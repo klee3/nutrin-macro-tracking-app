@@ -13,6 +13,21 @@ class MyApp extends StatelessWidget {
     return StreamProvider<User>.value(
       value: AuthService().user,
       child: MaterialApp(
+          theme: ThemeData(
+            // Define the default brightness and colors.
+            brightness: Brightness.light,
+            primaryColor: Colors.lightBlue[800],
+            accentColor: Colors.lightBlue[100],
+
+            // Define the default font family.
+//            fontFamily: 'Comfortaa',
+
+            // Define the default TextTheme. Use this to specify the default
+            // text styling for headlines, titles, bodies of text, and more.
+            textTheme: TextTheme(
+              headline5: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
+            ),
+          ),
         home: Wrapper(),
       ),
     );
