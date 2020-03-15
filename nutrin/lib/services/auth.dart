@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:mobileapp/model/TrackedFood.dart';
 import 'package:mobileapp/model/user.dart';
 import 'package:mobileapp/services/database.dart';
 
@@ -27,11 +28,14 @@ class AuthService {
     }
   }
 
+  // TODO: special error messages depending on what happened
   // sign in with email and password
   Future signInWithEmailAndPassword(String email, String password) async {
     try {
+      print(email);
+      print(password);
       AuthResult result = await _auth.signInWithEmailAndPassword(
-          email: email, password: password);
+          email: email.trim(), password: password);
       FirebaseUser firebaseUser = result.user;
       return _userFromFirebaseUser(firebaseUser);
     } catch (e) {
@@ -44,15 +48,14 @@ class AuthService {
   Future registerWithEmailAndPassword(String email, String password) async {
     try {
       AuthResult result = await _auth.createUserWithEmailAndPassword(
-          email: email, password: password);
+          email: email.trim(), password: password);
       FirebaseUser firebaseUser = result.user;
 
       // create a new document for the user with uid
       // TODO: should ask after registering
       DatabaseService databaseService = DatabaseService(uid: firebaseUser.uid);
-      await databaseService
-          .updateUserData(null, null, null, null, null);
-//      await databaseService.setPersonalNutrient({"calories": 20});
+      await databaseService.updateUserData(null, null, null, null, null);
+      await databaseService.addEmptyMeals();
       return _userFromFirebaseUser(firebaseUser);
     } catch (e) {
       print(e.toString());
