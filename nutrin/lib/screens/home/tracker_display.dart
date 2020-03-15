@@ -12,7 +12,11 @@ class _TrackerListState extends State<TrackerList> {
   Widget build(BuildContext context) {
     final tracker = Provider.of<Tracker>(context);
 
-//    return ListView.builder(
-//        itemCount:)
+    return ListView.builder(
+        itemCount: 3,
+      itemBuilder: (context, index) {
+
+      },
+    );
   }
 }
