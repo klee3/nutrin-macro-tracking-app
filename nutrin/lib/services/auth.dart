@@ -49,8 +49,10 @@ class AuthService {
 
       // create a new document for the user with uid
       // TODO: should ask after registering
-      await DatabaseService(uid: firebaseUser.uid)
+      DatabaseService databaseService = DatabaseService(uid: firebaseUser.uid);
+      await databaseService
           .updateUserData(null, null, null, null, null);
+//      await databaseService.setPersonalNutrient({"calories": 20});
       return _userFromFirebaseUser(firebaseUser);
     } catch (e) {
       print(e.toString());

@@ -22,6 +22,12 @@ class DatabaseService {
     });
   }
 
+  Future updatePersonalNutrients(Map<String, double> nutrients) async {
+    return await trackerCollection.document(uid).setData({
+      'personalNutrients': nutrients
+    }, merge: true);
+  }
+
   // get tracker stream
   Stream<Tracker> get tracker {
     return trackerCollection
@@ -36,7 +42,7 @@ class DatabaseService {
         name: snapshot.data['name'] ?? '',
         sex: snapshot.data['sex'] ?? '',
         metric: snapshot.data['metric'] ?? true,
-        height: snapshot.data['height'] ?? 0,
-        weight: snapshot.data['weight']) ?? 0;
+        height: snapshot.data['height'],
+        weight: snapshot.data['weight']);
   }
 }
