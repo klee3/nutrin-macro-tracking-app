@@ -198,27 +198,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.6.4"
-  path_provider:
+  path_drawing:
     dependency: transitive
     description:
-      name: path_provider
+      name: path_drawing
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.6.5"
-  path_provider_macos:
+    version: "0.4.1"
+  path_parsing:
     dependency: transitive
     description:
-      name: path_provider_macos
+      name: path_parsing
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.4"
-  path_provider_platform_interface:
-    dependency: transitive
-    description:
-      name: path_provider_platform_interface
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.1"
+    version: "0.1.4"
   pedantic:
     dependency: transitive
     description:

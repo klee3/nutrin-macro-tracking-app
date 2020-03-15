@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mobileapp/widgets/FoodCarousel.dart';
 
 class Test extends StatefulWidget {
   @override
@@ -11,7 +12,7 @@ class Test extends StatefulWidget {
 
 class _TestState extends State<Test> {
   int _selectedPage = 0;
-  final _pageOptions = [MainContent(), EntryScreen(),MainContent()];
+  final _pageOptions = [MainContent(), EntryScreen(), MainContent()];
 
   @override
   Widget build(BuildContext context) {
@@ -34,8 +35,7 @@ class _TestState extends State<Test> {
               icon: Icon(Icons.person), title: Text("Track")),
 //          BottomNavigationBarItem(
 //              icon: Icon(Icons.person), title: Text("Track")),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.home), title: Text("Home")),
+          BottomNavigationBarItem(icon: Icon(Icons.home), title: Text("Home")),
           BottomNavigationBarItem(
               icon: Icon(Icons.add_shopping_cart), title: Text("Fridge")),
         ],
@@ -58,7 +58,7 @@ class MainContent extends StatelessWidget {
                 Row(
                   children: <Widget>[
                     new Text(
-                      new DateTime.now().toIso8601String().substring(0,10),
+                      new DateTime.now().toIso8601String().substring(0, 10),
                       style: TextStyle(fontSize: 30.0, fontFamily: 'Comfortaa'),
                       textAlign: TextAlign.center,
                     ),
@@ -243,30 +243,7 @@ class _EntryScreenState extends State<EntryScreen> {
             SizedBox(
               height: 20.0,
             ),
-            Column(
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 20.0,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text("Your Fridge",
-                          style: TextStyle(
-                              fontSize: 22.0,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 1.5)),
-                      Text("See all",
-                          style: TextStyle(
-                              fontSize: 16.0,
-                              color: Theme.of(context).primaryColor,
-                              fontWeight: FontWeight.w600)),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+            FoodCarousel()
           ],
         ),
       ),
