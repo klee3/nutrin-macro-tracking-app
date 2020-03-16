@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:mobileapp/services/auth.dart';
 import 'package:mobileapp/shared/constants.dart';
 import 'package:mobileapp/shared/loading.dart';
@@ -211,74 +212,107 @@ class _SignInState extends State<SignIn> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
-          _buildSocialMediaButton(
-                  () => print("Login with Facebook"),
+          _buildSocialMediaButton(() => print("Login with Facebook"),
               AssetImage('assets/fbfb.png')),
           _buildSocialMediaButton(
-                  () => print("Login with Google"),
-              AssetImage('assets/gmail.png')),
+              () => print("Login with Google"), AssetImage('assets/gmail.png')),
         ],
+      ),
+    );
+  }
+
+  Widget _buildSignUpButton() {
+    return GestureDetector(
+      onTap: () => print("Sign up button pressed"),
+      child: RichText(
+        text: TextSpan(
+          children: [
+            TextSpan(
+              text: 'Don\'t have an account? ',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 18.0,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+            TextSpan(
+              text: 'Sign up',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: <Widget>[
-          Container(
-            height: double.infinity,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  Color(0xFF4e878c),
-                  Color(0xFF65b891),
-                  Color(0xFF93e5ab),
-                ],
+    return loading ? Loading() : Scaffold(
+      body: AnnotatedRegion<SystemUiOverlayStyle>(
+        value: SystemUiOverlayStyle.light,
+        child: GestureDetector(
+          onTap: () => FocusScope.of(context).unfocus(),
+          child: Stack(
+            children: <Widget>[
+              Container(
+                height: double.infinity,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Color(0xFF4e878c),
+                      Color(0xFF65b891),
+                      Color(0xFF93e5ab),
+                    ],
+                  ),
+                ),
               ),
-            ),
-          ),
-          Container(
-            height: double.infinity,
-            child: SingleChildScrollView(
-              physics: AlwaysScrollableScrollPhysics(),
-              padding: EdgeInsets.symmetric(horizontal: 40.0, vertical: 120.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    "Sign in",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontFamily: "Comfortaa",
-                        fontSize: 30.0,
-                        fontWeight: FontWeight.bold),
+              Container(
+                height: double.infinity,
+                child: SingleChildScrollView(
+                  physics: AlwaysScrollableScrollPhysics(),
+                  padding: EdgeInsets.symmetric(horizontal: 40.0, vertical: 120.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        "Sign in",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: "Comfortaa",
+                            fontSize: 30.0,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                        height: 30.0,
+                      ),
+                      _buildEmail(),
+                      SizedBox(
+                        height: 30.0,
+                      ),
+                      _buildPassword(),
+                      _buildForgotPasswordBtn(),
+                      _buildRememberMeBtn(),
+                      _buildLoginBtn(),
+                      _buildSignInwithFBGMBtn(),
+                      _buildSocialMediaRow(),
+                      _buildSignUpButton(),
+                    ],
                   ),
-                  SizedBox(
-                    height: 30.0,
-                  ),
-                  _buildEmail(),
-                  SizedBox(
-                    height: 30.0,
-                  ),
-                  _buildPassword(),
-                  _buildForgotPasswordBtn(),
-                  _buildRememberMeBtn(),
-                  _buildLoginBtn(),
-                  _buildSignInwithFBGMBtn(),
-                  _buildSocialMediaRow(),
-             
-                ],
+                ),
               ),
-            ),
+            ],
           ),
-        ],
+        ),
       ),
     );
+
 //    return loading ? Loading() : Scaffold(
 //      backgroundColor: Colors.green[200],
 //      appBar: AppBar(
