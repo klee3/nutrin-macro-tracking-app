@@ -28,7 +28,7 @@ class Home extends StatelessWidget {
                 label: Text('Log Out'))
           ],
         ),
-        body: TrackerList(),
+        body: TrackerDisplay(),
       ),
     );
   }

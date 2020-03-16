@@ -2,20 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:mobileapp/model/tracker.dart';
 import 'package:provider/provider.dart';
 
-class TrackerList extends StatefulWidget {
+import 'meal_tile.dart';
+
+class TrackerDisplay extends StatefulWidget {
   @override
-  _TrackerListState createState() => _TrackerListState();
+  _TrackerDisplayState createState() => _TrackerDisplayState();
 }
 
-class _TrackerListState extends State<TrackerList> {
+class _TrackerDisplayState extends State<TrackerDisplay> {
   @override
   Widget build(BuildContext context) {
     final tracker = Provider.of<Tracker>(context);
 
     return ListView.builder(
-        itemCount: 3,
+      itemCount: tracker.meals.length,
       itemBuilder: (context, index) {
-
+        return MealTile(meal: tracker.meals[index]);
       },
     );
   }
