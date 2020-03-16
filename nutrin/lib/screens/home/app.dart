@@ -5,15 +5,15 @@ import 'package:mobileapp/widgets/fridge_carousel.dart';
 import 'package:mobileapp/widgets/recipe_carousel.dart';
 import 'macro_display.dart';
 
-class Test extends StatefulWidget {
+class App extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return _TestState();
+    return _AppState();
   }
 //  _TestState createState() => _TestState();
 }
 
-class _TestState extends State<Test> {
+class _AppState extends State<App> {
   int _selectedPage = 0;
   final _pageOptions = [MacroDisplay(), StatsDisplay(), FridgeDisplay()];
 
