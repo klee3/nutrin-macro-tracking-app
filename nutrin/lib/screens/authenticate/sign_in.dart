@@ -42,7 +42,11 @@ class _SignInState extends State<SignIn> {
           alignment: Alignment.centerLeft,
           decoration: kBoxDecorationStyle,
           height: 60.0,
-          child: TextField(
+          child: TextFormField(
+            validator: (val) => val.isEmpty ? 'Enter an email' : null,
+            onChanged: (val) {
+              setState(() => email = val);
+            },
             keyboardType: TextInputType.emailAddress,
             style: TextStyle(color: Colors.white),
             decoration: InputDecoration(
@@ -75,7 +79,11 @@ class _SignInState extends State<SignIn> {
           alignment: Alignment.centerLeft,
           decoration: kBoxDecorationStyle,
           height: 60.0,
-          child: TextField(
+          child: TextFormField(
+            validator: (val) => val.isEmpty ? 'Enter a password' : null,
+            onChanged: (val) {
+              setState(() => password = val);
+            },
             obscureText: true,
             style: TextStyle(color: Colors.white),
             decoration: InputDecoration(
@@ -115,7 +123,19 @@ class _SignInState extends State<SignIn> {
       width: double.infinity,
       child: RaisedButton(
         elevation: 5.0,
-        onPressed: () => print("Login button pressed"),
+        onPressed: () async {
+          if (_formKey.currentState.validate()) {
+            setState(() => loading = true);
+            dynamic result =
+                await _authService.signInWithEmailAndPassword(email, password);
+            if (result == null) {
+              setState(() {
+                error = 'Could not sign in with those credentials';
+                loading = false;
+              });
+            }
+          }
+        },
         padding: EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),
@@ -223,7 +243,7 @@ class _SignInState extends State<SignIn> {
 
   Widget _buildSignUpButton() {
     return GestureDetector(
-      onTap: () => print("Sign up button pressed"),
+      onTap: () => widget.toggleView(),
       child: RichText(
         text: TextSpan(
           children: [
@@ -251,137 +271,85 @@ class _SignInState extends State<SignIn> {
 
   @override
   Widget build(BuildContext context) {
-    return loading ? Loading() : Scaffold(
-      body: AnnotatedRegion<SystemUiOverlayStyle>(
-        value: SystemUiOverlayStyle.light,
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
-          child: Stack(
-            children: <Widget>[
-              Container(
-                height: double.infinity,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Color(0xFF4e878c),
-                      Color(0xFF65b891),
-                      Color(0xFF93e5ab),
-                    ],
-                  ),
+    return loading
+        ? Loading()
+        : Scaffold(
+            body: AnnotatedRegion<SystemUiOverlayStyle>(
+              value: SystemUiOverlayStyle.light,
+              child: GestureDetector(
+                onTap: () => FocusScope.of(context).unfocus(),
+                child: Stack(
+                  children: <Widget>[
+                    Container(
+                      height: double.infinity,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Color(0xFF4e878c),
+                            Color(0xFF65b891),
+                            Color(0xFF93e5ab),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Container(
+                      height: double.infinity,
+                      child: SingleChildScrollView(
+                        physics: AlwaysScrollableScrollPhysics(),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 40.0, vertical: 120.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text(
+                              "Sign in",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: "Comfortaa",
+                                  fontSize: 30.0,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            SizedBox(
+                              height: 30.0,
+                            ),
+                            Form(
+                              key: _formKey,
+                              child: Column(
+                                children: <Widget>[
+                                  _buildEmail(),
+                                  SizedBox(
+                                    height: 30.0,
+                                  ),
+                                  _buildPassword(),
+                                  _buildForgotPasswordBtn(),
+                                  _buildRememberMeBtn(),
+                                  _buildLoginBtn(),
+                                  Text(
+                                    error,
+                                    style: TextStyle(
+                                        color: Colors.red, fontSize: 16.0),
+                                  ),
+                                  SizedBox(
+                                    height: 13.0,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            _buildSignInwithFBGMBtn(),
+                            _buildSocialMediaRow(),
+                            _buildSignUpButton(),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              Container(
-                height: double.infinity,
-                child: SingleChildScrollView(
-                  physics: AlwaysScrollableScrollPhysics(),
-                  padding: EdgeInsets.symmetric(horizontal: 40.0, vertical: 120.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        "Sign in",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: "Comfortaa",
-                            fontSize: 30.0,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(
-                        height: 30.0,
-                      ),
-                      _buildEmail(),
-                      SizedBox(
-                        height: 30.0,
-                      ),
-                      _buildPassword(),
-                      _buildForgotPasswordBtn(),
-                      _buildRememberMeBtn(),
-                      _buildLoginBtn(),
-                      _buildSignInwithFBGMBtn(),
-                      _buildSocialMediaRow(),
-                      _buildSignUpButton(),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-
-//    return loading ? Loading() : Scaffold(
-//      backgroundColor: Colors.green[200],
-//      appBar: AppBar(
-//        backgroundColor: Colors.green[500],
-//        elevation: 0.0,
-//        title: Text('Sign in to Nutrin'),
-//        actions: <Widget>[
-//          FlatButton.icon(
-//              onPressed: () {
-//                widget.toggleView();
-//              },
-//              icon: Icon(Icons.person),
-//              label: Text('Register'))
-//        ],
-//      ),
-//      body: Container(
-//        padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
-//        child: Form(
-//          key: _formKey,
-//          child: Column(
-//            children: <Widget>[
-//              SizedBox(height: 20.0),
-//              TextFormField(
-//                decoration: textInputDecorationEmail,
-//                validator: (val) => val.isEmpty ? 'Enter an email' : null,
-//                onChanged: (val) {
-//                  setState(() => email = val);
-//                },
-//              ),
-//              SizedBox(height: 20.0),
-//              TextFormField(
-//                decoration: textInputDecorationPassword,
-//                obscureText: true,
-//                validator: (val) => val.isEmpty ? 'Enter a password' : null,
-//                onChanged: (val) {
-//                  setState(() => password = val);
-//                },
-//              ),
-//              SizedBox(height: 20.0),
-//              RaisedButton(
-//                color: Colors.blueGrey[400],
-//                child: Text(
-//                  'Sign in',
-//                  style: TextStyle(color: Colors.white),
-//                ),
-//                onPressed: () async {
-//                  if (_formKey.currentState.validate()) {
-//                    setState(() => loading = true);
-//                    dynamic result = await _authService
-//                        .signInWithEmailAndPassword(email, password);
-//                    if (result == null) {
-//                      setState(() {
-//                        error = 'Could not sign in with those credentials';
-//                        loading = false;
-//                      });
-//                    }
-//                  }
-//                },
-//              ),
-//              SizedBox(
-//                height: 12.0,
-//              ),
-//              Text(
-//                error,
-//                style: TextStyle(color: Colors.red, fontSize: 14.0),
-//              )
-//            ],
-//          ),
-//        ),
+            ),
+          );
 //
 //// button for anon sign in
 ////        child: RaisedButton(
