@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mobileapp/screens/authenticate/register.dart';
 import 'package:mobileapp/screens/authenticate/sign_in.dart';
+import 'package:mobileapp/utilities/constants.dart';
 
 class Authenticate extends StatefulWidget {
   @override
@@ -8,7 +10,6 @@ class Authenticate extends StatefulWidget {
 }
 
 class _AuthenticateState extends State<Authenticate> {
-
   bool showSignIn = true;
 
   void toggleView() {
