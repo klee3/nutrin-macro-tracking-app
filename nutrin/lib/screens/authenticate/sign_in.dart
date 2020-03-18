@@ -4,6 +4,7 @@ import 'package:mobileapp/services/auth.dart';
 import 'package:mobileapp/shared/constants.dart';
 import 'package:mobileapp/shared/loading.dart';
 import 'package:mobileapp/utilities/constants.dart';
+import 'package:flutter_signin_button/flutter_signin_button.dart';
 
 class SignIn extends StatefulWidget {
   final Function toggleView;
@@ -235,16 +236,20 @@ class _SignInState extends State<SignIn> {
     );
   }
 
-  Widget _buildSocialMediaRow() {
+  Widget _buildSocialMediaColumn() {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 30.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      child: Column(
         children: <Widget>[
-          _buildSocialMediaButton(() => print("Login with Facebook"),
-              AssetImage('assets/fbfb.png')),
-          _buildSocialMediaButton(
-              () => print("Login with Google"), AssetImage('assets/gmail.png')),
+          // TODO: connect with auth
+          SignInButton(
+            Buttons.GoogleDark,
+            onPressed: () {},
+          ),
+          SignInButton(
+            Buttons.Facebook,
+            onPressed: () {},
+          )
         ],
       ),
     );
@@ -348,7 +353,7 @@ class _SignInState extends State<SignIn> {
                               ),
                             ),
                             _buildSignInwithFBGMBtn(),
-                            _buildSocialMediaRow(),
+                            _buildSocialMediaColumn(),
                             _buildSignUpButton(),
                           ],
                         ),
