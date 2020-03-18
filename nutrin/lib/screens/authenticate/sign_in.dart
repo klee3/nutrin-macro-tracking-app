@@ -40,8 +40,6 @@ class _SignInState extends State<SignIn> {
         ),
         Container(
           alignment: Alignment.centerLeft,
-          decoration: kBoxDecorationStyle,
-          height: 60.0,
           child: TextFormField(
             validator: (val) => val.isEmpty ? 'Enter an email' : null,
             onChanged: (val) {
@@ -50,8 +48,17 @@ class _SignInState extends State<SignIn> {
             keyboardType: TextInputType.emailAddress,
             style: TextStyle(color: Colors.white),
             decoration: InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(top: 14.0),
+                fillColor: Color(0xFF65b891),
+                filled: true,
+                enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white, width: 2.0)),
+                focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.pink, width: 2.0)),
+                errorStyle: TextStyle(fontSize: 15),
+                border:
+                    OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                contentPadding:
+                    EdgeInsets.symmetric(vertical: 14.0, horizontal: 14.0),
                 prefixIcon: Icon(
                   Icons.email,
                   color: Colors.white,
@@ -77,8 +84,7 @@ class _SignInState extends State<SignIn> {
         ),
         Container(
           alignment: Alignment.centerLeft,
-          decoration: kBoxDecorationStyle,
-          height: 60.0,
+//          decoration: kBoxDecorationStyle,
           child: TextFormField(
             validator: (val) => val.isEmpty ? 'Enter a password' : null,
             onChanged: (val) {
@@ -87,8 +93,11 @@ class _SignInState extends State<SignIn> {
             obscureText: true,
             style: TextStyle(color: Colors.white),
             decoration: InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(top: 14.0),
+                errorStyle: TextStyle(fontSize: 15),
+                border:
+                    OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                contentPadding:
+                    EdgeInsets.symmetric(vertical: 14.0, horizontal: 14.0),
                 prefixIcon: Icon(
                   Icons.lock,
                   color: Colors.white,
