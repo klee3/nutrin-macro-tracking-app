@@ -1,4 +1,4 @@
 # Nutrin - Clean and Simple Nutrition Tracking
-## Why 
-I often find myself fed up with with apps that currently exist on the market. The UI is ugly, most of the features are through paid subsription or too much bloatware. Therefore we decided to make our own app that tracks food. Clean and Simple.
-## Features 
+## User Flow - in the works 
+
+<iframe style="border: none;" width="800" height="450" src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Ffile%2FqLFs8PPXRt8uu73Gg8YMkw%2FNutrin%3Fnode-id%3D0%253A1" allowfullscreen></iframe>
