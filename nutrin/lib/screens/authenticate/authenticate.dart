@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mobileapp/screens/authenticate/register.dart';
+import 'package:mobileapp/screens/authenticate/register_info_form.dart';
 import 'package:mobileapp/screens/authenticate/sign_in.dart';
 import 'package:mobileapp/utilities/constants.dart';
 
@@ -23,5 +24,6 @@ class _AuthenticateState extends State<Authenticate> {
     } else {
       return Register(toggleView: toggleView);
     }
+//  return RegisterInfoForm();
   }
 }

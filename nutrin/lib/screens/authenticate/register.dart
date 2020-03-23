@@ -84,10 +84,10 @@ class _RegisterState extends State<Register> {
                           await _authService
                               .registerWithEmailAndPassword(email, password)
                               .catchError((exception) => setState(() {
-                                    error =
-                                        "Email is invalid! Please try again.";
-                                    loading = false;
-                                  }));
+                            error =
+                            "Email is invalid! Please try again.";
+                            loading = false;
+                          }));
                         }
                       },
                     ),
