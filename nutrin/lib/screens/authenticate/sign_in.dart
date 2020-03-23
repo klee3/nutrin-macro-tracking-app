@@ -47,14 +47,8 @@ class _SignInState extends State<SignIn> {
               setState(() => email = val);
             },
             keyboardType: TextInputType.emailAddress,
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: Colors.black54),
             decoration: InputDecoration(
-                fillColor: Color(0xFF65b891),
-                filled: true,
-                enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white, width: 2.0)),
-                focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.pink, width: 2.0)),
                 errorStyle: TextStyle(fontSize: 15),
                 border:
                     OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
@@ -62,9 +56,9 @@ class _SignInState extends State<SignIn> {
                     EdgeInsets.symmetric(vertical: 14.0, horizontal: 14.0),
                 prefixIcon: Icon(
                   Icons.email,
-                  color: Colors.white,
+                  color: Colors.black54,
                 ),
-                hintText: "Enter your email",
+                labelText: "Enter your email",
                 hintStyle: kHintTextStyle),
           ),
         )
@@ -92,7 +86,7 @@ class _SignInState extends State<SignIn> {
               setState(() => password = val);
             },
             obscureText: true,
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: Colors.black54),
             decoration: InputDecoration(
                 errorStyle: TextStyle(fontSize: 15),
                 border:
@@ -101,12 +95,12 @@ class _SignInState extends State<SignIn> {
                     EdgeInsets.symmetric(vertical: 14.0, horizontal: 14.0),
                 prefixIcon: Icon(
                   Icons.lock,
-                  color: Colors.white,
+                  color: Colors.black54,
                 ),
                 hintText: "Enter your password",
                 hintStyle: kHintTextStyle),
           ),
-        )
+        ),
       ],
     );
   }
@@ -128,7 +122,7 @@ class _SignInState extends State<SignIn> {
   Widget _buildLoginBtn() {
     return Container(
       padding: EdgeInsets.symmetric(
-        vertical: 25.0,
+        vertical: 15.0,
       ),
       width: double.infinity,
       child: RaisedButton(
@@ -150,11 +144,11 @@ class _SignInState extends State<SignIn> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),
         ),
-        color: Colors.white,
+        color: Theme.of(context).primaryColor,
         child: Text(
           "LOGIN",
           style: TextStyle(
-            color: Color(0xFF93e5ab),
+            color: Colors.white,
             letterSpacing: 1.5,
             fontSize: 18.0,
             fontWeight: FontWeight.bold,
@@ -169,18 +163,11 @@ class _SignInState extends State<SignIn> {
     return Column(
       children: <Widget>[
         Text(
-          "- OR -",
+          "- or sign in with -",
           style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.w400,
+            color: Colors.black,
+            fontWeight: FontWeight.normal,
           ),
-        ),
-        SizedBox(
-          height: 20.0,
-        ),
-        Text(
-          "Sign in with",
-          style: kLabelStyle,
         ),
       ],
     );
@@ -192,11 +179,11 @@ class _SignInState extends State<SignIn> {
       child: Row(
         children: <Widget>[
           Theme(
-            data: ThemeData(unselectedWidgetColor: Colors.white),
+            data: ThemeData(unselectedWidgetColor: Theme.of(context).primaryColor),
             child: Checkbox(
               value: _rememberMe,
-              checkColor: Colors.green,
-              activeColor: Colors.white,
+              checkColor: Colors.white,
+              activeColor: Theme.of(context).primaryColor,
               onChanged: (value) {
                 setState(() {
                   _rememberMe = value;
@@ -221,7 +208,7 @@ class _SignInState extends State<SignIn> {
         width: 60.0,
         decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: Colors.white,
+            color: Colors.black54,
             boxShadow: [
               BoxShadow(
                 color: Colors.black26,
@@ -264,7 +251,7 @@ class _SignInState extends State<SignIn> {
             TextSpan(
               text: 'Don\'t have an account? ',
               style: TextStyle(
-                color: Colors.white,
+                color: Colors.black54,
                 fontSize: 18.0,
                 fontWeight: FontWeight.w400,
               ),
@@ -272,7 +259,7 @@ class _SignInState extends State<SignIn> {
             TextSpan(
               text: 'Sign up',
               style: TextStyle(
-                color: Colors.white,
+                color: Colors.black54,
                 fontSize: 18.0,
                 fontWeight: FontWeight.bold,
               ),
@@ -298,15 +285,16 @@ class _SignInState extends State<SignIn> {
                       height: double.infinity,
                       width: double.infinity,
                       decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [
-                            Color(0xFF4e878c),
-                            Color(0xFF65b891),
-                            Color(0xFF93e5ab),
-                          ],
-                        ),
+                        color: Colors.white,
+//                        gradient: LinearGradient(
+//                          begin: Alignment.topCenter,
+//                          end: Alignment.bottomCenter,
+//                          colors: [
+//                            Color(0xFF4e878c),
+//                            Color(0xFF65b891),
+//                            Color(0xFF93e5ab),
+//                          ],
+//                        ),
                       ),
                     ),
                     Container(
@@ -321,7 +309,7 @@ class _SignInState extends State<SignIn> {
                             Text(
                               "Sign in",
                               style: TextStyle(
-                                  color: Colors.white,
+                                  color: Theme.of(context).primaryColor,
                                   fontFamily: "Comfortaa",
                                   fontSize: 30.0,
                                   fontWeight: FontWeight.bold),

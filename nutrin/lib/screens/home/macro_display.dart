@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class MacroDisplay extends StatefulWidget {
@@ -8,7 +9,7 @@ class MacroDisplay extends StatefulWidget {
 }
 
 class _MacroDisplayState extends State<MacroDisplay> {
-  List<String> meals = ["Breakfast", "Lunch", "Dinner"];
+  List<String> meals = ["Breakfast", "Lunch", "Dinner", "Snacks"];
 
   @override
   Widget build(BuildContext context) {
@@ -18,73 +19,25 @@ class _MacroDisplayState extends State<MacroDisplay> {
           Stack(
             children: <Widget>[
               Container(
-                height: MediaQuery.of(context).size.width,
+                margin: EdgeInsets.all(10.0),
+                height: 300,
                 decoration: BoxDecoration(
                   color: Theme.of(context).primaryColor,
                   borderRadius: BorderRadius.circular(30.0),
                   boxShadow: [
-                    BoxShadow(
-                      color: Colors.black26,
-                      offset: Offset(0.0, 2.0),
-                      blurRadius: 6.0,
+                    new BoxShadow(
+                      color: Colors.black54,
+                      offset: new Offset(5.0, 5.0),
+                      blurRadius: 5.0,
                     ),
                   ],
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(30.0),
                 ),
               ),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 40.0),
+                padding: EdgeInsets.symmetric(horizontal: 10.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        top: 20.0,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Positioned(
-                left: 20.0,
-                bottom: 20.0,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    SizedBox(
-                      width: 5.0,
-                    ),
-                    Text(
-                      "Macros",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 35.0,
-                        fontWeight: FontWeight.w600,
-                        letterSpacing: 1.2,
-                      ),
-                    ),
-                    Row(
-                      children: <Widget>[
-                        Icon(
-                          FontAwesomeIcons.utensils,
-                          size: 10.0,
-                          color: Colors.black,
-                        ),
-                        SizedBox(
-                          width: 5.0,
-                        ),
-                        Text(
-                          "Macros",
-                          style: TextStyle(
-                            fontSize: 20.0,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+                  children: <Widget>[],
                 ),
               ),
             ],
@@ -118,13 +71,6 @@ class _MacroDisplayState extends State<MacroDisplay> {
                                       fontSize: 18.0,
                                       fontWeight: FontWeight.w600),
                                 ),
-                                Icon(
-                                  Icons.add,
-                                  color: Colors.black,
-                                ),
-//                                IconButton(icon: Icon(Icons.add),
-//                                  onPressed: print("Pressed"),
-//                                )
                               ],
                             ),
                             SizedBox(
@@ -158,12 +104,32 @@ class _MacroDisplayState extends State<MacroDisplay> {
                           ],
                         ),
                       ),
-                    )
+                    ),
                   ],
                 );
               },
             ),
           ),
+        ],
+      ),
+      floatingActionButton: SpeedDial(
+        animatedIcon: AnimatedIcons.menu_close,
+        overlayColor: Colors.lightBlue,
+        overlayOpacity: .2,
+        curve: Curves.easeInBack,
+        children: [
+          SpeedDialChild(
+              child: Icon(Icons.free_breakfast),
+              label: "Breakfast",
+              onTap: () => print("Breakkfast")),
+          SpeedDialChild(
+              child: Icon(Icons.fastfood),
+              label: "Lunch",
+              onTap: () => print("Breakkfast")),
+          SpeedDialChild(
+              child: Icon(Icons.local_pizza),
+              label: "Dinner",
+              onTap: () => print("Breakkfast")),
         ],
       ),
     );
