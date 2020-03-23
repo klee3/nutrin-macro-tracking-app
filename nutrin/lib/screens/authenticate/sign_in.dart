@@ -126,14 +126,13 @@ class _SignInState extends State<SignIn> {
         onPressed: () async {
           if (_formKey.currentState.validate()) {
             setState(() => loading = true);
-            dynamic result =
-                await _authService.signInWithEmailAndPassword(email, password);
-            if (result == null) {
-              setState(() {
-                error = 'Could not sign in with those credentials';
-                loading = false;
-              });
-            }
+            await _authService
+                .signInWithEmailAndPassword(email, password)
+                .catchError((exception) => setState(() {
+                      error =
+                          "Email or password is incorrect! Please try again or reset your password.";
+                      loading = false;
+                    }));
           }
         },
         padding: EdgeInsets.all(15.0),
