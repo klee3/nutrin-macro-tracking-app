@@ -20,6 +20,6 @@ class Wrapper extends StatelessWidget {
 //    } else {
 //      return Home();
 //    }
-  return App();
+  return TrackerDisplay();
   }
 }

@@ -39,6 +39,7 @@ class _RegisterState extends State<Register> {
           height: 10.0,
         ),
         Container(
+          decoration: kBoxDecorationStyle,
           alignment: Alignment.centerLeft,
           child: TextFormField(
             validator: (val) => val.isEmpty ? 'Enter an email' : null,
@@ -47,21 +48,19 @@ class _RegisterState extends State<Register> {
             },
             keyboardType: TextInputType.emailAddress,
             style: TextStyle(
-              color: Theme.of(context).primaryColor,
+              color: Colors.black,
             ),
             decoration: InputDecoration(
               errorStyle: TextStyle(fontSize: 15.0),
-              border:
-                  OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
               contentPadding:
                   EdgeInsets.symmetric(vertical: 14.0, horizontal: 14.0),
               prefixIcon: Icon(
                 Icons.email,
-                color: Theme.of(context).primaryColor,
+                color: Colors.black54,
               ),
+              border: InputBorder.none,
               hintText: "Enter your email",
-              hintStyle: kHintTextStyle.copyWith(
-                  color: Theme.of(context).primaryColor),
+              hintStyle: kHintTextStyle,
             ),
           ),
         ),
@@ -81,6 +80,7 @@ class _RegisterState extends State<Register> {
           height: 10.0,
         ),
         Container(
+          decoration: kBoxDecorationStyle,
           alignment: Alignment.centerLeft,
           child: TextFormField(
             validator: (val) => val.isEmpty ? 'Enter a password' : null,
@@ -90,18 +90,17 @@ class _RegisterState extends State<Register> {
             obscureText: true,
             style: TextStyle(color: Theme.of(context).primaryColor),
             decoration: InputDecoration(
-                errorStyle: TextStyle(fontSize: 15),
-                border:
-                    OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-                contentPadding:
-                    EdgeInsets.symmetric(vertical: 14.0, horizontal: 14.0),
-                prefixIcon: Icon(
-                  Icons.lock,
-                  color: Theme.of(context).primaryColor,
-                ),
-                hintText: "Enter your password",
-                hintStyle: kHintTextStyle.copyWith(
-                    color: Theme.of(context).primaryColor)),
+              errorStyle: TextStyle(fontSize: 15),
+              contentPadding:
+                  EdgeInsets.symmetric(vertical: 14.0, horizontal: 14.0),
+              prefixIcon: Icon(
+                Icons.lock,
+                color: Colors.black54,
+              ),
+              border: InputBorder.none,
+              hintText: "Enter your password",
+              hintStyle: kHintTextStyle,
+            ),
           ),
         ),
       ],
@@ -113,19 +112,29 @@ class _RegisterState extends State<Register> {
     return loading
         ? Loading()
         : Scaffold(
+            backgroundColor: Colors.white,
+            resizeToAvoidBottomPadding: true,
             body: AnnotatedRegion<SystemUiOverlayStyle>(
               value: SystemUiOverlayStyle.light,
               child: GestureDetector(
                 onTap: () => FocusScope.of(context).unfocus(),
                 child: Stack(
+                  fit: StackFit.expand,
                   children: <Widget>[
-                    Container(
-                      height: double.infinity,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
+                    Positioned.fill(
+                      child: Image.asset(
+                        "assets/register.png",
+                        fit: BoxFit.fitWidth,
+                        alignment: Alignment.bottomCenter,
                       ),
                     ),
+//                    Container(
+//                      height: double.infinity,
+//                      width: double.infinity,
+//                      decoration: BoxDecoration(
+//                        color: Colors.white,
+//                      ),
+//                    ),
                     Container(
                       height: double.infinity,
                       child: SingleChildScrollView(
@@ -135,13 +144,23 @@ class _RegisterState extends State<Register> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            Text(
-                              "Sign up",
-                              style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
-                                  fontFamily: "Comfortaa",
-                                  fontSize: 30.0,
-                                  fontWeight: FontWeight.bold),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: <Widget>[
+                                SizedBox(
+                                  width: double.infinity,
+                                  child: Text(
+                                    "Create Account.",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontFamily: "Open Sans",
+                                      fontSize: 30.0,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    textAlign: TextAlign.left,
+                                  ),
+                                ),
+                              ],
                             ),
                             SizedBox(
                               height: 30.0,
@@ -165,16 +184,15 @@ class _RegisterState extends State<Register> {
                                       onPressed: () async {
                                         if (_formKey.currentState.validate()) {
                                           setState(() => loading = true);
-                                          dynamic result = await _authService
-                                              .signInWithEmailAndPassword(
-                                                  email, password);
-                                          if (result == null) {
-                                            setState(() {
-                                              error =
-                                                  'Could not sign up with those credentials';
-                                              loading = false;
-                                            });
-                                          }
+                                          await _authService
+                                              .registerWithEmailAndPassword(
+                                                  email, password)
+                                              .catchError(
+                                                  (exception) => setState(() {
+                                                        error =
+                                                            "Email is invalid! Please try again.";
+                                                        loading = false;
+                                                      }));
                                         }
                                       },
                                       padding: EdgeInsets.all(15.0),
@@ -203,8 +221,7 @@ class _RegisterState extends State<Register> {
                                           TextSpan(
                                             text: 'Already have an account? ',
                                             style: TextStyle(
-                                              color: Theme.of(context)
-                                                  .primaryColor,
+                                              color: Colors.black54,
                                               fontSize: 18.0,
                                               fontWeight: FontWeight.w400,
                                             ),
@@ -234,6 +251,25 @@ class _RegisterState extends State<Register> {
               ),
             ),
           );
+
+//    return Scaffold(
+//      backgroundColor: Colors.white,
+//      resizeToAvoidBottomPadding: true,
+//      body: Stack(
+//        fit: StackFit.expand,
+//        children: <Widget>[
+//          Positioned.fill(
+//            child: Image.asset(
+//              "assets/register.png",
+//              fit: BoxFit.fitWidth,
+//              alignment: Alignment.bottomCenter,
+//            ),
+//          ),
+//        ],
+//      ),
+//    );
+//
+//
 //      backgroundColor: Colors.green[200],
 //      appBar: AppBar(
 //        backgroundColor: Colors.green[500],

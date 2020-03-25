@@ -40,20 +40,17 @@ class _SignInState extends State<SignIn> {
           height: 10.0,
         ),
         Container(
+          decoration: kBoxDecorationStyle,
           alignment: Alignment.centerLeft,
           child: TextFormField(
-            validator: (val) => val.isEmpty ? 'Enter an email' : null,
+//            validator: (val) => val.isEmpty ? 'Enter an email' : null,
             onChanged: (val) {
               setState(() => email = val);
             },
             keyboardType: TextInputType.emailAddress,
             style: TextStyle(color: Colors.black54),
             decoration: InputDecoration(
-                errorStyle: TextStyle(fontSize: 15),
-                border:
-                    OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-                contentPadding:
-                    EdgeInsets.symmetric(vertical: 14.0, horizontal: 14.0),
+                border: InputBorder.none,
                 prefixIcon: Icon(
                   Icons.email,
                   color: Colors.black54,
@@ -78,10 +75,11 @@ class _SignInState extends State<SignIn> {
           height: 10.0,
         ),
         Container(
+          decoration: kBoxDecorationStyle,
           alignment: Alignment.centerLeft,
 //          decoration: kBoxDecorationStyle,
           child: TextFormField(
-            validator: (val) => val.isEmpty ? 'Enter a password' : null,
+//            validator: (val) => val.isEmpty ? 'Enter a password' : null,
             onChanged: (val) {
               setState(() => password = val);
             },
@@ -89,8 +87,7 @@ class _SignInState extends State<SignIn> {
             style: TextStyle(color: Colors.black54),
             decoration: InputDecoration(
                 errorStyle: TextStyle(fontSize: 15),
-                border:
-                    OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                border:InputBorder.none,
                 contentPadding:
                     EdgeInsets.symmetric(vertical: 14.0, horizontal: 14.0),
                 prefixIcon: Icon(
@@ -259,7 +256,7 @@ class _SignInState extends State<SignIn> {
             TextSpan(
               text: 'Sign up',
               style: TextStyle(
-                color: Colors.black54,
+                color: Colors.white,
                 fontSize: 18.0,
                 fontWeight: FontWeight.bold,
               ),
@@ -281,22 +278,29 @@ class _SignInState extends State<SignIn> {
                 onTap: () => FocusScope.of(context).unfocus(),
                 child: Stack(
                   children: <Widget>[
-                    Container(
-                      height: double.infinity,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-//                        gradient: LinearGradient(
-//                          begin: Alignment.topCenter,
-//                          end: Alignment.bottomCenter,
-//                          colors: [
-//                            Color(0xFF4e878c),
-//                            Color(0xFF65b891),
-//                            Color(0xFF93e5ab),
-//                          ],
-//                        ),
+                    Positioned.fill(
+                      child: Image.asset(
+                        "assets/welcomeback.png",
+                        fit: BoxFit.fitWidth,
+                        alignment: Alignment.bottomCenter,
                       ),
                     ),
+//                    Container(
+//                      height: double.infinity,
+//                      width: double.infinity,
+//                      decoration: BoxDecoration(
+//                        color: Colors.white,
+////                        gradient: LinearGradient(
+////                          begin: Alignment.topCenter,
+////                          end: Alignment.bottomCenter,
+////                          colors: [
+////                            Color(0xFF4e878c),
+////                            Color(0xFF65b891),
+////                            Color(0xFF93e5ab),
+////                          ],
+////                        ),
+//                      ),
+//                    ),
                     Container(
                       height: double.infinity,
                       child: SingleChildScrollView(
@@ -306,14 +310,20 @@ class _SignInState extends State<SignIn> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            Text(
-                              "Sign in",
-                              style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
-                                  fontFamily: "Comfortaa",
-                                  fontSize: 30.0,
-                                  fontWeight: FontWeight.bold),
-                            ),
+                            Column(children: <Widget>[
+                              SizedBox(
+                                width: double.infinity,
+                                child: Text(
+                                  "Welcome Back",
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontFamily: "OpenSans",
+                                      fontSize: 30.0,
+                                      fontWeight: FontWeight.bold),
+                                  textAlign: TextAlign.left,
+                                ),
+                              ),
+                            ],),
                             SizedBox(
                               height: 30.0,
                             ),
