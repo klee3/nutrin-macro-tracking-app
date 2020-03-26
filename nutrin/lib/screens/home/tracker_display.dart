@@ -14,11 +14,21 @@ class _TrackerDisplayState extends State<TrackerDisplay> {
   Widget build(BuildContext context) {
     final tracker = Provider.of<Tracker>(context);
 
-    return ListView.builder(
-      itemCount: tracker.meals.length,
-      itemBuilder: (context, index) {
-        return MealTile(meal: tracker.meals[index]);
-      },
+    return Scaffold(
+      backgroundColor: Colors.white,
+      resizeToAvoidBottomPadding: true,
+      body: Stack(
+        fit: StackFit.expand,
+        children: <Widget>[
+          ListView.builder(
+            itemCount: tracker.meals.length,
+            itemBuilder: (context, index) {
+              return MealTile(meal: tracker.meals[index]);
+            },
+          ),
+        ],
+      ),
+//      body:
     );
   }
 }

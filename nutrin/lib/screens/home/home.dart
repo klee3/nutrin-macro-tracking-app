@@ -14,10 +14,17 @@ class Home extends StatelessWidget {
     return StreamProvider<Tracker>.value(
       value: DatabaseService(uid: Provider.of<User>(context).uid).tracker,
       child: Scaffold(
-        backgroundColor: Colors.green[50],
         appBar: AppBar(
-          title: Text('Nutrin'),
-          backgroundColor: Colors.green[500],
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios),
+            onPressed: () => print("pressed"),
+            color: Colors.black,
+          ),
+          title: Text(
+            new DateTime.now().toIso8601String().substring(0, 9),
+            style: TextStyle(color: Colors.black),
+          ),
+          backgroundColor: Colors.white,
           elevation: 0.0,
           actions: <Widget>[
             FlatButton.icon(

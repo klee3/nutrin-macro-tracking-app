@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mobileapp/screens/home/entry.dart';
 import 'package:mobileapp/widgets/fridge_carousel.dart';
 import 'package:mobileapp/widgets/recipe_carousel.dart';
+import 'home.dart';
 import 'macro_display.dart';
 
 class App extends StatefulWidget {
@@ -15,16 +16,11 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   int _selectedPage = 0;
-  final _pageOptions = [MacroDisplay(), StatsDisplay(), FridgeDisplay()];
+  final _pageOptions = [Home(), StatsDisplay(), FridgeDisplay()];
 
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: new AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0.0,
-        iconTheme: new IconThemeData(color: Color(0xFF18D191)),
-      ),
       body: _pageOptions[_selectedPage],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedPage,
