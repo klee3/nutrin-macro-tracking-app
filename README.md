@@ -2,3 +2,5 @@
 ## User Flow - in the works 
 
 ![Figma Prototype of the App](flow.png)
+
+![Figma Prototype of the App](search.png)
