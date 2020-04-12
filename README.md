@@ -1,4 +1,4 @@
 # Nutrin - Clean and Simple Nutrition Tracking
 ## User Flow - in the works 
 
-![Figma Prototype of the App](nutrin.png)
+![Figma Prototype of the App](progress.png)
