@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:mobileapp/screens/authenticate/sign_in.dart';
 import 'package:mobileapp/services/auth.dart';
-import 'package:mobileapp/shared/constants.dart';
 import 'package:mobileapp/shared/loading.dart';
 import 'package:mobileapp/utilities/constants.dart';
 
@@ -39,10 +37,9 @@ class _RegisterState extends State<Register> {
           height: 10.0,
         ),
         Container(
-          decoration: kBoxDecorationStyle,
           alignment: Alignment.centerLeft,
           child: TextFormField(
-            validator: (val) => val.isEmpty ? 'Enter an email' : null,
+            validator: (val) => val.isEmpty ? 'john@gmail.com' : null,
             onChanged: (val) {
               setState(() => email = val);
             },
@@ -59,7 +56,7 @@ class _RegisterState extends State<Register> {
                 color: Colors.black54,
               ),
               border: InputBorder.none,
-              hintText: "Enter your email",
+              hintText: "john@gmail.com",
               hintStyle: kHintTextStyle,
             ),
           ),
@@ -80,7 +77,6 @@ class _RegisterState extends State<Register> {
           height: 10.0,
         ),
         Container(
-          decoration: kBoxDecorationStyle,
           alignment: Alignment.centerLeft,
           child: TextFormField(
             validator: (val) => val.isEmpty ? 'Enter a password' : null,
@@ -98,7 +94,7 @@ class _RegisterState extends State<Register> {
                 color: Colors.black54,
               ),
               border: InputBorder.none,
-              hintText: "Enter your password",
+              hintText: "Enter a password",
               hintStyle: kHintTextStyle,
             ),
           ),
