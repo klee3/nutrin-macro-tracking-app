@@ -1,47 +1,60 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mobileapp/screens/home/entry.dart';
+import 'package:mobileapp/model/meal.dart';
 import 'package:mobileapp/widgets/fridge_carousel.dart';
 import 'package:mobileapp/widgets/recipe_carousel.dart';
-import 'home.dart';
-import 'macro_display.dart';
 
-class App extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return _AppState();
-  }
-//  _TestState createState() => _TestState();
-}
+class MealTile extends StatelessWidget {
+  final Meal meal;
 
-class _AppState extends State<App> {
-  int _selectedPage = 0;
-  final _pageOptions = [Home(), StatsDisplay(), FridgeDisplay()];
+  MealTile({this.meal});
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      body: _pageOptions[_selectedPage],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedPage,
-        onTap: (int index) {
-          setState(() {
-            _selectedPage = index;
-          });
-        },
-        items: [
-          BottomNavigationBarItem(
-              icon: Icon(Icons.person), title: Text("Track")),
-//          BottomNavigationBarItem(
-//              icon: Icon(Icons.person), title: Text("Track")),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.pie_chart), title: Text("Stats")),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.add_shopping_cart), title: Text("Fridge")),
-        ],
-      ),
-//      MainContent(),
+    return Stack(
+      children: <Widget>[
+        Container(
+          margin: EdgeInsets.fromLTRB(40.0, 5.0, 20.0, 5.0),
+          height: 170.0,
+          width: double.infinity,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(20.0),
+            boxShadow: []
+          ),
+          child: Padding(
+            padding: EdgeInsets.all(20.0),
+            child: Column(
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      meal.mealName,
+                      style: TextStyle(
+                          fontSize: 18.0, fontWeight: FontWeight.w600),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 10.0,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
+//    return Padding(
+//      padding: EdgeInsets.only(top: 8.0),
+//      child: Card(
+//        margin: EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0),
+//        child: ListTile(
+//          title: Text(meal.mealName),
+//          subtitle: Text('Foods: ${meal.foods.toString()}'),
+//        ),
+//      ),
+//    );
   }
 }
 
@@ -109,7 +122,7 @@ class _FridgeDisplayState extends State<FridgeDisplay> {
                   .entries
                   .map(
                     (MapEntry map) => _buildIcon(map.key),
-                  )
+              )
                   .toList(),
             ),
             SizedBox(

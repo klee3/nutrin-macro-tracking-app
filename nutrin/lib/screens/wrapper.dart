@@ -3,10 +3,14 @@ import 'package:mobileapp/model/tracker.dart';
 import 'package:mobileapp/model/user.dart';
 import 'package:mobileapp/screens/authenticate/authenticate.dart';
 import 'package:mobileapp/screens/authenticate/sign_in.dart';
-import 'package:mobileapp/screens/home/entry.dart';
-import 'package:mobileapp/screens/home/home.dart';
-import 'package:mobileapp/screens/home/app.dart';
-import 'package:mobileapp/screens/home/recipe_display.dart';
+import 'package:mobileapp/screens/home/food_details.dart';
+import 'package:mobileapp/screens/home/search.dart';
+import 'package:mobileapp/screens/home/user_stats.dart';
+import 'package:mobileapp/screens/home/meal_display.dart';
+import 'package:mobileapp/screens/extra/app.dart';
+import 'package:mobileapp/screens/home/meal_display.dart';
+import 'package:mobileapp/screens/extra/meal_tile.dart';
+import 'package:mobileapp/screens/extra/recipe_display.dart';
 import 'package:mobileapp/screens/user%20introduction/new_sign_up_decision.dart';
 import 'package:mobileapp/screens/user%20introduction/user_activity_levels.dart';
 import 'package:mobileapp/screens/user%20introduction/user_input_macros.dart';
@@ -25,7 +29,7 @@ class Wrapper extends StatelessWidget {
   //  } else {
   //    return Home();
   //  }
-  return UserInputMacros();
+  return SearchDisplay();
   }
 }
   
