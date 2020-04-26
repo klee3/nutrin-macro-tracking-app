@@ -4,7 +4,8 @@ import 'package:mobileapp/model/user.dart';
 import 'package:mobileapp/screens/authenticate/authenticate.dart';
 import 'package:mobileapp/screens/authenticate/sign_in.dart';
 import 'package:mobileapp/screens/home/food_details.dart';
-import 'package:mobileapp/screens/home/search.dart';
+import 'package:mobileapp/screens/home/search/search.dart';
+import 'package:mobileapp/screens/home/search/silversearch.dart';
 import 'package:mobileapp/screens/home/user_stats.dart';
 import 'package:mobileapp/screens/home/meal_display.dart';
 import 'package:mobileapp/screens/extra/app.dart';
@@ -29,7 +30,7 @@ class Wrapper extends StatelessWidget {
   //  } else {
   //    return Home();
   //  }
-  return SearchDisplay();
+  return Sample2();
   }
 }
   
