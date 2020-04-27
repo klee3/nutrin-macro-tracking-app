@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mobileapp/screens/user%20introduction/personal_information.dart';
 
 class UserActivity extends StatefulWidget{
   @override
@@ -7,7 +9,7 @@ class UserActivity extends StatefulWidget{
 
 class _UserActivity extends State<UserActivity> {
 
-  ButtonTheme button(String hours, String white) {
+  ButtonTheme button(String hours, String white, Function func) {
     return ButtonTheme(
       minWidth: 250.0,
       child: RaisedButton(
@@ -25,7 +27,7 @@ class _UserActivity extends State<UserActivity> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20.0),
         ),
-        onPressed: (){},
+        onPressed: func,
         padding: EdgeInsets.only(left: 15.0, right: 15.0, top: 20.0, bottom: 20.0),
       ),
     );
@@ -59,15 +61,30 @@ class _UserActivity extends State<UserActivity> {
               children: <Widget>[
                 Padding(
                     padding: const EdgeInsets.only(top:20.0 ,bottom: 20.0, left: 60.0, right: 60.0),
-                    child: button("sedentary:", "0-3 hrs/week of moderate exercise")
+                    child: button("sedentary:", "0-3 hrs/week of moderate exercise", () {
+                      Navigator.push(
+                        context,
+                        CupertinoPageRoute(builder: (context) => PersonalInfo()),
+                      );
+                    },)
                 ),
                 Padding(
                     padding: const EdgeInsets.only(top:20.0 ,bottom: 20.0, left: 60.0, right: 60.0),
-                    child: button("moderate","3-5 hrs/week of moderate to intense exercise")
+                    child: button("moderate","3-5 hrs/week of moderate to intense exercise", () {
+                      Navigator.push(
+                        context,
+                        CupertinoPageRoute(builder: (context) => PersonalInfo()),
+                      );
+                    },)
                 ),
                 Padding(
                     padding: const EdgeInsets.only(top:20.0 ,bottom: 20.0, left: 60.0, right: 60.0),
-                    child: button("intense","7+ hrs/week of intense exercise")
+                    child: button("intense","7+ hrs/week of intense exercise", () {
+                      Navigator.push(
+                        context,
+                        CupertinoPageRoute(builder: (context) => PersonalInfo()),
+                      );
+                    },)
                 ),
               ],
             ),

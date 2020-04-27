@@ -33,6 +33,9 @@ dependencies:
   flutter_signin_button: ^1.0.0
   flutter_speed_dial: ^1.2.1
   folding_cell: "^0.1.0"
+  custom_switch: "0.0.1"
+  pie_chart: "3.1.1"
+
 
 
 

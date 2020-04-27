@@ -1,4 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mobileapp/screens/user%20introduction/user_activity_levels.dart';
+import 'package:mobileapp/screens/user%20introduction/user_input_macros.dart';
 
 class UserDecision extends StatefulWidget{
   @override
@@ -7,7 +10,7 @@ class UserDecision extends StatefulWidget{
 
 class _UserDecision extends State<UserDecision> {
 
-  ButtonTheme button(String hours, String white) {
+  ButtonTheme button(String hours, String white, Function function) {
     return ButtonTheme(
       minWidth: 250.0,
       child: RaisedButton(
@@ -25,7 +28,7 @@ class _UserDecision extends State<UserDecision> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20.0),
         ),
-        onPressed: (){},
+        onPressed: function,
         padding: EdgeInsets.only(left: 15.0, right: 15.0, top: 20.0, bottom: 20.0),
       ),
     );
@@ -70,11 +73,21 @@ class _UserDecision extends State<UserDecision> {
               children: <Widget>[
                 Padding(
                     padding: const EdgeInsets.only(top:20.0 ,bottom: 20.0, left: 60.0, right: 60.0),
-                    child: button("I will input", "my own macros.")
+                    child: button("I will input", "my own macros.", () {
+                    Navigator.push(
+                    context,
+                    CupertinoPageRoute(builder: (context) => UserInputMacros()),
+                    );
+                    },),
                 ),
                 Padding(
                     padding: const EdgeInsets.only(top:20.0 ,bottom: 20.0, left: 60.0, right: 60.0),
-                    child: button("I want","generated macros.")
+                    child: button("I want","generated macros.", () {
+                      Navigator.push(
+                        context,
+                        CupertinoPageRoute(builder: (context) => UserActivity()),
+                      );
+                    },),
                 ),
               ],
             ),
