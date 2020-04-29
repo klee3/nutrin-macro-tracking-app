@@ -28,7 +28,7 @@ class _MealDisplay extends State<MealDisplay> {
                       Text(
                         mealName,
                         style: TextStyle(
-                          fontFamily: 'OpenSans',
+                          fontFamily: 'Comfortaa',
 
                           fontSize: 20.0,
                           fontWeight: FontWeight.bold
@@ -42,13 +42,13 @@ class _MealDisplay extends State<MealDisplay> {
             Column(
               children: <Widget>[
                 IconButton(
-                  icon: Icon(Icons.add),
+                  icon: Icon(Icons.add_circle),
                   color: Colors.black,
                   onPressed: (){},
                 ),
-                text("Carbs"),
-                text("Protein"),
-                text("Fate"),
+                text("Carbs:"),
+                text("Protein:"),
+                text("Fat:"),
               ],
             ),
           ],
@@ -57,14 +57,14 @@ class _MealDisplay extends State<MealDisplay> {
     );
   }
 
-  Widget text(String text) {
-    return Text(
-      text + ":",
-      style: TextStyle(
-          fontFamily: 'Montserrat',
-          fontSize: 12.0,
-          fontWeight: FontWeight.w200,
-      ),
+  text(String string) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Text(
+          string,
+        style: TextStyle(fontFamily: "Comfortaa",
+            fontSize: 10,
+            fontWeight: FontWeight.w500),),
     );
   }
 
@@ -84,8 +84,8 @@ class _MealDisplay extends State<MealDisplay> {
                   color: Colors.white,
                   onPressed: (){},
                 ),
-                Text("April 25",
-                  style: TextStyle(color: Colors.white, fontFamily: "OpenSans",
+                Text(findWeekDay(new DateTime.now().weekday) + ", " + findMonth(new DateTime.now().month) + " " + new DateTime.now().day.toString(),
+                  style: TextStyle(color: Colors.white, fontFamily: "Comfortaa",
                       fontSize: 30,),
                 ),
                 IconButton(
@@ -111,12 +111,16 @@ class _MealDisplay extends State<MealDisplay> {
                   padding: EdgeInsets.only(top: 45.0),
                   child: Container(
                     height: MediaQuery.of(context).size.height - 300.0,
-                    child: ListView( children: [
-                      _buildMealItem(meals[0]),
-                      _buildMealItem(meals[1]),
-                      _buildMealItem(meals[2]),
-                      _buildMealItem(meals[3]),
-                    ],),),),
+                    child: ListView(
+                      children: ListTile.divideTiles(
+                        context: context,
+                        tiles:  [
+                          _buildMealItem(meals[0]),
+                          _buildMealItem(meals[1]),
+                          _buildMealItem(meals[2]),
+                          _buildMealItem(meals[3]),
+                        ],
+                      ).toList(),),),),
               ],
             ),
           ),
@@ -216,5 +220,36 @@ class _MealDisplay extends State<MealDisplay> {
 //        ],
 //      ),
 //    );
+  }
+
+  String findMonth(int month) {
+    switch (month) {
+      case 1: return "January";
+      case 2: return "February";
+      case 3: return "March";
+      case 4: return "April";
+      case 5: return "May";
+      case 6: return "June";
+      case 7: return "July";
+      case 8: return "August";
+      case 9: return "September";
+      case 10: return "October";
+      case 11: return "November";
+      case 12: return "December";
+    }
+    return "January";
+  }
+
+  findWeekDay(int weekday) {
+    switch (weekday) {
+      case 1: return "Sunday";
+      case 2: return "Monday";
+      case 3: return "Tuesday";
+      case 4: return "Wednesday";
+      case 5: return "Thursday";
+      case 6: return "Friday";
+      case 7: return "Saturday";
+    }
+    return "January";
   }
 }

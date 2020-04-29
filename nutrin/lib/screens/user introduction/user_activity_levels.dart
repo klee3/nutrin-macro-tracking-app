@@ -16,7 +16,7 @@ class _UserActivity extends State<UserActivity> {
         child: RichText(
           text: TextSpan(
             text: hours,
-            style: TextStyle(color: Color(0xFF119DA4), fontSize: 20, fontFamily: "OpenSans", fontWeight: FontWeight.bold),
+            style: TextStyle(color: Color(0xFF119DA4), fontSize: 20, fontFamily: "Comfortaa", fontWeight: FontWeight.bold),
             children: <TextSpan>[
               TextSpan(text: " " + white, style: TextStyle(color: Colors.white, fontWeight: FontWeight.normal),),
             ],
@@ -28,7 +28,7 @@ class _UserActivity extends State<UserActivity> {
           borderRadius: BorderRadius.circular(20.0),
         ),
         onPressed: func,
-        padding: EdgeInsets.only(left: 15.0, right: 15.0, top: 20.0, bottom: 20.0),
+        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
       ),
     );
   }
@@ -36,60 +36,63 @@ class _UserActivity extends State<UserActivity> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(left: 60.0, top: 120.0, right: 40.0),
-            child: SizedBox(
-              width: double.infinity,
-              child: Text(
-                "My exerise regime is...",
-                style: TextStyle(
-                    color: Colors.black,
-                    fontFamily: "OpenSans",
-                    fontSize: 30.0,
-                    fontWeight: FontWeight.normal,
+      body: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 100),
+        child: Column(
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(left: 60.0, top: 120.0, right: 40.0),
+              child: SizedBox(
+                width: double.infinity,
+                child: Text(
+                  "I'd describe my activity level as...",
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontFamily: "Comfortaa",
+                      fontSize: 30.0,
+                      fontWeight: FontWeight.normal,
+                  ),
+                  textAlign: TextAlign.left,
                 ),
-                textAlign: TextAlign.left,
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 15.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                Padding(
-                    padding: const EdgeInsets.only(top:20.0 ,bottom: 20.0, left: 60.0, right: 60.0),
-                    child: button("sedentary:", "0-3 hrs/week of moderate exercise", () {
-                      Navigator.push(
-                        context,
-                        CupertinoPageRoute(builder: (context) => PersonalInfo()),
-                      );
-                    },)
-                ),
-                Padding(
-                    padding: const EdgeInsets.only(top:20.0 ,bottom: 20.0, left: 60.0, right: 60.0),
-                    child: button("moderate","3-5 hrs/week of moderate to intense exercise", () {
-                      Navigator.push(
-                        context,
-                        CupertinoPageRoute(builder: (context) => PersonalInfo()),
-                      );
-                    },)
-                ),
-                Padding(
-                    padding: const EdgeInsets.only(top:20.0 ,bottom: 20.0, left: 60.0, right: 60.0),
-                    child: button("intense","7+ hrs/week of intense exercise", () {
-                      Navigator.push(
-                        context,
-                        CupertinoPageRoute(builder: (context) => PersonalInfo()),
-                      );
-                    },)
-                ),
-              ],
+            Padding(
+              padding: const EdgeInsets.only(top: 15.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Padding(
+                      padding: const EdgeInsets.only(top:20.0 ,bottom: 20.0, left: 60.0, right: 60.0),
+                      child: button("sedentary:", "0-3 hrs/week of moderate exercise", () {
+                        Navigator.push(
+                          context,
+                          CupertinoPageRoute(builder: (context) => PersonalInfo()),
+                        );
+                      },)
+                  ),
+                  Padding(
+                      padding: const EdgeInsets.only(top:20.0 ,bottom: 20.0, left: 60.0, right: 60.0),
+                      child: button("moderate","3-5 hrs/week of moderate to intense exercise", () {
+                        Navigator.push(
+                          context,
+                          CupertinoPageRoute(builder: (context) => PersonalInfo()),
+                        );
+                      },)
+                  ),
+                  Padding(
+                      padding: const EdgeInsets.only(top:20.0 ,bottom: 20.0, left: 60.0, right: 60.0),
+                      child: button("intense","7+ hrs/week of intense exercise", () {
+                        Navigator.push(
+                          context,
+                          CupertinoPageRoute(builder: (context) => PersonalInfo()),
+                        );
+                      },)
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

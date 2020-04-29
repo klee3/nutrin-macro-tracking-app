@@ -1,5 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mobileapp/screens/home/app.dart';
+import 'package:mobileapp/screens/home/settings.dart';
+import 'package:mobileapp/screens/user%20introduction/new_sign_up_decision.dart';
+import 'package:mobileapp/screens/user%20introduction/user_activity_levels.dart';
 import 'package:pie_chart/pie_chart.dart';
 
 class UserInputMacros extends StatefulWidget{
@@ -125,7 +129,23 @@ class _UserInputMacros extends State<UserInputMacros> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                PieChart(dataMap: input ? defaultMap:createNewMap()),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    IconButton(
+                      icon: Icon(Icons.arrow_back_ios, color: Colors.black,),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => UserDecision()),
+                        );
+                        },),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width / 2,
+                    ),
+                  ],
+                ),
+                PieChart(dataMap: createNewMap()),
                 Padding(
                   padding: const EdgeInsets.only(left: 70.0),
                   child: Row(
@@ -188,7 +208,10 @@ class _UserInputMacros extends State<UserInputMacros> {
                     ),
                     IconButton(
                       onPressed: () {
-                        input = true;
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => App()),
+                        );
                       },
                       icon: Icon(Icons.check_circle, size: 30, color: Color(0xFF19647E)),
                       highlightColor: Colors.blueAccent,
@@ -205,7 +228,7 @@ class _UserInputMacros extends State<UserInputMacros> {
 
   Map createNewMap() {
     Map<String, double>  dataMap = new Map();
-    dataMap.putIfAbsent("Carbs", () => 10);
+    dataMap.putIfAbsent("Carbs", () => 50);
     dataMap.putIfAbsent("Protein", () => 15);
     dataMap.putIfAbsent("Fat", () => 14);
     return dataMap;

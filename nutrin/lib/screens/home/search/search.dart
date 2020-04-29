@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mobileapp/screens/extra/app.dart';
+import 'package:mobileapp/screens/home/app.dart';
 import 'package:mobileapp/screens/home/search/results.dart';
 
 class SearchDisplay extends StatefulWidget {

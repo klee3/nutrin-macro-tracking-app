@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mobileapp/screens/home/settings.dart';
 import 'package:mobileapp/screens/home/user_stats.dart';
-import '../home/meal_display.dart';
+import 'meal_display.dart';
 
 class App extends StatefulWidget {
   @override
@@ -14,7 +14,7 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   int _selectedPage = 0;
-  final _pageOptions = [MealDisplay(), StatsDisplay(), Settings()];
+  final _pageOptions = [MealDisplay(), StatsDisplay(), Home()];
 
   @override
   Widget build(BuildContext context) {
