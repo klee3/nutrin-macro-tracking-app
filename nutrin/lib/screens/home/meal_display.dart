@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mobileapp/model/tracked_food.dart';
+import 'package:mobileapp/screens/home/search/search.dart';
+import 'package:mobileapp/screens/home/search/silversearch.dart';
 
 
 class MealDisplay extends StatefulWidget {
@@ -9,10 +12,15 @@ class MealDisplay extends StatefulWidget {
 
 class _MealDisplay extends State<MealDisplay> {
   List<String> meals = ["Breakfast", "Lunch", "Dinner", "Snacks"];
+  List<TrackedFood> foods = [
+    TrackedFood("Egg Whites", 95, 22.2, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 317.5, 0.0, 0.0, 200.0, "g(s)",),
+    TrackedFood("Dark Chocolate", 95, 3, 0.4, 2.3, 2.6, 0.0, 0.6, 1.1, 0.0, 0.4, 0.0, 0.0, 1.0, "piece",),
+    TrackedFood("Sourdough Bread", 100, 3.0, 20.0, 1.0, 0.0, 1.0, 0.0, 6.0, 0.0, 10.0, 0.0, 0.0, 1.0, "slice",),
+  ];
 
-  Widget _buildMealItem(String mealName) {
+  Widget _buildMeal(String mealName, List<TrackedFood> foodList) {
     return Padding(
-      padding: EdgeInsets.only(left: 10.0, right: 10.0, top: 10.0),
+      padding: EdgeInsets.only(top: 10.0),
       child: InkWell(
         onTap: () {},
         child: Row(
@@ -28,10 +36,21 @@ class _MealDisplay extends State<MealDisplay> {
                       Text(
                         mealName,
                         style: TextStyle(
-                          fontFamily: 'Comfortaa',
-
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.bold
+                            fontFamily: 'Comfortaa',
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold
+                        ),
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width * .6,
+                        height: MediaQuery.of(context).size.width / 2,
+                        child: ListView.separated(
+                          itemCount: foods.length,
+                          itemBuilder: (context, index) {
+                            return foodTile(foods[index]);
+                          }, separatorBuilder: (BuildContext context, int index) {
+                          return Divider();
+                        },
                         ),
                       ),
                     ],
@@ -39,23 +58,94 @@ class _MealDisplay extends State<MealDisplay> {
                 ],
               ),
             ),
-            Column(
-              children: <Widget>[
-                IconButton(
-                  icon: Icon(Icons.add_circle),
-                  color: Colors.black,
-                  onPressed: (){},
-                ),
-                text("Carbs:"),
-                text("Protein:"),
-                text("Fat:"),
-              ],
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  IconButton(
+                    icon: Icon(Icons.add_circle, size: 35,),
+                    color: Colors.black,
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Sample2()),
+                      );
+                    },
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height / 8,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      text("Carbs: " + calculateMacros(foodList, "carbohydrate")),
+                      text("Protein: " + calculateMacros(foodList, "protein")),
+                      text("Fat: " + calculateMacros(foodList, "fat")),],
+                  ),
+                ],
+              ),
             ),
           ],
         ),
       ),
     );
   }
+
+  Widget foodTile(TrackedFood food) {
+    return ListTile(
+      title: Title(
+        child: Container(
+          width: MediaQuery.of(context).size.width * .6,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Column(
+                crossAxisAlignment:  CrossAxisAlignment.start,
+                children: <Widget>[
+                  SizedBox(
+                    width: 200,
+                    child: Text(food.name , style: TextStyle(
+                        fontFamily: "Comfortaa", fontSize: 15),),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Text(food.toMap().containsKey("serving") ? food.toMap()["serving"].toString() : '1', style: TextStyle(
+                          fontFamily: "Comfortaa",
+                          color: Colors.grey,
+                          fontSize: 10.0,
+                          fontWeight: FontWeight.w100),),
+                      Text(food.toMap().containsKey("unit") ? " " + food.toMap()["unit"] : ' serving', style: TextStyle(
+                          fontFamily: "Comfortaa",
+                          color: Colors.grey,
+                          fontSize: 10.0,
+                          fontWeight: FontWeight.w100),),
+                    ],
+                  ),
+//                Text(food.toMap().keys.firstWhere((k) => k == "serving", orElse: () => '1')),
+//                Text(food.toMap().keys.firstWhere((k) => k == "unit", orElse: () => 'serving')),
+                ],
+              ),
+              Column(
+                crossAxisAlignment:  CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(food.toMap().containsKey("carbohydrates") ? "C: " + food.toMap()["carbohydrates"].toString() + " g" : 'C: 0.0 g',
+                  style: TextStyle(fontFamily: "Comfortaa", fontSize: 10),),
+                  Text(food.toMap().containsKey("protein") ? "P: " + food.toMap()["protein"].toString() + " g" : 'P: 0.0 g',
+                    style: TextStyle(fontFamily: "Comfortaa", fontSize: 10),),
+                  Text(food.toMap().containsKey("fat") ? "F: " + food.toMap()["fat"].toString() + " g" : 'F: 0.0 g',
+                    style: TextStyle(fontFamily: "Comfortaa", fontSize: 10),),
+                ],
+              ),
+            ],
+          ),
+        ),
+        color: Colors.black,),
+    );
+  }
+
+
 
   text(String string) {
     return Padding(
@@ -86,7 +176,7 @@ class _MealDisplay extends State<MealDisplay> {
                 ),
                 Text(findWeekDay(new DateTime.now().weekday) + ", " + findMonth(new DateTime.now().month) + " " + new DateTime.now().day.toString(),
                   style: TextStyle(color: Colors.white, fontFamily: "Comfortaa",
-                      fontSize: 30,),
+                      fontSize: 25,),
                 ),
                 IconButton(
                   icon: Icon(Icons.arrow_forward_ios),
@@ -115,10 +205,10 @@ class _MealDisplay extends State<MealDisplay> {
                       children: ListTile.divideTiles(
                         context: context,
                         tiles:  [
-                          _buildMealItem(meals[0]),
-                          _buildMealItem(meals[1]),
-                          _buildMealItem(meals[2]),
-                          _buildMealItem(meals[3]),
+                          _buildMeal(meals[0], foods),
+                          _buildMeal(meals[1], foods),
+                          _buildMeal(meals[2], foods),
+                          _buildMeal(meals[3], foods),
                         ],
                       ).toList(),),),),
               ],
@@ -251,5 +341,13 @@ class _MealDisplay extends State<MealDisplay> {
       case 7: return "Saturday";
     }
     return "January";
+  }
+
+  String calculateMacros(List<TrackedFood> foods, String s) {
+    double macro = 0;
+    for (TrackedFood tf in foods) {
+      macro += tf.toMap().containsKey(s) ? tf.toMap()[s] : 0;
+    }
+    return macro.toString() + " g";
   }
 }

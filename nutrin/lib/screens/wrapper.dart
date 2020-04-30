@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobileapp/model/user.dart';
+import 'package:mobileapp/screens/home/app.dart';
 import 'package:mobileapp/screens/home/test_meal_display.dart';
 import 'package:mobileapp/screens/user%20introduction/graph.dart';
 import 'package:mobileapp/screens/user%20introduction/veggies.dart';
@@ -16,7 +17,7 @@ class Wrapper extends StatelessWidget {
   //  } else {
   //    return Home();
   //  }
-  return TestMeal();
+  return App();
   }
 }
   

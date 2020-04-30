@@ -92,7 +92,9 @@ class DatabaseService {
                         foodJson['potassium'].toDouble(),
                         foodJson['sodium'].toDouble(),
                         foodJson['vitaminA'].toDouble(),
-                        foodJson['vitaminC'].toDouble()))
+                        foodJson['vitaminC'].toDouble(),
+                        foodJson['serving'].toDouble(),
+                        foodJson['unit'].toString()))
                     .toList()))
             .toList());
   }
