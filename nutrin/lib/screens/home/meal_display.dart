@@ -2,8 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mobileapp/model/meal.dart';
 import 'package:mobileapp/model/tracked_food.dart';
-import 'package:pie_chart/pie_chart.dart';
-
+import 'package:fl_chart/fl_chart.dart';
 
 class MealDisplay extends StatefulWidget {
   @override
@@ -31,6 +30,12 @@ class _MealDisplay extends State<MealDisplay> {
     TrackedFood("Egg Whites", 95, 22.2, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 317.5, 0.0, 0.0, 200.0, "g(s)",),
     TrackedFood("Dark Chocolate", 95, 3, 0.4, 2.3, 2.6, 0.0, 0.6, 1.1, 0.0, 0.4, 0.0, 0.0, 1.0, "piece",),
   ];
+
+  static PieChartSectionData eaten = PieChartSectionData(color: Colors.blue, value: 1200);
+  static PieChartSectionData remaining = PieChartSectionData(color: Colors.lightBlueAccent, value: 600);
+
+  List<PieChartSectionData> data = [eaten, remaining];
+
   
   Widget foodTiles(List<TrackedFood> foods) {
     return Row(
@@ -161,11 +166,21 @@ class _MealDisplay extends State<MealDisplay> {
                   height: 250.0,
                   child:
                   Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
-                      Text("1200"),
+                      Text('1123', style: TextStyle(fontFamily: "Comfortaa", color: Colors.white, fontSize: 50, fontWeight: FontWeight.bold),),
+//                      Container(
+//                        height: 100,
+//                        width: 100,
+//                        child: PieChart(
+//                          PieChartData(sections: data),
+//                        ),
+//                      ),
+                    SizedBox(
+                      height: 40,
+                    ),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
                       macroDisplay(meals, "carbohydrates"),
                       macroDisplay(meals, "protein"),
@@ -304,8 +319,8 @@ class _MealDisplay extends State<MealDisplay> {
   macroDisplay(List<Meal> meals, String s) {
     return Column(
       children: <Widget>[
-        Text(s),
-        Text(calculateTotal(meals, s).toStringAsFixed(2)),
+        Text(s.toUpperCase(), style: TextStyle(fontFamily: "Comfortaa", color: Colors.white, fontSize: 20, fontWeight: FontWeight.w500),),
+        Text(calculateTotal(meals, s).toStringAsFixed(2), style: TextStyle(fontFamily: "Comfortaa", color: Colors.white, fontSize: 15,),),
       ],
     );
   }
