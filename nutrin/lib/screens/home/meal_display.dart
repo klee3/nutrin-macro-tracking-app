@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mobileapp/model/meal.dart';
 import 'package:mobileapp/model/tracked_food.dart';
-import 'package:mobileapp/screens/home/search/search.dart';
-import 'package:mobileapp/screens/home/search/silversearch.dart';
+import 'package:pie_chart/pie_chart.dart';
 
 
 class MealDisplay extends StatefulWidget {
@@ -11,11 +11,14 @@ class MealDisplay extends StatefulWidget {
 }
 
 class _MealDisplay extends State<MealDisplay> {
-  List<String> meals = ["Breakfast", "Lunch", "Dinner", "Snacks"];
-  List<List<TrackedFood>> foods = [breakfast, lunch, dinner, snack];
+  List<Meal> meals = [
+    Meal("Breakfast", breakfast,),
+    Meal("Lunch", lunch,),
+    Meal("Dinner", dinner,),
+    Meal("Snacks", snack,)];
   static List<TrackedFood> breakfast = [
     TrackedFood("Egg Whites", 95, 22.2, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 317.5, 0.0, 0.0, 200.0, "g(s)",),
-    TrackedFood("Dark Chocolate", 95, 3, 0.4, 2.3, 2.6, 0.0, 0.6, 1.1, 0.0, 0.4, 0.0, 0.0, 1.0, "piece",),
+    TrackedFood("Dark Chocolate", 30, 3, 0.4, 2.3, 2.6, 0.0, 0.6, 1.1, 0.0, 0.4, 0.0, 0.0, 1.0, "piece",),
     TrackedFood("Sourdough Bread", 100, 3.0, 20.0, 1.0, 0.0, 1.0, 0.0, 6.0, 0.0, 10.0, 0.0, 0.0, 1.0, "slice",),
   ];
   static List<TrackedFood> lunch = [
@@ -28,158 +31,87 @@ class _MealDisplay extends State<MealDisplay> {
     TrackedFood("Egg Whites", 95, 22.2, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 317.5, 0.0, 0.0, 200.0, "g(s)",),
     TrackedFood("Dark Chocolate", 95, 3, 0.4, 2.3, 2.6, 0.0, 0.6, 1.1, 0.0, 0.4, 0.0, 0.0, 1.0, "piece",),
   ];
-
-  Widget _buildMeal(String mealName, List<TrackedFood> foodList) {
-    return ListTile(
-      title: Text(mealName, style: TextStyle(fontSize: 20.0, fontFamily: "Comfortaa",),),
-//      chldren: <Widget>[
-//        ListView.builder(
-//          itemCount: foodList.length,
-//          itemBuilder: (context, i) {
-//            return foodTile(foodList[i]);
-//          },),
-//      ],
-    );
-//    return InkWell(
-//        onTap: () {},
-//        child: Row(
-//          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//          children: <Widget>[
-//            Container(
-//              child: Row(
-//                children: [
-//                  SizedBox(width: 10.0,),
-//                  Column(
-//                    crossAxisAlignment: CrossAxisAlignment.start,
-//                    children: <Widget>[
-//                      Text(
-//                        mealName,
-//                        style: TextStyle(
-//                            fontFamily: 'Comfortaa',
-//                            fontSize: 20.0,
-//                            fontWeight: FontWeight.bold
-//                        ),
-//                      ),
-//                      Container(
-//                        width: MediaQuery.of(context).size.width * .6,
-//                        height: MediaQuery.of(context).size.height / 4,
-//                        child: ListView.separated(
-//                          itemCount: foodList.length,
-//                          itemBuilder: (context, index) {
-//                            return foodList.length == 0 ? IconButton(icon: Icon(Icons.add_circle, color: Colors.black,), onPressed: (){},) : foodTile(foods[index]);
-//                          }, separatorBuilder: (BuildContext context, int index) {
-//                          return Divider();
-//                        },
-//                        ),
-//                      ),
-//                    ],
-//                  ),
-//                ],
-//              ),
-//            ),
-//            Padding(
-//              padding: const EdgeInsets.only(bottom: 8.0),
-//              child: Column(
-//                crossAxisAlignment: CrossAxisAlignment.center,
-//                children: <Widget>[
-//                  IconButton(
-//                    icon: Icon(Icons.add_circle, size: 35,),
-//                    color: Colors.black,
-//                    onPressed: () {
-//                      Navigator.push(
-//                        context,
-//                        MaterialPageRoute(builder: (context) => Sample2()),
-//                      );
-//                    },
-//                  ),
-//                  SizedBox(
-//                    height: MediaQuery.of(context).size.height / 8,
-//                  ),
-//                  Column(
-//                    crossAxisAlignment: CrossAxisAlignment.start,
-//                    children: <Widget>[
-//                      text("Carbs: " + calculateMacros(foodList, "carbohydrate")),
-//                      text("Protein: " + calculateMacros(foodList, "protein")),
-//                      text("Fat: " + calculateMacros(foodList, "fat")),],
-//                  ),
-//                ],
-//              ),
-//            ),
-//          ],
-//        ),
-//      );
-  }
-
+  
   Widget foodTiles(List<TrackedFood> foods) {
-    return Padding(
-      padding: const EdgeInsets.only(right: 100.0),
-      child: ListView.builder(
-        shrinkWrap: true,
-          itemCount: foods.length,
-          itemBuilder: (context, i) {
-          return Column(
-            children: <Widget>[
-              foodTile(foods[i]),
-            ],
-          );
-      }),
+    return Row(
+      children: <Widget>[
+        Expanded(
+          child: ListView.separated(
+            separatorBuilder: (context, index) => Divider(
+              color: Colors.grey,
+            ),
+            shrinkWrap: true,
+              itemCount: foods.length,
+              itemBuilder: (context, i) {
+              return Column(
+                children: <Widget>[
+                  foodTile(foods[i]),
+                ],
+              );
+          }),
+        ),
+      ],
     );
   }
 
   Widget foodTile(TrackedFood food) {
-    return ListTile(
-      title: Title(
-        child: Container(
-          width: MediaQuery.of(context).size.width * .6,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              SizedBox(
-                width: 150,
-                child: Column(
+    return InkWell(
+      onTap: (){},
+      onDoubleTap: (){},
+      child: ListTile(
+        title: Title(
+          child: Container(
+            width: MediaQuery.of(context).size.width * .6,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                SizedBox(
+                  width: 150,
+                  child: Column(
+                    crossAxisAlignment:  CrossAxisAlignment.start,
+                    children: <Widget>[
+                      SizedBox(
+                        width: 150,
+                        child: Text(food.name , style: TextStyle(
+                            fontFamily: "Comfortaa", fontSize: 15),),
+                      ),
+                      Container(
+                        width: 50,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            Text(food.toMap().containsKey("serving") ? food.toMap()["serving"].toString() : '1', style: TextStyle(
+                                fontFamily: "Comfortaa",
+                                color: Colors.grey,
+                                fontSize: 10.0,
+                                fontWeight: FontWeight.w100),),
+                            Text(food.toMap().containsKey("unit") ? " " + food.toMap()["unit"] : ' serving', style: TextStyle(
+                                fontFamily: "Comfortaa",
+                                color: Colors.grey,
+                                fontSize: 10.0,
+                                fontWeight: FontWeight.w100),),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Column(
                   crossAxisAlignment:  CrossAxisAlignment.start,
                   children: <Widget>[
-                    SizedBox(
-                      width: 150,
-                      child: Text(food.name , style: TextStyle(
-                          fontFamily: "Comfortaa", fontSize: 15),),
-                    ),
-                    Container(
-                      width: 50,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          Text(food.toMap().containsKey("serving") ? food.toMap()["serving"].toString() : '1', style: TextStyle(
-                              fontFamily: "Comfortaa",
-                              color: Colors.grey,
-                              fontSize: 10.0,
-                              fontWeight: FontWeight.w100),),
-                          Text(food.toMap().containsKey("unit") ? " " + food.toMap()["unit"] : ' serving', style: TextStyle(
-                              fontFamily: "Comfortaa",
-                              color: Colors.grey,
-                              fontSize: 10.0,
-                              fontWeight: FontWeight.w100),),
-                        ],
-                      ),
-                    ),
+                    Text(food.toMap().containsKey("carbohydrates") ? "C: " + food.toMap()["carbohydrates"].toString() + " g" : 'C: 0.0 g',
+                    style: TextStyle(fontFamily: "Comfortaa", fontSize: 10),),
+                    Text(food.toMap().containsKey("protein") ? "P: " + food.toMap()["protein"].toString() + " g" : 'P: 0.0 g',
+                      style: TextStyle(fontFamily: "Comfortaa", fontSize: 10),),
+                    Text(food.toMap().containsKey("fat") ? "F: " + food.toMap()["fat"].toString() + " g" : 'F: 0.0 g',
+                      style: TextStyle(fontFamily: "Comfortaa", fontSize: 10),),
                   ],
                 ),
-              ),
-              Column(
-                crossAxisAlignment:  CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(food.toMap().containsKey("carbohydrates") ? "C: " + food.toMap()["carbohydrates"].toString() + " g" : 'C: 0.0 g',
-                  style: TextStyle(fontFamily: "Comfortaa", fontSize: 10),),
-                  Text(food.toMap().containsKey("protein") ? "P: " + food.toMap()["protein"].toString() + " g" : 'P: 0.0 g',
-                    style: TextStyle(fontFamily: "Comfortaa", fontSize: 10),),
-                  Text(food.toMap().containsKey("fat") ? "F: " + food.toMap()["fat"].toString() + " g" : 'F: 0.0 g',
-                    style: TextStyle(fontFamily: "Comfortaa", fontSize: 10),),
-                ],
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-        color: Colors.black,),
+          color: Colors.black,),
+      ),
     );
   }
 
@@ -225,11 +157,28 @@ class _MealDisplay extends State<MealDisplay> {
                     ],
                   ),
                 ),
-                SizedBox(height: 40.0,),
+                SizedBox(
+                  height: 250.0,
+                  child:
+                  Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text("1200"),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      macroDisplay(meals, "carbohydrates"),
+                      macroDisplay(meals, "protein"),
+                      macroDisplay(meals, "fat"),
+                    ],
+                    ),
+                    ],
+                  ),
+                ),
                 Container(
-                  height: MediaQuery.of(context).size.height - 185.0,
+                  height: MediaQuery.of(context).size.height - 400,
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Color(0xFFF9F9F9),
                     borderRadius: BorderRadius.only(topLeft: Radius.circular(75.0)),
                   ),
                   child: ListView(
@@ -239,29 +188,63 @@ class _MealDisplay extends State<MealDisplay> {
                       Padding(
                         padding: EdgeInsets.only(top: 45.0),
                         child: Container(
-                          height: MediaQuery.of(context).size.height - 250.0,
-                          child:
-                              ListView.builder(
+                          height: MediaQuery.of(context).size.height - 450.0,
+                          child: ListView.builder(
+//                            separatorBuilder: (context, index) => Divider(
+//                              color: Color(0xFF21BFBD),
+//                            ),
                                 shrinkWrap: true,
                                 itemCount: 4,
                                 itemBuilder: (context, i) {
                                 return Row(
                                   children: <Widget>[
                                     Expanded(
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: <Widget>[
-                                          Text(meals[i], style: TextStyle(fontSize: 30.0, fontFamily: "Comfortaa"),),
-                                          ListView.builder(
-                                            shrinkWrap: true,
-                                            itemCount: 1,
-                                              itemBuilder: (context, index) {
-                                                return foodTiles(foods[i]);
-                                          }),
-                                        ],
+                                      child: Card(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(15.0),
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 8),
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: <Widget>[
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                children: <Widget>[
+                                                  Column(
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: <Widget>[
+                                                      Text(meals[i].mealName, style: TextStyle(fontSize: 30.0, fontFamily: "Comfortaa"),),
+                                                      Container(
+                                                        width: MediaQuery.of(context).size.width / 2 + 80,
+                                                        child: Row(
+                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                          children: <Widget>[
+                                                            Text("C: " + meals[i].calculateCarbs().toString() + " g", style: TextStyle(fontSize: 10.0, fontFamily: "Comfortaa"),),
+                                                            Text("P: " + meals[i].calculateProtein().toString() + " g", style: TextStyle(fontSize: 10.0, fontFamily: "Comfortaa"),),
+                                                            Text("F: "  + meals[i].calculateFat().toString() + " g", style: TextStyle(fontSize: 10.0, fontFamily: "Comfortaa"),),
+                                                            Text("Calories: " + meals[i].calculateCalories().toStringAsFixed(2), style: TextStyle(fontSize: 10.0, fontFamily: "Comfortaa"),),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  IconButton(
+                                                    onPressed: () {}, icon: Icon(Icons.add_circle, color: Color(0xFF21BFBD), size: 40,),
+                                                  ),
+                                                ],
+                                              ),
+                                              ListView.builder(
+                                                shrinkWrap: true,
+                                                itemCount: 1,
+                                                  itemBuilder: (context, index) {
+                                                    return foodTiles(meals[i].foods);
+                                              }),
+                                            ],
+                                          ),
+                                        ),
                                       ),
                                     ),
-                                    Text("yah"),
                                   ],
                                 );
                                 },
@@ -316,5 +299,49 @@ class _MealDisplay extends State<MealDisplay> {
       macro += tf.toMap().containsKey(s) ? tf.toMap()[s] : 0;
     }
     return macro.toString() + " g";
+  }
+
+  macroDisplay(List<Meal> meals, String s) {
+    return Column(
+      children: <Widget>[
+        Text(s),
+        Text(calculateTotal(meals, s).toStringAsFixed(2)),
+      ],
+    );
+  }
+
+  double calculateTotal(List<Meal> meals, String s) {
+    switch (s) {
+      case "carbohydrates": return calculateTotalCarbs(meals);
+      break;
+      case "protein": return calculateTotalProtein(meals);
+      break;
+      case "fat": return calculateTotalFat(meals);
+      break;
+    }
+  }
+
+  double calculateTotalCarbs(List<Meal> meals) {
+    double carbs = 0;
+    for (Meal meal in meals) {
+      carbs += meal.calculateCarbs();
+    }
+    return carbs;
+  }
+
+  double calculateTotalProtein(List<Meal> meals) {
+    double protein = 0;
+    for (Meal meal in meals) {
+      protein += meal.calculateProtein();
+    }
+    return protein;
+  }
+
+  double calculateTotalFat(List<Meal> meals) {
+    double fat = 0;
+    for (Meal meal in meals) {
+      fat += meal.calculateFat();
+    }
+    return fat;
   }
 }

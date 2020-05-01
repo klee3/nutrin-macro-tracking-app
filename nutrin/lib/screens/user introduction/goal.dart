@@ -1,14 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mobileapp/screens/user%20introduction/goal.dart';
 import 'package:mobileapp/screens/user%20introduction/personal_information.dart';
 
-class UserActivity extends StatefulWidget{
+class UserGoal extends StatefulWidget{
   @override
-  _UserActivity createState() => _UserActivity();
+  _UserGoal createState() => _UserGoal();
 }
 
-class _UserActivity extends State<UserActivity> {
+class _UserGoal extends State<UserGoal> {
 
   ButtonTheme button(String hours, String white, Function func) {
     return ButtonTheme(
@@ -46,12 +45,12 @@ class _UserActivity extends State<UserActivity> {
               child: SizedBox(
                 width: double.infinity,
                 child: Text(
-                  "I'd describe my activity level as...",
+                  "I want to...",
                   style: TextStyle(
-                      color: Colors.black,
-                      fontFamily: "Comfortaa",
-                      fontSize: 30.0,
-                      fontWeight: FontWeight.normal,
+                    color: Colors.black,
+                    fontFamily: "Comfortaa",
+                    fontSize: 30.0,
+                    fontWeight: FontWeight.normal,
                   ),
                   textAlign: TextAlign.left,
                 ),
@@ -64,28 +63,28 @@ class _UserActivity extends State<UserActivity> {
                 children: <Widget>[
                   Padding(
                       padding: const EdgeInsets.only(top:20.0 ,bottom: 20.0, left: 60.0, right: 60.0),
-                      child: button("sedentary:", "0-3 hrs/week of moderate exercise", () {
+                      child: button("lose", "fat", () {
                         Navigator.push(
                           context,
-                          CupertinoPageRoute(builder: (context) => UserGoal()),
+                          CupertinoPageRoute(builder: (context) => PersonalInfo()),
                         );
                       },)
                   ),
                   Padding(
                       padding: const EdgeInsets.only(top:20.0 ,bottom: 20.0, left: 60.0, right: 60.0),
-                      child: button("moderate","3-5 hrs/week of moderate to intense exercise", () {
+                      child: button("maintain","my weight", () {
                         Navigator.push(
                           context,
-                          CupertinoPageRoute(builder: (context) => UserGoal()),
+                          CupertinoPageRoute(builder: (context) => PersonalInfo()),
                         );
                       },)
                   ),
                   Padding(
                       padding: const EdgeInsets.only(top:20.0 ,bottom: 20.0, left: 60.0, right: 60.0),
-                      child: button("intense","7+ hrs/week of intense exercise", () {
+                      child: button("gain", "muscle", () {
                         Navigator.push(
                           context,
-                          CupertinoPageRoute(builder: (context) => UserGoal()),
+                          CupertinoPageRoute(builder: (context) => PersonalInfo()),
                         );
                       },)
                   ),
