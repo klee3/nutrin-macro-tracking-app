@@ -6,18 +6,19 @@ class MacroDonut extends StatefulWidget {
   final int protein;
   final int fat;
 
-  const MacroDonut({Key key, @required this.carbs, this.protein, this.fat}) : super(key: key);
+  MacroDonut({Key key, @required this.carbs, this.protein, this.fat}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => PieChart2State();
+  State<StatefulWidget> createState() => PieChart2State(carbs: carbs, protein: protein, fat: fat);
 }
 
 class PieChart2State extends State {
+  final int carbs;
+  final int protein;
+  final int fat;
   int touchedIndex;
 
-  get carbs => carbs;
-  get protein => protein;
-  get fat => fat;
+  PieChart2State({Key key, @required this.carbs, this.protein, this.fat});
 
   @override
   Widget build(BuildContext context) {
