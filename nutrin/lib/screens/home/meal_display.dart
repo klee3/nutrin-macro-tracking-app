@@ -2,7 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mobileapp/model/meal.dart';
 import 'package:mobileapp/model/tracked_food.dart';
-import 'package:fl_chart/fl_chart.dart';
+import 'package:mobileapp/screens/home/donut.dart';
+import 'package:mobileapp/screens/home/food_details.dart';
+import 'package:mobileapp/screens/home/search/search.dart';
+import 'package:mobileapp/screens/home/search/silversearch.dart';
+import 'package:pie_chart/pie_chart.dart';
+import 'package:charts_flutter/flutter.dart' as charts;
 
 class MealDisplay extends StatefulWidget {
   @override
@@ -31,12 +36,6 @@ class _MealDisplay extends State<MealDisplay> {
     TrackedFood("Dark Chocolate", 95, 3, 0.4, 2.3, 2.6, 0.0, 0.6, 1.1, 0.0, 0.4, 0.0, 0.0, 1.0, "piece",),
   ];
 
-  static PieChartSectionData eaten = PieChartSectionData(color: Colors.blue, value: 1200);
-  static PieChartSectionData remaining = PieChartSectionData(color: Colors.lightBlueAccent, value: 600);
-
-  List<PieChartSectionData> data = [eaten, remaining];
-
-  
   Widget foodTiles(List<TrackedFood> foods) {
     return Row(
       children: <Widget>[
@@ -61,7 +60,12 @@ class _MealDisplay extends State<MealDisplay> {
 
   Widget foodTile(TrackedFood food) {
     return InkWell(
-      onTap: (){},
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => DetailsPage(trackedFood: food,)),
+        );
+      },
       onDoubleTap: (){},
       child: ListTile(
         title: Title(
@@ -148,7 +152,12 @@ class _MealDisplay extends State<MealDisplay> {
                       IconButton(
                         icon: Icon(Icons.arrow_back_ios),
                         color: Colors.white,
-                        onPressed: (){},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => CaloriesDonut()),
+                          );
+                        },
                       ),
                       Text(findWeekDay(new DateTime.now().weekday) + ", " + findMonth(new DateTime.now().month) + " " + new DateTime.now().day.toString(),
                         style: TextStyle(color: Colors.white, fontFamily: "Comfortaa",
@@ -168,7 +177,23 @@ class _MealDisplay extends State<MealDisplay> {
                   Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
-                      Text('1123', style: TextStyle(fontFamily: "Comfortaa", color: Colors.white, fontSize: 50, fontWeight: FontWeight.bold),),
+                      Container(
+                        height: 150,
+                        width: 150,
+                        child: CaloriesDonut(),
+//                        PieChart(
+//                            dataMap: createNewMap(),
+//                        showChartValues: false,
+//                        chartType: ChartType.ring,
+//                        chartRadius: 100,
+//                        showChartValuesInPercentage: false,
+//                        showChartValuesOutside: false,
+//                        showLegends: false,
+//                          chartValueStyle: defaultChartValueStyle.copyWith(
+//                            color: Colors.white,
+//                            fontFamily: "Comfortaa"
+//                          ),),
+                      ),
 //                      Container(
 //                        height: 100,
 //                        width: 100,
@@ -176,17 +201,17 @@ class _MealDisplay extends State<MealDisplay> {
 //                          PieChartData(sections: data),
 //                        ),
 //                      ),
-                    SizedBox(
-                      height: 40,
-                    ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
-                      macroDisplay(meals, "carbohydrates"),
-                      macroDisplay(meals, "protein"),
-                      macroDisplay(meals, "fat"),
+                        macroDisplay(meals, "carbohydrates"),
+                        macroDisplay(meals, "protein"),
+                        macroDisplay(meals, "fat"),
                     ],
                     ),
+                      ),
                     ],
                   ),
                 ),
@@ -245,7 +270,13 @@ class _MealDisplay extends State<MealDisplay> {
                                                     ],
                                                   ),
                                                   IconButton(
-                                                    onPressed: () {}, icon: Icon(Icons.add_circle, color: Color(0xFF21BFBD), size: 40,),
+                                                    onPressed: () {
+                                                      Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(builder: (context) => SearchDisplay()),
+                                                      );
+                                                    },
+                                                    icon: Icon(Icons.add_circle, color: Color(0xFF21BFBD), size: 40,),
                                                   ),
                                                 ],
                                               ),
@@ -319,7 +350,7 @@ class _MealDisplay extends State<MealDisplay> {
   macroDisplay(List<Meal> meals, String s) {
     return Column(
       children: <Widget>[
-        Text(s.toUpperCase(), style: TextStyle(fontFamily: "Comfortaa", color: Colors.white, fontSize: 20, fontWeight: FontWeight.w500),),
+        Text(s.toUpperCase().substring(0,1), style: TextStyle(fontFamily: "Comfortaa", color: Colors.white, fontSize: 20, fontWeight: FontWeight.w500),),
         Text(calculateTotal(meals, s).toStringAsFixed(2), style: TextStyle(fontFamily: "Comfortaa", color: Colors.white, fontSize: 15,),),
       ],
     );
@@ -358,5 +389,12 @@ class _MealDisplay extends State<MealDisplay> {
       fat += meal.calculateFat();
     }
     return fat;
+  }
+
+  Map createNewMap() {
+    Map<String, double>  dataMap = new Map();
+    dataMap.putIfAbsent("Eaten", () => 876);
+    dataMap.putIfAbsent("Remaining", () => 234);
+    return dataMap;
   }
 }

@@ -19,7 +19,7 @@ class _PersonalInfo extends State<PersonalInfo> {
 
 
   Widget inputField() {
-    return   Padding(
+    return  Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
         width: MediaQuery.of(context).size.width / 6,
