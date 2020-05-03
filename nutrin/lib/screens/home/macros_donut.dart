@@ -1,24 +1,27 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:mobileapp/model/tracked_food.dart';
 
 class MacroDonut extends StatefulWidget {
-  final int carbs;
-  final int protein;
-  final int fat;
+  final double carbs;
+  final double protein;
+  final double fat;
+  final TrackedFood food;
 
-  MacroDonut({Key key, @required this.carbs, this.protein, this.fat}) : super(key: key);
+  MacroDonut({Key key, @required this.carbs, this.protein, this.fat, this.food}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => PieChart2State(carbs: carbs, protein: protein, fat: fat);
+  State<StatefulWidget> createState() => PieChart2State(food: food, carbs: carbs, protein: protein, fat: fat);
 }
 
 class PieChart2State extends State {
-  final int carbs;
-  final int protein;
-  final int fat;
+  final double carbs;
+  final double protein;
+  final double fat;
+  final TrackedFood food;
   int touchedIndex;
 
-  PieChart2State({Key key, @required this.carbs, this.protein, this.fat});
+  PieChart2State({Key key, @required this.carbs, this.protein, this.fat, this.food});
 
   @override
   Widget build(BuildContext context) {
@@ -67,28 +70,43 @@ class PieChart2State extends State {
           return PieChartSectionData(
             color: const Color(0xff19647E),
             value: carbs / (carbs + protein + fat),
-            title: (carbs / (carbs + protein + fat)).toString(),
+            title: food.toMap()['carbohydrates'].toStringAsFixed(2),
             radius: radius,
             titleStyle: TextStyle(
-                fontSize: fontSize, fontWeight: FontWeight.w200, fontFamily: "Comfortaa", color: const Color(0xffffffff)),
+                fontSize: fontSize, fontWeight: FontWeight.w200, fontFamily: "Comfortaa",
+                color:
+//                carbs.toString() == "0" ?
+                Colors.transparent
+//                    : const Color(0xffffffff)
+                    ),
           );
         case 1:
           return PieChartSectionData(
             color: const Color(0xff119DA4),
             value: protein / (carbs + protein + fat),
-            title: (protein / (carbs + protein + fat)).toString(),
+            title: food.toMap()['protein'].toStringAsFixed(2),
             radius: radius,
             titleStyle: TextStyle(
-                fontSize: fontSize, fontWeight: FontWeight.w200, fontFamily: "Comfortaa", color: const Color(0xffffffff)),
+                fontSize: fontSize, fontWeight: FontWeight.w200, fontFamily: "Comfortaa",
+                color:
+//                protein.toString() == "0" ?
+                Colors.transparent
+//                    : const Color(0xffffffff)
+            ),
           );
         case 2:
           return PieChartSectionData(
             color: const Color(0xff845bef),
             value: fat / (carbs + protein + fat),
-            title: (fat / (carbs + protein + fat)).toString(),
+            title: food.toMap()['fat'].toStringAsFixed(2),
             radius: radius,
             titleStyle: TextStyle(
-                fontSize: fontSize, fontWeight: FontWeight.bold, color: const Color(0xffffffff)),
+                fontSize: fontSize, fontWeight: FontWeight.w200,
+                color:
+//                fat.toString() == "0" ?
+                Colors.transparent
+//                    : const Color(0xffffffff)
+            ),
           );
 //        case 3:
 //          return PieChartSectionData(

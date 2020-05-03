@@ -2,8 +2,8 @@ class TrackedFood {
   // TODO: could make nutrient class
   final String name;
   final double _calories;
-  final double _protein;
   final double _carbohydrates;
+  final double _protein;
   final double _fat;
   final double _calcium;
   final double _fiber;
@@ -19,8 +19,8 @@ class TrackedFood {
   TrackedFood(
       this.name,
       this._calories,
-      this._protein,
       this._carbohydrates,
+      this._protein,
       this._fat,
       this._calcium,
       this._fiber,
@@ -36,20 +36,20 @@ class TrackedFood {
   Map<String, dynamic> toMap() {
     return {
       'name': name,
+      "serving": _serving,
+      "unit": _unit,
+      'calories': _calories,
+      'carbohydrates': _carbohydrates,
       'protein': _protein,
       'fat': _fat,
-      'carbohydrates': _carbohydrates,
       'calcium': _calcium,
       'fiber': _fiber,
-      'calories': _calories,
       'cholesterol': _cholesterol,
       'iron': _iron,
       'potassium': _potassium,
       'sodium': _sodium,
       'vitaminA': _vitaminA,
       'vitaminC': _vitaminC,
-      "serving": _serving,
-      "unit": _unit,
     };
   }
 }

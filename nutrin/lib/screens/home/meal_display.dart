@@ -181,26 +181,7 @@ class _MealDisplay extends State<MealDisplay> {
                         height: 150,
                         width: 150,
                         child: CaloriesDonut(),
-//                        PieChart(
-//                            dataMap: createNewMap(),
-//                        showChartValues: false,
-//                        chartType: ChartType.ring,
-//                        chartRadius: 100,
-//                        showChartValuesInPercentage: false,
-//                        showChartValuesOutside: false,
-//                        showLegends: false,
-//                          chartValueStyle: defaultChartValueStyle.copyWith(
-//                            color: Colors.white,
-//                            fontFamily: "Comfortaa"
-//                          ),),
                       ),
-//                      Container(
-//                        height: 100,
-//                        width: 100,
-//                        child: PieChart(
-//                          PieChartData(sections: data),
-//                        ),
-//                      ),
                       Padding(
                         padding: const EdgeInsets.only(bottom: 8.0),
                         child: Row(
@@ -239,7 +220,7 @@ class _MealDisplay extends State<MealDisplay> {
                                 return Row(
                                   children: <Widget>[
                                     Expanded(
-                                      child: Card(
+                                        child: Card(
                                         shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(15.0),
                                         ),

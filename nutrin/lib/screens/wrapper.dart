@@ -21,7 +21,7 @@ class Wrapper extends StatelessWidget {
   //  } else {
   //    return Home();
   //  }
-  return MealDisplay();
+  return App();
   }
 }
   
