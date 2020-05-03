@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mobileapp/model/recipe.dart';
-import 'package:mobileapp/screens/home/recipe_display.dart';
+import 'package:mobileapp/screens/extra/recipe_display.dart';
 
 class RecipeCarousel extends StatelessWidget {
   @override
