@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:mobileapp/model/meal.dart';
+import 'package:mobileapp/model/mealmodel.dart';
 import 'package:mobileapp/model/tracked_food.dart';
 import 'package:mobileapp/model/tracker.dart';
 
@@ -76,7 +76,7 @@ class DatabaseService {
         Map<dynamic, dynamic>.from(snapshot.data['personalNutrients'])
             .map((key, value) => MapEntry(key.toString(), value.toDouble())),
         List<dynamic>.from(snapshot.data['meals'])
-            .map((mealJson) => Meal(
+            .map((mealJson) => MealModel(
                 mealJson['mealName'],
                 List<dynamic>.from(mealJson['foods'])
                     .map((foodJson) => TrackedFood(

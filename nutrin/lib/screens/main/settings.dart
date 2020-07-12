@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobileapp/model/tracker.dart';
-import 'package:mobileapp/model/user.dart';
 import 'package:mobileapp/services/auth.dart';
-import 'package:mobileapp/services/database.dart';
-import 'package:provider/provider.dart';
 
 class Settings extends StatelessWidget {
   final AuthService _authService = AuthService();

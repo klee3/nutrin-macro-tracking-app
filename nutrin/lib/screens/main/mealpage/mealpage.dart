@@ -15,9 +15,7 @@ class MealPage extends StatefulWidget {
 class _MealPage extends State<MealPage> {
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<Tracker>.value(
-      value: DatabaseService(uid: Provider.of<User>(context).uid).tracker,
-      child: Scaffold(),
-    );
+    var tracker = Provider.of<Tracker>(context);
+    var user = Provider.of<User>(context);
   }
 }

@@ -3,6 +3,8 @@ import 'package:mobileapp/model/user.dart';
 import 'package:mobileapp/screens/wrapper.dart';
 import 'package:mobileapp/services/auth.dart';
 import 'package:provider/provider.dart';
+import 'package:mobileapp/model/tracker.dart';
+import 'package:mobileapp/services/database.dart';
 
 void main() => runApp(MyApp());
 
@@ -15,6 +17,9 @@ class MyApp extends StatelessWidget {
         StreamProvider<User>.value(
           value: AuthService().user,
         ),
+        StreamProvider<Tracker>.value(
+          value: DatabaseService(uid: Provider.of<User>(context).uid).tracker,
+        )
       ],
       child: MaterialApp(
         theme: ThemeData(
