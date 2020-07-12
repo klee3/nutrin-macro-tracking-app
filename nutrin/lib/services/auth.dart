@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:mobileapp/model/tracked_food.dart';
 import 'package:mobileapp/model/user.dart';
 import 'package:mobileapp/services/database.dart';
 
