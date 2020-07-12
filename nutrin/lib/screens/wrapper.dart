@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobileapp/model/user.dart';
 import 'package:provider/provider.dart';
 import 'authenticate/authenticate.dart';
-import 'home/settings.dart';
-
+import 'main/settings.dart';
 
 class Wrapper extends StatelessWidget {
   @override
@@ -13,8 +12,7 @@ class Wrapper extends StatelessWidget {
     if (user == null) {
       return Authenticate();
     } else {
-      return Home();
+      return Settings();
     }
   }
 }
-  

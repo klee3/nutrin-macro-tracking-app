@@ -10,24 +10,21 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<User>.value(
-      value: AuthService().user,
+    return MultiProvider(
+      providers: [
+        StreamProvider<User>.value(
+          value: AuthService().user,
+        ),
+      ],
       child: MaterialApp(
-          theme: ThemeData(
-            // Define the default brightness and colors.
-            brightness: Brightness.light,
-            primaryColor: Color(0xFF21BFBD),
-            accentColor: Colors.lightBlue[100],
-
-            // Define the default font family.
-//            fontFamily: 'Comfortaa',
-
-            // Define the default TextTheme. Use this to specify the default
-            // text styling for headlines, titles, bodies of text, and more.
-            textTheme: TextTheme(
-              headline: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
-            ),
+        theme: ThemeData(
+          brightness: Brightness.light,
+          primaryColor: Color(0xFF21BFBD),
+          accentColor: Colors.lightBlue[100],
+          textTheme: TextTheme(
+            headline5: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
           ),
+        ),
         home: Wrapper(),
       ),
     );
