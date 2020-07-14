@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobileapp/model/user.dart';
+import 'package:mobileapp/screens/main/bottomnav.dart';
 import 'package:provider/provider.dart';
 import 'authenticate/authenticate.dart';
 import 'main/settings/settings.dart';
@@ -15,8 +16,8 @@ class Wrapper extends StatelessWidget {
       return Authenticate();
     } else {
       return StreamProvider<Tracker>.value(
-        value: DatabaseService(uid: Provider.of<User>(context).uid).tracker,
-        child: Settings(),
+        value: DatabaseService(uid: user.uid).tracker,
+        child: NavigationBar(),
       );
     }
   }

@@ -17,9 +17,9 @@ class _NavigationBarState extends State<NavigationBar> {
   int _selectedIndex = 0;
 
   final List<Widget> _widgetOptions = <Widget>[
-    Settings(),
-    MealPage(),
     StatsPage(),
+    MealPage(),
+    Settings(),
   ];
 
   void _onItemTapped(int index) {
@@ -32,24 +32,27 @@ class _NavigationBarState extends State<NavigationBar> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _widgetOptions.elementAt(_selectedIndex),
-      bottomNavigationBar: BottomNavigationBar(
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.pie_chart),
-            title: Text("Stats"),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            title: Text("Home"),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            title: Text("Settings"),
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Theme.of(context).accentColor,
-        onTap: _onItemTapped,
+      bottomNavigationBar: SizedBox(
+        height: MediaQuery.of(context).size.height / 10.5,
+        child: BottomNavigationBar(
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.pie_chart),
+              title: Text("Stats"),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              title: Text("Home"),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.settings),
+              title: Text("Settings"),
+            ),
+          ],
+          currentIndex: _selectedIndex,
+          selectedItemColor: Theme.of(context).accentColor,
+          onTap: _onItemTapped,
+        ),
       ),
     );
   }

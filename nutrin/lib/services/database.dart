@@ -81,20 +81,20 @@ class DatabaseService {
                 List<dynamic>.from(mealJson['foods'])
                     .map((foodJson) => TrackedFood(
                         foodJson['name'],
-                        foodJson['calories'].toDouble(),
-                        foodJson['protein'].toDouble(),
-                        foodJson['carbohydrates'].toDouble(),
-                        foodJson['fat'].toDouble(),
-                        foodJson['calcium'].toDouble(),
-                        foodJson['fiber'].toDouble(),
-                        foodJson['cholesterol'].toDouble(),
-                        foodJson['iron'].toDouble(),
-                        foodJson['potassium'].toDouble(),
-                        foodJson['sodium'].toDouble(),
-                        foodJson['vitaminA'].toDouble(),
-                        foodJson['vitaminC'].toDouble(),
-                        foodJson['serving'].toDouble(),
-                        foodJson['unit'].toString()))
+                        // foodJson['calories'].toDouble(),
+                        foodJson['protein'],
+                        foodJson['carbohydrates'],
+                        foodJson['fat'],
+                        // foodJson['calcium'].toDouble(),
+                        // foodJson['fiber'].toDouble(),
+                        // foodJson['cholesterol'].toDouble(),
+                        // foodJson['iron'].toDouble(),
+                        // foodJson['potassium'].toDouble(),
+                        // foodJson['sodium'].toDouble(),
+                        // foodJson['vitaminA'].toDouble(),
+                        // foodJson['vitaminC'].toDouble(),
+                        foodJson['serving'],
+                        foodJson['unit']))
                     .toList()))
             .toList());
   }
@@ -167,13 +167,13 @@ class DatabaseService {
       'protein': protein,
       'carbohydrates': carbohydrates,
       'fat': fat,
-      'calcium': sex == "F" ? 1200 : 1000,
-      'iron': sex == "F" ? age <= 50 ? 18 : 8 : age <= 18 ? 11 : 8,
-      'potassium': 4600,
-      'sodium': 2300,
-      'fiber': sex == "F" ? 25 : 40,
-      'vitaminA': sex == "F" ? 700 : 900,
-      'vitaminC': sex == "F" ? 75 : 90,
+      // 'calcium': sex == "F" ? 1200 : 1000,
+      // 'iron': sex == "F" ? age <= 50 ? 18 : 8 : age <= 18 ? 11 : 8,
+      // 'potassium': 4600,
+      // 'sodium': 2300,
+      // 'fiber': sex == "F" ? 25 : 40,
+      // 'vitaminA': sex == "F" ? 700 : 900,
+      // 'vitaminC': sex == "F" ? 75 : 90,
     };
   }
 }
