@@ -5,18 +5,14 @@ import 'package:mobileapp/model/user.dart';
 import 'package:mobileapp/services/database.dart';
 import 'package:provider/provider.dart';
 
-class MacroTile extends StatefulWidget {
+class MealList extends StatefulWidget {
   @override
-  _MacroTileState createState() => _MacroTileState();
+  _MealListState createState() => _MealListState();
 }
 
-class _MacroTileState extends State<MacroTile> {
+class _MealListState extends State<MealList> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 100,
-      width: 100,
-      child: Text("Macro Tiles"),
-    );
+    return Container();
   }
 }

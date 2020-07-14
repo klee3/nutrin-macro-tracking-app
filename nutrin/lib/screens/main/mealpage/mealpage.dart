@@ -17,6 +17,11 @@ class _MealPage extends State<MealPage> {
   Widget build(BuildContext context) {
     return StreamProvider<Tracker>.value(
       value: DatabaseService(uid: Provider.of<User>(context).uid).tracker,
+      child: Scaffold(
+        body: Column(
+          children: <Widget>[],
+        ),
+      ),
     );
   }
 }
