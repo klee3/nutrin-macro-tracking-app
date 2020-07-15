@@ -1,3 +1,3 @@
 # in progress!
 
-to try it out git clone and run `flutter pub get` and then `flutter run`. 
+to try it out git clone, `cd nutrin` and run `flutter pub get` and then `flutter run`. 
