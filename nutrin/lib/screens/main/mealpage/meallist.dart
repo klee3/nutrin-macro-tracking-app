@@ -62,16 +62,26 @@ class _MealListState extends State<MealList> {
                   children: <Widget>[
                     Text(
                       food.name,
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, fontFamily: "OpenSans"),
                     ),
                     Container(
                       width: MediaQuery.of(context).size.width / 3,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          Text(food.carbohydrates + "C"),
-                          Text(food.protein + "P"),
-                          Text(food.fat + "F"),
+                          Text(
+                            food.carbohydrates + "C",
+                            style: TextStyle(fontFamily: "OpenSans"),
+                          ),
+                          Text(
+                            food.protein + "P",
+                            style: TextStyle(fontFamily: "OpenSans"),
+                          ),
+                          Text(
+                            food.fat + "F",
+                            style: TextStyle(fontFamily: "OpenSans"),
+                          ),
                         ],
                       ),
                     ),
@@ -83,6 +93,7 @@ class _MealListState extends State<MealList> {
                     child: Text(
                       food.serving + " " + food.unit,
                       textAlign: TextAlign.left,
+                      style: TextStyle(fontFamily: "OpenSans"),
                     ),
                   ),
                 ),
@@ -108,6 +119,7 @@ class _MealListState extends State<MealList> {
           child: Text(
             currentMeal.mealName.toUpperCase(),
             textAlign: TextAlign.left,
+            style: TextStyle(fontFamily: "OpenSans"),
           ),
         ),
         Container(

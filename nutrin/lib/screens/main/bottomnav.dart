@@ -38,15 +38,24 @@ class _NavigationBarState extends State<NavigationBar> {
           items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(Icons.pie_chart),
-              title: Text("Stats"),
+              title: Text(
+                "Stats",
+                style: TextStyle(fontFamily: "OpenSans", fontSize: 10),
+              ),
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
-              title: Text("Home"),
+              title: Text(
+                "Home",
+                style: TextStyle(fontFamily: "OpenSans", fontSize: 10),
+              ),
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.settings),
-              title: Text("Settings"),
+              title: Text(
+                "Settings",
+                style: TextStyle(fontFamily: "OpenSans", fontSize: 10),
+              ),
             ),
           ],
           currentIndex: _selectedIndex,

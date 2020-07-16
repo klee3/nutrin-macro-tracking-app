@@ -25,9 +25,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           brightness: Brightness.dark,
           primaryColor: Color(0xFF3C7A89),
-          textTheme: TextTheme(
-            headline5: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
-          ),
+          fontFamily: "OpenSans",
         ),
         home: Wrapper(),
       ),

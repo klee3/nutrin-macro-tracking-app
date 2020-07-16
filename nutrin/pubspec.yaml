@@ -96,5 +96,10 @@ flutter:
     - family: Comfortaa
       fonts:
         - asset: fonts/Comfortaa-Regular.ttf
-          weight: 900
           style: normal
+    - family: OpenSans
+      fonts: 
+      - asset: fonts/OpenSans-Regular.ttf
+        style: normal
+      - asset: fonts/OpenSans-SemiBold.ttf
+        weight: 700

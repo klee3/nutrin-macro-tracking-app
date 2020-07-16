@@ -96,7 +96,16 @@ class _MacroTileState extends State<MacroTile> {
               children: <Widget>[
                 Text(
                   getFormattedDate(),
-                  style: TextStyle(fontSize: 25),
+                  style: TextStyle(fontSize: 25, fontFamily: 'OpenSans'),
+                ),
+                Container(
+                  height: 10,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).primaryColor,
+                    border: Border.all(color: Theme.of(context).primaryColor),
+                    borderRadius: BorderRadius.all(Radius.circular(5.0) //
+                        ),
+                  ),
                 ),
                 macroPanel(caloriesEaten, macros["calories"].round(), "CAL",
                     Theme.of(context).primaryColor),
@@ -128,7 +137,7 @@ class _MacroTileState extends State<MacroTile> {
       children: <Widget>[
         Text(
           consumed.toString(),
-          style: TextStyle(color: color, fontSize: 35),
+          style: TextStyle(color: color, fontSize: 35, fontFamily: "OpenSans"),
         ),
         SizedBox(
           child: Column(
@@ -136,12 +145,12 @@ class _MacroTileState extends State<MacroTile> {
               Text(
                 macro,
                 textAlign: TextAlign.left,
-                style: TextStyle(color: color),
+                style: TextStyle(color: color, fontFamily: "OpenSans"),
               ),
               Text(
                 "/" + total.toString(),
                 textAlign: TextAlign.left,
-                style: TextStyle(color: color),
+                style: TextStyle(color: color, fontFamily: "OpenSans"),
               ),
             ],
           ),
