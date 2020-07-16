@@ -7,4 +7,6 @@ class Directory {
   Directory(this._foods);
 
   List<TrackedFood> get foods => _foods;
+
+  void addNewFood() {}
 }
