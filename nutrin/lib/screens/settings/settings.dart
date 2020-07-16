@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mobileapp/screens/main/settings/macrosform.dart';
 import 'package:mobileapp/services/auth.dart';
 import 'package:provider/provider.dart';
 import 'package:mobileapp/model/tracker.dart';

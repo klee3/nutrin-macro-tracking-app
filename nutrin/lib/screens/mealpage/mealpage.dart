@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mobileapp/model/tracker.dart';
 import 'package:mobileapp/model/user.dart';
-import 'package:mobileapp/screens/main/mealpage/macrostile.dart';
-import 'package:mobileapp/screens/main/mealpage/meallist.dart';
+import 'package:mobileapp/screens/mealpage/macrostile.dart';
+import 'package:mobileapp/screens/mealpage/meallist.dart';
 import 'package:mobileapp/services/database.dart';
 import 'package:provider/provider.dart';
 

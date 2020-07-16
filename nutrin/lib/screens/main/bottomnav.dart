@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:mobileapp/model/tracker.dart';
 import 'package:mobileapp/model/user.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:mobileapp/screens/main/mealpage/mealpage.dart';
-import 'package:mobileapp/screens/main/settings/settings.dart';
-import 'package:mobileapp/screens/main/stats/statspage.dart';
+import 'package:mobileapp/screens/mealpage/mealpage.dart';
+import 'package:mobileapp/screens/settings/settings.dart';
+import 'package:mobileapp/screens/stats/statspage.dart';
 import 'package:mobileapp/services/database.dart';
 import 'package:provider/provider.dart';
 

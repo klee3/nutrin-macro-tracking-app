@@ -3,7 +3,6 @@ import 'package:mobileapp/model/user.dart';
 import 'package:mobileapp/screens/main/bottomnav.dart';
 import 'package:provider/provider.dart';
 import 'authenticate/authenticate.dart';
-import 'main/settings/settings.dart';
 import 'package:mobileapp/services/database.dart';
 import 'package:mobileapp/model/tracker.dart';
 

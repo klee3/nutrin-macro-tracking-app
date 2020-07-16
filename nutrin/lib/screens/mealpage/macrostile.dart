@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mobileapp/model/mealmodel.dart';
 import 'package:mobileapp/model/tracker.dart';
 import 'package:mobileapp/model/user.dart';
 import 'package:mobileapp/services/database.dart';
@@ -77,13 +78,25 @@ class _MacroTileState extends State<MacroTile> {
   @override
   Widget build(BuildContext context) {
     var tracker = Provider.of<Tracker>(context);
-    int caloriesEaten = 500;
-    int carbsEaten = 10;
-    int fatEaten = 10;
-    int proteinEaten = 10;
 
     if (tracker != null) {
       var macros = tracker.personalNutrients;
+      List<MealModel> meals = tracker.meals;
+      List<double> caloriesPerMeal =
+          meals.map((meal) => meal.calculateCalories());
+      List<double> carbsPerMeal = meals.map((meal) => meal.calculateCarbs());
+      List<double> fatPerMeal = meals.map((meal) => meal.calculateFat());
+      List<double> proteinPerMeal =
+          meals.map((meal) => meal.calculateProtein());
+
+      double caloriesEaten =
+          caloriesPerMeal.reduce((value, element) => value + element);
+      double fatEaten = fatPerMeal.reduce((value, element) => value + element);
+      double proteinEaten =
+          proteinPerMeal.reduce((value, element) => value + element);
+      double carbsEaten =
+          carbsPerMeal.reduce((value, element) => value + element);
+
       return Container(
           width: MediaQuery.of(context).size.width,
           padding: EdgeInsets.all(25),
@@ -182,13 +195,13 @@ class _MacroTileState extends State<MacroTile> {
     }
   }
 
-  Widget macroPanel(int consumed, int total, String macro, Color color,
+  Widget macroPanel(double consumed, int total, String macro, Color color,
       [double size]) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Text(
-          consumed.toString(),
+          consumed.toInt().toString(),
           style: TextStyle(
               color: color, fontSize: size ?? 35, fontFamily: "OpenSans"),
         ),

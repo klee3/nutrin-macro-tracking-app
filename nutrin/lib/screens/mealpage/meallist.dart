@@ -4,6 +4,7 @@ import 'package:mobileapp/model/mealmodel.dart';
 import 'package:mobileapp/model/tracked_food.dart';
 import 'package:mobileapp/model/tracker.dart';
 import 'package:mobileapp/model/user.dart';
+import 'package:mobileapp/screens/search/searchpage.dart';
 import 'package:mobileapp/services/database.dart';
 import 'package:provider/provider.dart';
 
@@ -142,7 +143,11 @@ class _MealListState extends State<MealList> {
               ),
               GestureDetector(
                 onTap: () {
-                  print("Add new");
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => SearchPage(currentMeal.mealName)),
+                  );
                 },
                 child: Container(
                   width: 50,
