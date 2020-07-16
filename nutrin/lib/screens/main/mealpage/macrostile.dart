@@ -96,6 +96,7 @@ class _MacroTileState extends State<MacroTile> {
               children: <Widget>[
                 Text(
                   getFormattedDate(),
+                  style: TextStyle(fontSize: 25),
                 ),
                 macroPanel(caloriesEaten, macros["calories"].round(), "CAL",
                     Theme.of(context).primaryColor),

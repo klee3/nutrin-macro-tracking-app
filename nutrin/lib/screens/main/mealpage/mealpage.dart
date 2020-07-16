@@ -37,9 +37,8 @@ class _MealPage extends State<MealPage> {
 
     Widget loading() {
       if (tracker != null) {
-        return Container(
-          height: (MediaQuery.of(context).size.height),
-          child: Column(
+        return Scaffold(
+          body: Column(
             children: <Widget>[MacroTile(), MealList()],
           ),
         );
@@ -54,12 +53,7 @@ class _MealPage extends State<MealPage> {
 
     return StreamProvider<Tracker>.value(
       value: DatabaseService(uid: user.uid).tracker,
-      child: Container(
-        height: MediaQuery.of(context).size.height,
-        child: Scaffold(
-          body: loading(),
-        ),
-      ),
+      child: loading(),
     );
   }
 }

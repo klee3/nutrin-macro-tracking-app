@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mobileapp/model/mealmodel.dart';
+import 'package:mobileapp/model/tracked_food.dart';
 import 'package:mobileapp/model/tracker.dart';
 import 'package:mobileapp/model/user.dart';
 import 'package:mobileapp/services/database.dart';
@@ -23,71 +25,10 @@ class _MealListState extends State<MealList> {
         width: MediaQuery.of(context).size.width,
         height: mealListHeight,
         child: ListView.builder(
+            shrinkWrap: true,
             itemBuilder: (BuildContext context, int index) {
               var currentMeal = meals[index];
-              return Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    padding: EdgeInsets.only(left: 15),
-                    child: Text(
-                      currentMeal.mealName.toUpperCase(),
-                      textAlign: TextAlign.left,
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.all(15.0),
-                    padding: const EdgeInsets.all(3.0),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Theme.of(context).primaryColor),
-                      borderRadius: BorderRadius.all(Radius.circular(5.0) //
-                          ),
-                    ),
-                    height: 50,
-                    child: ListView.separated(
-                        itemCount: currentMeal.foods.length,
-                        separatorBuilder: (BuildContext context, int index) =>
-                            const Divider(),
-                        itemBuilder: (BuildContext context, int index) {
-                          return Column(
-                            children: <Widget>[
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  Text(currentMeal.foods[index].name),
-                                  Container(
-                                    width: (MediaQuery.of(context).size.width -
-                                            30) /
-                                        2,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: <Widget>[
-                                        Text(currentMeal
-                                                .foods[index].carbohydrates +
-                                            "C"),
-                                        Text(currentMeal.foods[index].protein +
-                                            "P"),
-                                        Text(
-                                            currentMeal.foods[index].fat + "F"),
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              ),
-                              Text(
-                                currentMeal.foods[index].serving.toString() +
-                                    currentMeal.foods[index].unit,
-                                textAlign: TextAlign.left,
-                              ),
-                            ],
-                          );
-                        }),
-                  ),
-                ],
-              );
+              return generateMeal(currentMeal, index);
             },
             // separatorBuilder: (BuildContext context, int index) =>
             //     const Divider(),
@@ -100,5 +41,95 @@ class _MealListState extends State<MealList> {
         child: CircularProgressIndicator(),
       );
     }
+  }
+
+  Widget foodtiles(MealModel currentMeal) {
+    var widgets = <Widget>[];
+
+    for (var i = 0; i < currentMeal.foods.length; i++) {
+      TrackedFood food = currentMeal.foods[i];
+      Widget foodTile = InkWell(
+        onTap: () {},
+        child: Card(
+          elevation: 0,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      food.name,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width / 3,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text(food.carbohydrates + "C"),
+                          Text(food.protein + "P"),
+                          Text(food.fat + "F"),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  width: double.infinity,
+                  child: Container(
+                    child: Text(
+                      food.serving + " " + food.unit,
+                      textAlign: TextAlign.left,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+      widgets.add(foodTile);
+    }
+    return Column(
+      children: widgets,
+    );
+  }
+
+  Widget generateMeal(MealModel currentMeal, int index) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        Container(
+          width: MediaQuery.of(context).size.width,
+          padding: EdgeInsets.only(left: 15),
+          child: Text(
+            currentMeal.mealName.toUpperCase(),
+            textAlign: TextAlign.left,
+          ),
+        ),
+        Container(
+          margin: const EdgeInsets.all(15.0),
+          padding: const EdgeInsets.all(3.0),
+          decoration: BoxDecoration(
+            border: Border.all(color: Theme.of(context).primaryColor),
+            borderRadius: BorderRadius.all(Radius.circular(5.0) //
+                ),
+          ),
+          child: foodtiles(currentMeal),
+          // ListView.separated(
+          //   shrinkWrap: true,
+          //   itemCount: currentMeal.foods.length,
+          //   separatorBuilder: (BuildContext context, int index) =>
+          //       const Divider(),
+          //   itemBuilder: (BuildContext context, int index) {
+          //     return generateFoodTile(currentMeal, index);
+          //   },
+          // ),
+        ),
+      ],
+    );
   }
 }
