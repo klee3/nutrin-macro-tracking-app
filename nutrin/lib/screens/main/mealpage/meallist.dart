@@ -16,14 +16,10 @@ class _MealListState extends State<MealList> {
   @override
   Widget build(BuildContext context) {
     var tracker = Provider.of<Tracker>(context);
-    var mealListHeight = MediaQuery.of(context).size.height -
-        ((MediaQuery.of(context).size.height / 10.5) +
-            (MediaQuery.of(context).size.height / 3));
     if (tracker != null) {
       var meals = tracker.meals;
       return Container(
         width: MediaQuery.of(context).size.width,
-        height: mealListHeight,
         child: ListView.builder(
             shrinkWrap: true,
             itemBuilder: (BuildContext context, int index) {
@@ -53,7 +49,7 @@ class _MealListState extends State<MealList> {
         child: Card(
           elevation: 0,
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(10.0),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
@@ -72,16 +68,28 @@ class _MealListState extends State<MealList> {
                         children: <Widget>[
                           Text(
                             food.carbohydrates + "C",
-                            style: TextStyle(fontFamily: "OpenSans"),
+                            style:
+                                TextStyle(fontFamily: "OpenSans", fontSize: 10),
                           ),
                           Text(
                             food.protein + "P",
-                            style: TextStyle(fontFamily: "OpenSans"),
+                            style:
+                                TextStyle(fontFamily: "OpenSans", fontSize: 10),
                           ),
                           Text(
                             food.fat + "F",
-                            style: TextStyle(fontFamily: "OpenSans"),
+                            style:
+                                TextStyle(fontFamily: "OpenSans", fontSize: 10),
                           ),
+                          GestureDetector(
+                            onTap: () {
+                              print("Pressed");
+                            },
+                            child: Icon(
+                              Icons.delete,
+                              size: 20,
+                            ),
+                          )
                         ],
                       ),
                     ),
@@ -93,7 +101,7 @@ class _MealListState extends State<MealList> {
                     child: Text(
                       food.serving + " " + food.unit,
                       textAlign: TextAlign.left,
-                      style: TextStyle(fontFamily: "OpenSans"),
+                      style: TextStyle(fontFamily: "OpenSans", fontSize: 10),
                     ),
                   ),
                 ),
@@ -115,11 +123,46 @@ class _MealListState extends State<MealList> {
       children: <Widget>[
         Container(
           width: MediaQuery.of(context).size.width,
-          padding: EdgeInsets.only(left: 15),
-          child: Text(
-            currentMeal.mealName.toUpperCase(),
-            textAlign: TextAlign.left,
-            style: TextStyle(fontFamily: "OpenSans"),
+          padding: EdgeInsets.only(left: 15, right: 15),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Container(
+                width: MediaQuery.of(context).size.width * .75,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).primaryColor,
+                  borderRadius: BorderRadius.all(Radius.circular(30.0) //
+                      ),
+                ),
+                child: Text(
+                  currentMeal.mealName.toUpperCase(),
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontFamily: "OpenSans", color: Colors.white),
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  print("Add new");
+                },
+                child: Container(
+                  width: 50,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      // Text("ADD",
+                      //     style: TextStyle(
+                      //       fontSize: 10,
+                      //     )),
+                      Icon(
+                        Icons.add_circle,
+                        size: 25,
+                        color: Theme.of(context).primaryColor,
+                      )
+                    ],
+                  ),
+                ),
+              )
+            ],
           ),
         ),
         Container(
@@ -127,7 +170,7 @@ class _MealListState extends State<MealList> {
           padding: const EdgeInsets.all(3.0),
           decoration: BoxDecoration(
             border: Border.all(color: Theme.of(context).primaryColor),
-            borderRadius: BorderRadius.all(Radius.circular(5.0) //
+            borderRadius: BorderRadius.all(Radius.circular(15.0) //
                 ),
           ),
           child: foodtiles(currentMeal),

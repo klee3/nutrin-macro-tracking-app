@@ -77,7 +77,6 @@ class _MacroTileState extends State<MacroTile> {
   @override
   Widget build(BuildContext context) {
     var tracker = Provider.of<Tracker>(context);
-    var tileHeight = MediaQuery.of(context).size.height / 3;
     int caloriesEaten = 500;
     int carbsEaten = 10;
     int fatEaten = 10;
@@ -86,39 +85,90 @@ class _MacroTileState extends State<MacroTile> {
     if (tracker != null) {
       var macros = tracker.personalNutrients;
       return Container(
-          height: tileHeight,
           width: MediaQuery.of(context).size.width,
           padding: EdgeInsets.all(25),
           child: Scaffold(
             body: Column(
-              mainAxisSize: MainAxisSize.max,
+              mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Text(
-                  getFormattedDate(),
-                  style: TextStyle(fontSize: 25, fontFamily: 'OpenSans'),
-                ),
-                Container(
-                  height: 10,
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor,
-                    border: Border.all(color: Theme.of(context).primaryColor),
-                    borderRadius: BorderRadius.all(Radius.circular(5.0) //
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      GestureDetector(
+                        onTap: () {},
+                        child: Icon(
+                          Icons.arrow_back_ios,
+                          color: Colors.grey,
                         ),
+                      ),
+                      Text(
+                        getFormattedDate(),
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontFamily: 'OpenSans',
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey),
+                      ),
+                      GestureDetector(
+                        onTap: () {},
+                        child: Icon(
+                          Icons.arrow_forward_ios,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                macroPanel(caloriesEaten, macros["calories"].round(), "CAL",
-                    Theme.of(context).primaryColor),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    macroPanel(carbsEaten, macros["carbohydrates"].round(),
-                        "CARBS", Color(0xFF03256C)),
-                    macroPanel(proteinEaten, macros["protein"].round(), "PRO",
-                        Color(0xFF2A9134)),
-                    macroPanel(fatEaten, macros["fat"].round(), "FAT",
-                        Color(0xFFDA4167)),
-                  ],
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Material(
+                    elevation: 5,
+                    child: Stack(
+                      children: <Widget>[
+                        Container(
+                          height: 10,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(5.0) //
+                                    ),
+                          ),
+                        ),
+                        Container(
+                          height: 10,
+                          width: 100,
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).primaryColor,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(5.0) //
+                                    ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                  ),
+                ),
+                Container(
+                  child: macroPanel(caloriesEaten, macros["calories"].round(),
+                      "CAL", Theme.of(context).primaryColor, 45),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      macroPanel(carbsEaten, macros["carbohydrates"].round(),
+                          "CARBS", Color(0xFF03256C)),
+                      macroPanel(proteinEaten, macros["protein"].round(), "PRO",
+                          Color(0xFF2A9134)),
+                      macroPanel(fatEaten, macros["fat"].round(), "FAT",
+                          Color(0xFFDA4167)),
+                    ],
+                  ),
                 )
               ],
             ),
@@ -132,12 +182,15 @@ class _MacroTileState extends State<MacroTile> {
     }
   }
 
-  Widget macroPanel(int consumed, int total, String macro, Color color) {
+  Widget macroPanel(int consumed, int total, String macro, Color color,
+      [double size]) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Text(
           consumed.toString(),
-          style: TextStyle(color: color, fontSize: 35, fontFamily: "OpenSans"),
+          style: TextStyle(
+              color: color, fontSize: size ?? 35, fontFamily: "OpenSans"),
         ),
         SizedBox(
           child: Column(

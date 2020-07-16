@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mobileapp/model/tracker.dart';
 import 'package:mobileapp/model/user.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mobileapp/screens/main/mealpage/mealpage.dart';
 import 'package:mobileapp/screens/main/settings/settings.dart';
 import 'package:mobileapp/screens/main/stats/statspage.dart';
@@ -37,7 +38,7 @@ class _NavigationBarState extends State<NavigationBar> {
         child: BottomNavigationBar(
           items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              icon: Icon(Icons.pie_chart),
+              icon: Icon(Icons.multiline_chart),
               title: Text(
                 "Stats",
                 style: TextStyle(fontFamily: "OpenSans", fontSize: 10),
