@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:mobileapp/model/directory.dart';
 import 'package:mobileapp/model/mealmodel.dart';
 import 'package:mobileapp/model/tracked_food.dart';
 import 'package:mobileapp/model/tracker.dart';
@@ -8,9 +9,13 @@ class DatabaseService {
 
   DatabaseService({this.uid});
 
-  // collection reference
+  // collection reference for tracker
   final CollectionReference trackerCollection =
       Firestore.instance.collection('Tracker');
+
+  // collection referance for avaliblefoods
+  final CollectionReference avalibleFoodsCollection =
+      Firestore.instance.collection("AvalibleFoods");
 
   // TODO: should use enum
   // TODO: coupled with tracker
@@ -52,6 +57,15 @@ class DatabaseService {
         }
       ]
     }, merge: true);
+  }
+
+  // get avalible foods stream
+  Stream<Directory> get avaliblefoods {
+    return avalibleFoodsCollection.snapshots().map(_directoryFromSnapshot);
+  }
+
+  Directory _directoryFromSnapshot(QuerySnapshot snapshot) {
+    var foods = <TrackedFood>[];
   }
 
   // get tracker stream
