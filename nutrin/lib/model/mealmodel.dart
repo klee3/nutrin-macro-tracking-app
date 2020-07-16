@@ -1,7 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:mobileapp/model/tracked_food.dart';
 
-class MealModel extends ChangeNotifier {
+class MealModel {
   final String mealName;
   List<TrackedFood> foods;
 
@@ -41,13 +40,11 @@ class MealModel extends ChangeNotifier {
     return ((calculateCarbs() + calculateProtein()) * 4) + (calculateFat() * 9);
   }
 
-  void addFood(TrackedFood food) {
-    foods.add(food);
-    notifyListeners();
+  void deleteFoodItem(String foodName) {
+    foods.where((element) => element.name != foodName);
   }
 
-  void removeFood(TrackedFood food) {
-    foods.remove(food);
-    notifyListeners();
+  void addFoodItem(TrackedFood food) {
+    foods.add(food);
   }
 }
