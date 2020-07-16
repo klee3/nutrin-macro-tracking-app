@@ -77,53 +77,75 @@ class _MacroTileState extends State<MacroTile> {
   @override
   Widget build(BuildContext context) {
     var tracker = Provider.of<Tracker>(context);
-    return Container(
+    var tileHeight = MediaQuery.of(context).size.height / 3;
+    int caloriesEaten = 500;
+    int carbsEaten = 10;
+    int fatEaten = 10;
+    int proteinEaten = 10;
+
+    if (tracker != null) {
+      var macros = tracker.personalNutrients;
+      return Container(
+          height: tileHeight,
+          width: MediaQuery.of(context).size.width,
+          padding: EdgeInsets.all(25),
+          child: Scaffold(
+            body: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text(
+                  getFormattedDate(),
+                ),
+                macroPanel(caloriesEaten, macros["calories"].round(), "CAL",
+                    Theme.of(context).primaryColor),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    macroPanel(carbsEaten, macros["carbohydrates"].round(),
+                        "CARBS", Color(0xFF03256C)),
+                    macroPanel(proteinEaten, macros["protein"].round(), "PRO",
+                        Color(0xFF2A9134)),
+                    macroPanel(fatEaten, macros["fat"].round(), "FAT",
+                        Color(0xFFDA4167)),
+                  ],
+                )
+              ],
+            ),
+          ));
+    } else {
+      return Container(
         height: MediaQuery.of(context).size.height / 3,
         width: MediaQuery.of(context).size.width,
-        padding: EdgeInsets.all(25),
-        child: Scaffold(
-          body: Column(
+        child: CircularProgressIndicator(),
+      );
+    }
+  }
+
+  Widget macroPanel(int consumed, int total, String macro, Color color) {
+    return Row(
+      children: <Widget>[
+        Text(
+          consumed.toString(),
+          style: TextStyle(color: color, fontSize: 35),
+        ),
+        SizedBox(
+          child: Column(
             children: <Widget>[
-              Column(
-                children: <Widget>[
-                  Text(
-                    getFormattedDate(),
-                  )
-                ],
+              Text(
+                macro,
+                textAlign: TextAlign.left,
+                style: TextStyle(color: color),
               ),
-              SizedBox(
-                height: 50,
-                child: Text(tracker.personalNutrients.containsKey("calories")
-                    ? tracker.personalNutrients["calories"].round().toString()
-                    : 0.toString()),
+              Text(
+                "/" + total.toString(),
+                textAlign: TextAlign.left,
+                style: TextStyle(color: color),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  SizedBox(
-                    child: Text(
-                        tracker.personalNutrients.containsKey("carbohydrates")
-                            ? tracker.personalNutrients["carbohydrates"]
-                                .round()
-                                .toString()
-                            : 0.toString()),
-                  ),
-                  SizedBox(
-                    child: Text(tracker.personalNutrients.containsKey("protein")
-                        ? tracker.personalNutrients["protein"]
-                            .round()
-                            .toString()
-                        : 0.toString()),
-                  ),
-                  SizedBox(
-                    child: Text(tracker.personalNutrients.containsKey("fat")
-                        ? tracker.personalNutrients["fat"].round().toString()
-                        : 0.toString()),
-                  ),
-                ],
-              )
             ],
           ),
-        ));
+        ),
+      ],
+    );
   }
 }

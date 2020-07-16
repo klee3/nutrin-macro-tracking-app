@@ -18,13 +18,37 @@ class _MealPage extends State<MealPage> {
   @override
   Widget build(BuildContext context) {
     var user = Provider.of<User>(context);
+    var tracker = Provider.of<Tracker>(context);
+
     bool toggle = true;
 
-    List<Widget> display() {
-      if (toggle) {
-        return [MacroTile(), MealList()];
+    // Widget macroDisplay() {
+    //   if (toggle) {
+    //     return Container(
+    //       height: MediaQuery.of(context).size.height,
+    //       child: Column(
+    //         children: <Widget>[MacroTile(), MealList()],
+    //       ),
+    //     );
+    //   } else {
+    //     return MealList();
+    //   }
+    // }
+
+    Widget loading() {
+      if (tracker != null) {
+        return Container(
+          height: (MediaQuery.of(context).size.height),
+          child: Column(
+            children: <Widget>[MacroTile(), MealList()],
+          ),
+        );
       } else {
-        return [MealList()];
+        return Container(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          child: CircularProgressIndicator(),
+        );
       }
     }
 
@@ -33,9 +57,7 @@ class _MealPage extends State<MealPage> {
       child: Container(
         height: MediaQuery.of(context).size.height,
         child: Scaffold(
-          body: Column(
-            children: display(),
-          ),
+          body: loading(),
         ),
       ),
     );

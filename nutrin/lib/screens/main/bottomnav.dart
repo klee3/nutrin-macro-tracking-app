@@ -35,6 +35,7 @@ class _NavigationBarState extends State<NavigationBar> {
       bottomNavigationBar: SizedBox(
         height: MediaQuery.of(context).size.height / 10.5,
         child: BottomNavigationBar(
+          backgroundColor: Theme.of(context).primaryColor,
           items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(Icons.pie_chart),
@@ -50,7 +51,7 @@ class _NavigationBarState extends State<NavigationBar> {
             ),
           ],
           currentIndex: _selectedIndex,
-          selectedItemColor: Theme.of(context).accentColor,
+          selectedItemColor: Colors.white,
           onTap: _onItemTapped,
         ),
       ),
