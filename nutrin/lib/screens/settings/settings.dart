@@ -18,14 +18,10 @@ class Settings extends StatelessWidget {
 
     return Scaffold(
         appBar: AppBar(
-          leading: Icon(
-            Icons.settings,
-            color: Colors.black,
-          ),
           title: Text(
             "Settings",
             style: TextStyle(
-                fontSize: 20, color: Colors.black, fontFamily: "Comfortaa"),
+                fontSize: 20, color: Colors.black, fontFamily: "OpenSans"),
           ),
           backgroundColor: Colors.white,
           elevation: 0.0,
@@ -38,7 +34,7 @@ class Settings extends StatelessWidget {
                 label: Text(
                   'Log Out',
                   style: TextStyle(
-                      fontWeight: FontWeight.bold, fontFamily: "Comfortaa"),
+                      fontWeight: FontWeight.bold, fontFamily: "OpenSans"),
                 ))
           ],
         ),
@@ -49,7 +45,17 @@ class Settings extends StatelessWidget {
             width: 400,
             child: Column(
               children: <Widget>[
-                Text(user.uid),
+                Container(
+                  width: 400,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "Change Macros",
+                      textAlign: TextAlign.left,
+                      style: TextStyle(color: Theme.of(context).primaryColor),
+                    ),
+                  ),
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
@@ -62,7 +68,16 @@ class Settings extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     RaisedButton(
-                        child: Text("Set New Macros"),
+                        color: Theme.of(context).primaryColor,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                            side: BorderSide(
+                                color: Theme.of(context).primaryColor)),
+                        child: Text(
+                          "SET NEW MACROS",
+                          style: TextStyle(
+                              fontFamily: 'OpenSans', color: Colors.white),
+                        ),
                         onPressed: () {
                           if (_formkey.currentState.validate()) {
                             Scaffold.of(context).showSnackBar(
@@ -73,7 +88,17 @@ class Settings extends StatelessWidget {
                           }
                         }),
                     RaisedButton(
-                        child: Text("Set To Default"),
+                        color: Colors.white,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                            side: BorderSide(
+                                color: Theme.of(context).primaryColor)),
+                        child: Text(
+                          "SET DEFAULT",
+                          style: TextStyle(
+                              fontFamily: 'OpenSans',
+                              color: Theme.of(context).primaryColor),
+                        ),
                         onPressed: () {
                           Scaffold.of(context).showSnackBar(
                             SnackBar(
@@ -95,7 +120,16 @@ class Settings extends StatelessWidget {
       width: 100,
       child: Column(
         children: <Widget>[
-          Text(name),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              name.length > 7
+                  ? name.toUpperCase().substring(0, 4) + "S"
+                  : name.toUpperCase(),
+              style: TextStyle(
+                  fontFamily: "OpenSans", fontWeight: FontWeight.bold),
+            ),
+          ),
           TextFormField(
             initialValue: tracker.personalNutrients.containsKey(name)
                 ? tracker.personalNutrients[name].round().toString()
