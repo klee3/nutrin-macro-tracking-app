@@ -82,24 +82,24 @@ class _MacroTileState extends State<MacroTile> {
     if (tracker != null) {
       var macros = tracker.personalNutrients;
       List<MealModel> meals = tracker.meals;
-      List<double> caloriesPerMeal =
-          meals.map((meal) => meal.calculateCalories());
-      List<double> carbsPerMeal = meals.map((meal) => meal.calculateCarbs());
-      List<double> fatPerMeal = meals.map((meal) => meal.calculateFat());
-      List<double> proteinPerMeal =
-          meals.map((meal) => meal.calculateProtein());
-
-      double caloriesEaten =
+      var caloriesPerMeal =
+          meals.map((meal) => meal.calculateCalories()).toList();
+      var carbsPerMeal = meals.map((meal) => meal.calculateCarbs()).toList();
+      var fatPerMeal = meals.map((meal) => meal.calculateFat()).toList();
+      var proteinPerMeal =
+          meals.map((meal) => meal.calculateProtein()).toList();
+      double totalCalories =
           caloriesPerMeal.reduce((value, element) => value + element);
-      double fatEaten = fatPerMeal.reduce((value, element) => value + element);
-      double proteinEaten =
-          proteinPerMeal.reduce((value, element) => value + element);
-      double carbsEaten =
+      double totalCarbs =
           carbsPerMeal.reduce((value, element) => value + element);
+      double totalFat = fatPerMeal.reduce((value, element) => value + element);
+      double totalProtein =
+          proteinPerMeal.reduce((value, element) => value + element);
 
       return Container(
           width: MediaQuery.of(context).size.width,
-          padding: EdgeInsets.all(25),
+          height: MediaQuery.of(context).size.height * .35,
+          padding: EdgeInsets.only(left: 25, right: 25, top: 15),
           child: Scaffold(
             body: Column(
               mainAxisSize: MainAxisSize.min,
@@ -143,6 +143,7 @@ class _MacroTileState extends State<MacroTile> {
                       children: <Widget>[
                         Container(
                           height: 10,
+                          width: MediaQuery.of(context).size.width,
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius:
@@ -152,7 +153,8 @@ class _MacroTileState extends State<MacroTile> {
                         ),
                         Container(
                           height: 10,
-                          width: 100,
+                          width: (totalCalories / macros["calories"].round()) *
+                              (MediaQuery.of(context).size.width),
                           decoration: BoxDecoration(
                             color: Theme.of(context).primaryColor,
                             borderRadius:
@@ -166,7 +168,7 @@ class _MacroTileState extends State<MacroTile> {
                   ),
                 ),
                 Container(
-                  child: macroPanel(caloriesEaten, macros["calories"].round(),
+                  child: macroPanel(totalCalories, macros["calories"].round(),
                       "CAL", Theme.of(context).primaryColor, 45),
                 ),
                 Padding(
@@ -174,11 +176,11 @@ class _MacroTileState extends State<MacroTile> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      macroPanel(carbsEaten, macros["carbohydrates"].round(),
+                      macroPanel(totalCarbs, macros["carbohydrates"].round(),
                           "CARBS", Color(0xFF03256C)),
-                      macroPanel(proteinEaten, macros["protein"].round(), "PRO",
+                      macroPanel(totalProtein, macros["protein"].round(), "PRO",
                           Color(0xFF2A9134)),
-                      macroPanel(fatEaten, macros["fat"].round(), "FAT",
+                      macroPanel(totalFat, macros["fat"].round(), "FAT",
                           Color(0xFFDA4167)),
                     ],
                   ),
@@ -188,10 +190,10 @@ class _MacroTileState extends State<MacroTile> {
           ));
     } else {
       return Container(
-        height: MediaQuery.of(context).size.height / 3,
-        width: MediaQuery.of(context).size.width,
-        child: CircularProgressIndicator(),
-      );
+          // height: MediaQuery.of(context).size.height / 3,
+          // width: MediaQuery.of(context).size.width,
+          // child: CircularProgressIndicator(),
+          );
     }
   }
 

@@ -41,7 +41,8 @@ class _MealPage extends State<MealPage> {
           body: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              Expanded(child: MacroTile()),
+              // Expanded(child:),
+              MacroTile(),
               Expanded(child: MealList())
             ],
           ),

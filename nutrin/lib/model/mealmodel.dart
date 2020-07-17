@@ -13,7 +13,7 @@ class MealModel {
     double trackedCarbs = 0.0;
     for (TrackedFood food in foods) {
       trackedCarbs += food.toMap().containsKey('carbohydrates')
-          ? food.toMap()['carbohydrates']
+          ? double.parse(food.toMap()['carbohydrates'])
           : 0;
     }
     return trackedCarbs;
@@ -22,8 +22,9 @@ class MealModel {
   double calculateProtein() {
     double trackedProtein = 0.0;
     for (TrackedFood food in foods) {
-      trackedProtein +=
-          food.toMap().containsKey('protein') ? food.toMap()['protein'] : 0;
+      trackedProtein += food.toMap().containsKey('protein')
+          ? double.parse(food.toMap()['protein'])
+          : 0;
     }
     return trackedProtein;
   }
@@ -31,7 +32,9 @@ class MealModel {
   double calculateFat() {
     double trackedFat = 0.0;
     for (TrackedFood food in foods) {
-      trackedFat += food.toMap().containsKey('fat') ? food.toMap()['fat'] : 0;
+      trackedFat += food.toMap().containsKey('fat')
+          ? double.parse(food.toMap()['fat'])
+          : 0;
     }
     return trackedFat;
   }
