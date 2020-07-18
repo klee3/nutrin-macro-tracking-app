@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mobileapp/model/tracked_food.dart';
 import 'package:http/http.dart' as http;
+import 'package:mobileapp/screens/search/createnewfood.dart';
 
 class SearchPage extends StatefulWidget {
   final String mealName;
@@ -13,10 +14,11 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-  final _formkey = GlobalKey<FormState>();
+  final _searchFormkey = GlobalKey<FormState>();
+  final _foodFormKey = GlobalKey<FormState>();
   var myController = TextEditingController();
   String _searchText = "";
-  List names = <String>[];
+  List searchResults = <String>[];
   List filteredNames = <String>[];
 
   @override
@@ -69,6 +71,21 @@ class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => CreateNewFoodPage(),
+            ),
+          );
+        },
+        backgroundColor: Theme.of(context).primaryColor,
+        child: Icon(
+          Icons.add,
+          size: 35,
+        ),
+      ),
       body: Column(
         children: <Widget>[
           Container(
@@ -76,7 +93,7 @@ class _SearchPageState extends State<SearchPage> {
             child: Row(
               children: <Widget>[
                 Form(
-                  key: _formkey,
+                  key: _searchFormkey,
                   child: Row(
                     children: <Widget>[
                       Padding(
@@ -93,11 +110,6 @@ class _SearchPageState extends State<SearchPage> {
                                   const EdgeInsets.symmetric(horizontal: 8.0),
                               child: TextField(
                                 controller: myController,
-                                // onChanged: (text) {
-                                //   setState(() {
-                                //     _searchText = text;
-                                //   });
-                                // },
                                 decoration:
                                     InputDecoration(border: InputBorder.none),
                               ),
@@ -109,36 +121,13 @@ class _SearchPageState extends State<SearchPage> {
                 buttons(),
               ],
             ),
-          )
+          ),
+          Expanded(child: ListView()),
         ],
       ),
-      // body: SafeArea(
-      //   child: Padding(
-      //     padding: EdgeInsets.symmetric(horizontal: 20.0),
-      //     child: SearchBar(
-      //       onSearch: search,
-      //       onItemFound: (TrackedFood food, int index) {
-      //         return InkWell(
-      //           onTap: () => print("Hello"),
-      //           child: ListTile(
-      //             title: Text(food.name),
-      //             subtitle: Text(food.serving + " " + food.unit),
-      //           ),
-      //         );
-      //       },
-      //     ),
-      //   ),
-      // ),
       appBar: AppBar(
         title: Text("Add Food"),
       ),
     );
   }
-
-  // Future<List<TrackedFood>> search(String search) async {
-  //   await Future.delayed(Duration(seconds: 2));
-  //   return List.generate(search.length, (int index) {
-  //     return TrackedFood("Apple", "25", "3", "1", "80", "g");
-  //   });
-  // }
 }
