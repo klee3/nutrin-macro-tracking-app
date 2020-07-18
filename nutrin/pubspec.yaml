@@ -32,10 +32,9 @@ dependencies:
   font_awesome_flutter: ^8.2.0
   flutter_signin_button: ^1.0.0
   folding_cell: "^0.1.0"
-  custom_switch: "0.0.1"
-  flutter_svg: ^0.17.1
   http: ^0.12.2
-
+  dotenv: ^2.0.0
+  flappy_search_bar: ^1.4.1
 
 
 
