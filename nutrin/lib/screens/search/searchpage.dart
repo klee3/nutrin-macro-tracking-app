@@ -14,31 +14,35 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   final _formkey = GlobalKey<FormState>();
-  final textEditingController = new TextEditingController();
+  var myController = TextEditingController();
   String _searchText = "";
   List names = <String>[];
   List filteredNames = <String>[];
-  Icon _searchIcon = new Icon(Icons.search);
-  Widget _appBarTitle = new Text("Add Food");
 
-  void _getFoods() async {
-    var url = 'https://swapi.co/api/people';
-    final response = await http.get(url);
-    List tempList = [];
-    print(response.body);
+  @override
+  void initState() {
+    super.initState();
+
+    myController.addListener(() {
+      buttons();
+    });
   }
 
-  Widget searchResults() {}
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is removed from the widget tree.
+    // This also removes the _printLatestValue listener.
+    myController.dispose();
+    super.dispose();
+  }
 
   Widget buttons() {
-    if (_searchText == "") {
+    if (myController.text == "") {
       return Row(
         children: <Widget>[
           IconButton(
             icon: Icon(Icons.search),
-            onPressed: () {
-              _getFoods();
-            },
+            onPressed: () {},
           ),
           IconButton(
             icon: Icon(Icons.camera_alt),
@@ -47,8 +51,17 @@ class _SearchPageState extends State<SearchPage> {
         ],
       );
     } else {
-      return Container(
-        child: Text("CANCEL"),
+      return GestureDetector(
+        onTap: () {
+          myController.clear();
+        },
+        child: Container(
+          child: Text(
+            "CANCEL",
+            textAlign: TextAlign.center,
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ),
       );
     }
   }
@@ -79,6 +92,12 @@ class _SearchPageState extends State<SearchPage> {
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 8.0),
                               child: TextField(
+                                controller: myController,
+                                // onChanged: (text) {
+                                //   setState(() {
+                                //     _searchText = text;
+                                //   });
+                                // },
                                 decoration:
                                     InputDecoration(border: InputBorder.none),
                               ),
