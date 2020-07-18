@@ -15,7 +15,6 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   final _searchFormkey = GlobalKey<FormState>();
-  final _foodFormKey = GlobalKey<FormState>();
   var myController = TextEditingController();
   String _searchText = "";
   List searchResults = <String>[];
@@ -126,7 +125,8 @@ class _SearchPageState extends State<SearchPage> {
         ],
       ),
       appBar: AppBar(
-        title: Text("Add Food"),
+        title: Text(widget.mealName.substring(0, 1).toUpperCase() +
+            widget.mealName.substring(1, widget.mealName.length)),
       ),
     );
   }
