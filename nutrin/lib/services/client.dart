@@ -15,21 +15,43 @@ class FoodClient {
     apiKey = env.containsKey('APIKEY') ? env['APIKEY'] : Error();
   }
 
-  Future<http.Response> foodQueryForId(String food) async {
+  foodQueryForId(String food) async {
     var body = jsonEncode({
       "query": food,
       "dataType": ["Foundation", "SR Legacy"],
       "pageSize": 10,
-      "pageNumber": 1,
+      "pageNumber": 0,
       "sortBy": "dataType.keyword",
       "sortOrder": "asc"
     });
     var header = {'Content-Type': 'application/json'};
-    var response = http
-        .post(url, body: body, headers: header)
-        .then((value) => print(value.body));
-    return await http.post(url, body: body, headers: header);
+    var response = await http.post(url, body: body, headers: header);
+    if (response.statusCode == 200) {
+      // print(json.decode(response.body)[4]);
+      print(extractFdcids(json.decode(response.body)[4]));
+    } else {
+      throw Exception("Please try again");
+    }
   }
 
-  Future<http.Response> foodQueryWithId(Future<http.Response> response) {}
+  Future<List<TrackedFood>> foodQueryWithId(String food) async {
+    List<int> fdcids = foodQueryForId(food);
+    var body = jsonEncode({
+      "fdcIds": fdcids,
+      "format": "abridged",
+      // "nutrients": [203, 204, 205]
+    });
+    var header = {'Content-Type': 'application/json'};
+    final response = await http.post(url, body: body, headers: header);
+    if (response.statusCode == 200) {
+      print(response.body);
+      // return TrackedFood.fromJson(json.decode(response.body));
+    } else {
+      throw Exception("Failed to retrieve foods");
+    }
+  }
+
+  extractFdcids(List rawJson) {
+    return rawJson.map((e) => json.decode(e)[0]);
+  }
 }

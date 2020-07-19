@@ -33,6 +33,17 @@ class TrackedFood {
       this.serving,
       this.unit);
 
+  factory TrackedFood.fromJson(Map<String, dynamic> json) {
+    return TrackedFood(
+      json['n'],
+      json['n'],
+      json['n'],
+      json['n'],
+      json['n'],
+      json['n'],
+    );
+  }
+
   Map<String, dynamic> toMap() {
     return {
       'name': name,

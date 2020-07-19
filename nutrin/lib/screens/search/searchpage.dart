@@ -17,9 +17,12 @@ class _SearchPageState extends State<SearchPage> {
   final _searchFormkey = GlobalKey<FormState>();
   var myController = TextEditingController();
   String _searchText = "";
-  List searchResults = <String>[];
-  List filteredNames = <String>[];
+  Future<List<TrackedFood>> searchResults;
   var client = FoodClient();
+
+  // @protected
+  // @mustCallSuper
+  // void didChangeDependencies() {}
 
   @override
   void initState() {
@@ -113,9 +116,11 @@ class _SearchPageState extends State<SearchPage> {
                                 controller: myController,
                                 onChanged: (value) {
                                   print(myController.text);
-                                  setState(() {
-                                    searchResults = ["one", "two", "three"];
-                                  });
+                                  client.foodQueryForId("cheese");
+                                  // setState(() {
+                                  //   searchResults =
+                                  //       client.foodQueryWithId(_searchText);
+                                  // });
                                 },
                                 decoration:
                                     InputDecoration(border: InputBorder.none),
@@ -129,8 +134,23 @@ class _SearchPageState extends State<SearchPage> {
               ],
             ),
           ),
-          Expanded(
-            child: Container(width: 0.0, height: 0.0),
+          FutureBuilder<List<TrackedFood>>(
+            future: searchResults,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return Expanded(
+                    child:
+                        Container(width: 100, height: 100, child: Text("YEs")));
+              } else {
+                return Center(
+                  child: Container(
+                      child: CircularProgressIndicator(
+                    backgroundColor: Theme.of(context).primaryColor,
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white30),
+                  )),
+                );
+              }
+            },
           ),
         ],
       ),
