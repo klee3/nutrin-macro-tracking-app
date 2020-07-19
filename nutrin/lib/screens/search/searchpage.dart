@@ -2,8 +2,8 @@ import 'package:flappy_search_bar/flappy_search_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mobileapp/model/tracked_food.dart';
-import 'package:http/http.dart' as http;
 import 'package:mobileapp/screens/search/createnewfood.dart';
+import 'package:mobileapp/services/client.dart';
 
 class SearchPage extends StatefulWidget {
   final String mealName;
@@ -121,7 +121,11 @@ class _SearchPageState extends State<SearchPage> {
               ],
             ),
           ),
-          Expanded(child: ListView()),
+          Expanded(
+              child: RaisedButton(
+            onPressed: () {},
+            child: Text("Yeet"),
+          )),
         ],
       ),
       appBar: AppBar(
