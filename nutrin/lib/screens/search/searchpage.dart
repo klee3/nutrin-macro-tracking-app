@@ -19,6 +19,7 @@ class _SearchPageState extends State<SearchPage> {
   String _searchText = "";
   List searchResults = <String>[];
   List filteredNames = <String>[];
+  var client = FoodClient();
 
   @override
   void initState() {
@@ -57,6 +58,7 @@ class _SearchPageState extends State<SearchPage> {
           myController.clear();
         },
         child: Container(
+          width: MediaQuery.of(context).size.width * .25,
           child: Text(
             "CANCEL",
             textAlign: TextAlign.center,
@@ -109,6 +111,12 @@ class _SearchPageState extends State<SearchPage> {
                                   const EdgeInsets.symmetric(horizontal: 8.0),
                               child: TextField(
                                 controller: myController,
+                                onChanged: (value) {
+                                  print(myController.text);
+                                  setState(() {
+                                    searchResults = ["one", "two", "three"];
+                                  });
+                                },
                                 decoration:
                                     InputDecoration(border: InputBorder.none),
                               ),
@@ -122,10 +130,8 @@ class _SearchPageState extends State<SearchPage> {
             ),
           ),
           Expanded(
-              child: RaisedButton(
-            onPressed: () {},
-            child: Text("Yeet"),
-          )),
+            child: Container(width: 0.0, height: 0.0),
+          ),
         ],
       ),
       appBar: AppBar(
