@@ -116,7 +116,7 @@ class _SearchPageState extends State<SearchPage> {
                                 controller: myController,
                                 onChanged: (value) {
                                   print(myController.text);
-                                  client.foodQueryForId("cheese");
+                                  client.foodQueryWithId("cheese");
                                   // setState(() {
                                   //   searchResults =
                                   //       client.foodQueryWithId(_searchText);

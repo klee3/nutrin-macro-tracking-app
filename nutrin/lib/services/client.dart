@@ -15,7 +15,7 @@ class FoodClient {
     apiKey = env.containsKey('APIKEY') ? env['APIKEY'] : Error();
   }
 
-  foodQueryForId(String food) async {
+  Future<List<int>> foodQueryForId(String food) async {
     var body = jsonEncode({
       "query": food,
       "dataType": ["Foundation", "SR Legacy"],
@@ -27,31 +27,31 @@ class FoodClient {
     var header = {'Content-Type': 'application/json'};
     var response = await http.post(url, body: body, headers: header);
     if (response.statusCode == 200) {
-      // print(json.decode(response.body)[4]);
-      print(extractFdcids(json.decode(response.body)[4]));
+      return json.decode(response.body).toList().map((e) => (extractFdcids(e)));
     } else {
       throw Exception("Please try again");
     }
   }
 
   Future<List<TrackedFood>> foodQueryWithId(String food) async {
-    List<int> fdcids = foodQueryForId(food);
-    var body = jsonEncode({
-      "fdcIds": fdcids,
-      "format": "abridged",
-      // "nutrients": [203, 204, 205]
-    });
-    var header = {'Content-Type': 'application/json'};
-    final response = await http.post(url, body: body, headers: header);
-    if (response.statusCode == 200) {
-      print(response.body);
-      // return TrackedFood.fromJson(json.decode(response.body));
-    } else {
-      throw Exception("Failed to retrieve foods");
-    }
+    Future<List<int>> fdcids = foodQueryForId(food);
+    print(fdcids);
+    // var body = jsonEncode({
+    //   "fdcIds": fdcids,
+    //   "format": "abridged",
+    //   // "nutrients": [203, 204, 205]
+    // });
+    // var header = {'Content-Type': 'application/json'};
+    // final response = await http.post(url, body: body, headers: header);
+    // if (response.statusCode == 200) {
+    //   print(response.body);
+    //   // return TrackedFood.fromJson(json.decode(response.body));
+    // } else {
+    //   throw Exception("Failed to retrieve foods");
+    // }
   }
 
-  extractFdcids(List rawJson) {
-    return rawJson.map((e) => json.decode(e)[0]);
+  extractFdcids(Map<String, dynamic> rawJson) {
+    return rawJson.containsKey('fdcId') ? rawJson['fdcId'] : '000';
   }
 }
