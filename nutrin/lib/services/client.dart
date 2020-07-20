@@ -16,9 +16,9 @@ class FoodClient {
   }
 
   Future<List<int>> foodQueryForId(String food) async {
-    List<int> listOfFdcids;
+    List<dynamic> listOfFdcids;
     var body = jsonEncode({
-      "query": food,
+      "query": "cake",
       "dataType": ["Foundation", "SR Legacy"],
       "pageSize": 10,
       "pageNumber": 0,
@@ -28,12 +28,8 @@ class FoodClient {
     var header = {'Content-Type': 'application/json'};
     var response = await http.post(url, body: body, headers: header);
     if (response.statusCode == 200) {
-      listOfFdcids = json
-          .decode(response.body)
-          .map((val) => extractFdcids(val))
-          .toList()
-          .map((d) => d as int)
-          .toList();
+      listOfFdcids =
+          json.decode(response.body).map((val) => extractFdcids(val)).toList();
     } else {
       throw Exception("Please try again");
     }

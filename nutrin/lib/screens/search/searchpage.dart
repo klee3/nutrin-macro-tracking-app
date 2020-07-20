@@ -25,56 +25,56 @@ class _SearchPageState extends State<SearchPage> {
   FutureBuilder<List<TrackedFood>> searchResults;
   Timer debounceTimer;
 
-  @override
-  void initState() {
-    super.initState();
+  // @override
+  // void initState() {
+  //   super.initState();
 
-    _searchQuery.addListener(() {
-      buttons();
-    });
-  }
+  //   _searchQuery.addListener(() {
+  //     buttons();
+  //   });
+  // }
 
-  _SearchPageState() {
-    _searchQuery.addListener(() {
-      if (debounceTimer != null) {
-        debounceTimer.cancel();
-      }
-      debounceTimer = Timer(Duration(milliseconds: 500), () {
-        if (this.mounted) {
-          performSearch(_searchQuery.text);
-        }
-      });
-    });
-  }
+  // _SearchPageState() {
+  //   _searchQuery.addListener(() {
+  //     if (debounceTimer != null) {
+  //       debounceTimer.cancel();
+  //     }
+  //     debounceTimer = Timer(Duration(milliseconds: 500), () {
+  //       if (this.mounted) {
+  //         performSearch(_searchQuery.text);
+  //       }
+  //     });
+  //   });
+  // }
 
-  void performSearch(String query) async {
-    if (query.isEmpty) {
-      setState(() {
-        _isSearching = false;
-        _error = null;
-        _results = List();
-      });
-      return;
-    }
-    setState(() {
-      _isSearching = true;
-      _error = null;
-      _results = List();
-    });
+  // void performSearch(String query) async {
+  //   if (query.isEmpty) {
+  //     setState(() {
+  //       _isSearching = false;
+  //       _error = null;
+  //       _results = List();
+  //     });
+  //     return;
+  //   }
+  //   setState(() {
+  //     _isSearching = true;
+  //     _error = null;
+  //     _results = List();
+  //   });
 
-    var client = FoodClient();
-    final foods = await client.foodQueryForId(query);
-    if (this._searchQuery.text == query && this.mounted) {
-      setState(() {
-        _isSearching = false;
-        if (foods != null) {
-          _results = foods;
-        } else {
-          _error = 'An error has occured.';
-        }
-      });
-    }
-  }
+  //   var client = FoodClient();
+  //   final foods = await client.foodQueryForId(query);
+  //   if (this._searchQuery.text == query && this.mounted) {
+  //     setState(() {
+  //       _isSearching = false;
+  //       if (foods != null) {
+  //         _results = foods;
+  //       } else {
+  //         _error = 'An error has occured.';
+  //       }
+  //     });
+  //   }
+  // }
 
   Widget buttons() {
     if (_searchQuery.text == "") {
@@ -86,7 +86,10 @@ class _SearchPageState extends State<SearchPage> {
           ),
           IconButton(
             icon: Icon(Icons.camera_alt),
-            onPressed: () {},
+            onPressed: () {
+              var client = FoodClient();
+              client.foodQueryForId("Yes");
+            },
           ),
         ],
       );
