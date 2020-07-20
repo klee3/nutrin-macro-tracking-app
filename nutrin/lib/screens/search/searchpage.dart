@@ -192,5 +192,35 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
 
-  Widget buildBody(BuildContext context) {}
+  Widget buildBody(BuildContext context) {
+    if (_isSearching) {
+      return Container(
+        height: 100,
+        width: 100,
+        child: CircularProgressIndicator(
+          backgroundColor: Theme.of(context).primaryColor,
+          valueColor: AlwaysStoppedAnimation<Color>(Colors.white30),
+        ),
+      );
+    } else if (_error != null) {
+      return Container(
+        height: 100,
+        width: 100,
+        child: Text(_error),
+      );
+    } else if (_searchQuery.text.isEmpty) {
+      return Container(
+        height: 100,
+        width: 100,
+        child: Text("Begin search by typing in seach bar"),
+      );
+    } else {
+      ListView.builder(
+          itemCount: _results.length,
+          padding: EdgeInsets.symmetric(vertical: 8.0),
+          itemBuilder: (BuildContext context, int index) {
+            return Text(index.toString());
+          });
+    }
+  }
 }
