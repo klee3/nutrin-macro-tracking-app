@@ -112,86 +112,168 @@ class _SearchPageState extends State<SearchPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => CreateNewFoodPage(),
-            ),
-          );
-        },
-        backgroundColor: Theme.of(context).primaryColor,
-        child: Icon(
-          Icons.add,
-          size: 35,
-        ),
-      ),
-      body: Column(
-        children: <Widget>[
-          Container(
-            width: MediaQuery.of(context).size.width,
-            child: Row(
-              children: <Widget>[
-                Form(
-                  key: _searchFormkey,
-                  child: Row(
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10.0, vertical: 10.0),
-                        child: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.grey[300],
-                              borderRadius: new BorderRadius.circular(5.0),
-                            ),
-                            width: MediaQuery.of(context).size.width * .65,
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 8.0),
-                              child: TextField(
-                                autofocus: true,
-                                controller: _searchQuery,
-                                onChanged: (value) {
-                                  print(_searchQuery.text);
-                                },
-                                decoration:
-                                    InputDecoration(border: InputBorder.none),
-                              ),
-                            )),
-                      ),
-                    ],
-                  ),
+    return MaterialApp(
+      home: DefaultTabController(
+        length: 2,
+        child: Scaffold(
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => CreateNewFoodPage(),
                 ),
-                buttons(),
-              ],
+              );
+            },
+            backgroundColor: Theme.of(context).primaryColor,
+            child: Icon(
+              Icons.add,
+              size: 35,
             ),
           ),
-          // buildBody(context),
-          // FutureBuilder<List<TrackedFood>>(
-          //   future: searchResults,
-          //   builder: (context, snapshot) {
-          //     if (snapshot.hasData) {
-          //       return Expanded(
-          //           child:
-          //               Container(width: 100, height: 100, child: Text("YEs")));
-          //     } else {
-          //       return Center(
-          //         child: Container(
-          //             child: CircularProgressIndicator(
-          //           backgroundColor: Theme.of(context).primaryColor,
-          //           valueColor: AlwaysStoppedAnimation<Color>(Colors.white30),
-          //         )),
-          //       );
-          //     }
-          //   },
-          // ),
-        ],
-      ),
-      appBar: AppBar(
-        title: Text(widget.mealName.substring(0, 1).toUpperCase() +
-            widget.mealName.substring(1, widget.mealName.length)),
+          body: TabBarView(
+            children: [
+              Column(
+                children: <Widget>[
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    child: Row(
+                      children: <Widget>[
+                        Form(
+                          key: _searchFormkey,
+                          child: Row(
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10.0, vertical: 10.0),
+                                child: Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey[300],
+                                      borderRadius:
+                                          new BorderRadius.circular(5.0),
+                                    ),
+                                    width:
+                                        MediaQuery.of(context).size.width * .65,
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 8.0),
+                                      child: TextField(
+                                        autofocus: true,
+                                        controller: _searchQuery,
+                                        onChanged: (value) {
+                                          print(_searchQuery.text);
+                                        },
+                                        decoration: InputDecoration(
+                                            border: InputBorder.none),
+                                      ),
+                                    )),
+                              ),
+                            ],
+                          ),
+                        ),
+                        buttons(),
+                      ],
+                    ),
+                  ),
+                  // buildBody(context),
+                  // FutureBuilder<List<TrackedFood>>(
+                  //   future: searchResults,
+                  //   builder: (context, snapshot) {
+                  //     if (snapshot.hasData) {
+                  //       return Expanded(
+                  //           child:
+                  //               Container(width: 100, height: 100, child: Text("YEs")));
+                  //     } else {
+                  //       return Center(
+                  //         child: Container(
+                  //             child: CircularProgressIndicator(
+                  //           backgroundColor: Theme.of(context).primaryColor,
+                  //           valueColor: AlwaysStoppedAnimation<Color>(Colors.white30),
+                  //         )),
+                  //       );
+                  //     }
+                  //   },
+                  // ),
+                ],
+              ),
+              Column(
+                children: <Widget>[
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    child: Row(
+                      children: <Widget>[
+                        Form(
+                          key: _searchFormkey,
+                          child: Row(
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10.0, vertical: 10.0),
+                                child: Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey[300],
+                                      borderRadius:
+                                          new BorderRadius.circular(5.0),
+                                    ),
+                                    width:
+                                        MediaQuery.of(context).size.width * .65,
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 8.0),
+                                      child: TextField(
+                                        autofocus: true,
+                                        controller: _searchQuery,
+                                        onChanged: (value) {
+                                          print(_searchQuery.text);
+                                        },
+                                        decoration: InputDecoration(
+                                            border: InputBorder.none),
+                                      ),
+                                    )),
+                              ),
+                            ],
+                          ),
+                        ),
+                        buttons(),
+                      ],
+                    ),
+                  ),
+                  // buildBody(context),
+                  // FutureBuilder<List<TrackedFood>>(
+                  //   future: searchResults,
+                  //   builder: (context, snapshot) {
+                  //     if (snapshot.hasData) {
+                  //       return Expanded(
+                  //           child:
+                  //               Container(width: 100, height: 100, child: Text("YEs")));
+                  //     } else {
+                  //       return Center(
+                  //         child: Container(
+                  //             child: CircularProgressIndicator(
+                  //           backgroundColor: Theme.of(context).primaryColor,
+                  //           valueColor: AlwaysStoppedAnimation<Color>(Colors.white30),
+                  //         )),
+                  //       );
+                  //     }
+                  //   },
+                  // ),
+                ],
+              ),
+            ],
+          ),
+          appBar: AppBar(
+            bottom: TabBar(tabs: <Widget>[
+              Tab(
+                text: 'SEARCH',
+              ),
+              Tab(
+                text: "MY FOODS",
+              ),
+            ]),
+            title: Text(widget.mealName.substring(0, 1).toUpperCase() +
+                widget.mealName.substring(1, widget.mealName.length)),
+          ),
+        ),
       ),
     );
   }
