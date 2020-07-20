@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flappy_search_bar/flappy_search_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -14,35 +16,67 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
+  final FocusNode myFocusNode = FocusNode();
   final _searchFormkey = GlobalKey<FormState>();
-  var myController = TextEditingController();
-  String _searchText = "";
-  Future<List<TrackedFood>> searchResults;
-  var client = FoodClient();
-
-  // @protected
-  // @mustCallSuper
-  // void didChangeDependencies() {}
+  var _searchQuery = TextEditingController();
+  bool _isSearching = false;
+  String _error;
+  List<TrackedFood> _results = List();
+  FutureBuilder<List<TrackedFood>> searchResults;
+  Timer debounceTimer;
 
   @override
   void initState() {
     super.initState();
 
-    myController.addListener(() {
+    _searchQuery.addListener(() {
       buttons();
     });
   }
 
-  @override
-  void dispose() {
-    // Clean up the controller when the widget is removed from the widget tree.
-    // This also removes the _printLatestValue listener.
-    myController.dispose();
-    super.dispose();
+  _SearchPageState() {
+    _searchQuery.addListener(() {
+      if (debounceTimer != null) {
+        debounceTimer.cancel();
+      }
+      debounceTimer = Timer(Duration(milliseconds: 500), () {
+        if (this.mounted) {
+          performSearch(_searchQuery.text);
+        }
+      });
+    });
+  }
+
+  void performSearch(String query) async {
+    if (query.isEmpty) {
+      setState(() {
+        _isSearching = false;
+        _error = null;
+        _results = List();
+      });
+      return;
+    }
+    setState(() {
+      _isSearching = true;
+      _error = null;
+      _results = List();
+    });
+
+    final foods = await FoodClient.foodQueryWithId(query);
+    if (this._searchQuery.text == query && this.mounted) {
+      setState(() {
+        _isSearching = false;
+        if (foods != null) {
+          _results = foods;
+        } else {
+          _error = 'An error has occured.';
+        }
+      });
+    }
   }
 
   Widget buttons() {
-    if (myController.text == "") {
+    if (_searchQuery.text == "") {
       return Row(
         children: <Widget>[
           IconButton(
@@ -58,7 +92,7 @@ class _SearchPageState extends State<SearchPage> {
     } else {
       return GestureDetector(
         onTap: () {
-          myController.clear();
+          _searchQuery.clear();
         },
         child: Container(
           width: MediaQuery.of(context).size.width * .25,
@@ -113,14 +147,10 @@ class _SearchPageState extends State<SearchPage> {
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 8.0),
                               child: TextField(
-                                controller: myController,
+                                autofocus: true,
+                                controller: _searchQuery,
                                 onChanged: (value) {
-                                  print(myController.text);
-                                  client.foodQueryWithId("cheese");
-                                  // setState(() {
-                                  //   searchResults =
-                                  //       client.foodQueryWithId(_searchText);
-                                  // });
+                                  print(_searchQuery.text);
                                 },
                                 decoration:
                                     InputDecoration(border: InputBorder.none),
@@ -134,24 +164,25 @@ class _SearchPageState extends State<SearchPage> {
               ],
             ),
           ),
-          FutureBuilder<List<TrackedFood>>(
-            future: searchResults,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return Expanded(
-                    child:
-                        Container(width: 100, height: 100, child: Text("YEs")));
-              } else {
-                return Center(
-                  child: Container(
-                      child: CircularProgressIndicator(
-                    backgroundColor: Theme.of(context).primaryColor,
-                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white30),
-                  )),
-                );
-              }
-            },
-          ),
+          buildBody(context),
+          // FutureBuilder<List<TrackedFood>>(
+          //   future: searchResults,
+          //   builder: (context, snapshot) {
+          //     if (snapshot.hasData) {
+          //       return Expanded(
+          //           child:
+          //               Container(width: 100, height: 100, child: Text("YEs")));
+          //     } else {
+          //       return Center(
+          //         child: Container(
+          //             child: CircularProgressIndicator(
+          //           backgroundColor: Theme.of(context).primaryColor,
+          //           valueColor: AlwaysStoppedAnimation<Color>(Colors.white30),
+          //         )),
+          //       );
+          //     }
+          //   },
+          // ),
         ],
       ),
       appBar: AppBar(
@@ -160,4 +191,6 @@ class _SearchPageState extends State<SearchPage> {
       ),
     );
   }
+
+  Widget buildBody(BuildContext context) {}
 }

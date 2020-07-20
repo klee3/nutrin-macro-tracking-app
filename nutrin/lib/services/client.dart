@@ -6,16 +6,10 @@ import 'package:http/http.dart' as http;
 import 'package:mobileapp/model/tracked_food.dart';
 
 class FoodClient {
-  final url =
+  static final url =
       "https://api.nal.usda.gov/fdc/v1/foods/list?api_key=OwOopadFaacSp65Vps9UTkNTWlVUXOFFMOy6jgsf";
-  var apiKey;
 
-  init() {
-    load();
-    apiKey = env.containsKey('APIKEY') ? env['APIKEY'] : Error();
-  }
-
-  Future<List<int>> foodQueryForId(String food) async {
+  static Future<List<int>> foodQueryForId(String food) async {
     var body = jsonEncode({
       "query": food,
       "dataType": ["Foundation", "SR Legacy"],
@@ -33,7 +27,7 @@ class FoodClient {
     }
   }
 
-  Future<List<TrackedFood>> foodQueryWithId(String food) async {
+  static Future<List<TrackedFood>> foodQueryWithId(String food) async {
     Future<List<int>> fdcids = foodQueryForId(food);
     print(fdcids);
     // var body = jsonEncode({
@@ -51,7 +45,7 @@ class FoodClient {
     // }
   }
 
-  extractFdcids(Map<String, dynamic> rawJson) {
+  static extractFdcids(Map<String, dynamic> rawJson) {
     return rawJson.containsKey('fdcId') ? rawJson['fdcId'] : '000';
   }
 }
