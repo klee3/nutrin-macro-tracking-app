@@ -20,21 +20,6 @@ class _MealPage extends State<MealPage> {
     var user = Provider.of<User>(context);
     var tracker = Provider.of<Tracker>(context);
 
-    bool toggle = true;
-
-    // Widget macroDisplay() {
-    //   if (toggle) {
-    //     return Container(
-    //       height: MediaQuery.of(context).size.height,
-    //       child: Column(
-    //         children: <Widget>[MacroTile(), MealList()],
-    //       ),
-    //     );
-    //   } else {
-    //     return MealList();
-    //   }
-    // }
-
     Widget loading() {
       if (tracker != null) {
         return Scaffold(

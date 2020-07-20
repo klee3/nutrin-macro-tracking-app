@@ -30,37 +30,45 @@ class _NavigationBarState extends State<NavigationBar> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: _widgetOptions.elementAt(_selectedIndex),
-      bottomNavigationBar: SizedBox(
-        height: MediaQuery.of(context).size.height / 10.5,
-        child: BottomNavigationBar(
-          items: <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.multiline_chart),
-              title: Text(
-                "Stats",
-                style: TextStyle(fontFamily: "OpenSans", fontSize: 10),
+    var user = Provider.of<User>(context);
+    return MultiProvider(
+      providers: [
+        StreamProvider<Tracker>.value(
+          value: DatabaseService(uid: user.uid).tracker,
+        ),
+      ],
+      child: Scaffold(
+        body: _widgetOptions.elementAt(_selectedIndex),
+        bottomNavigationBar: SizedBox(
+          height: MediaQuery.of(context).size.height / 10.5,
+          child: BottomNavigationBar(
+            items: <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: Icon(Icons.multiline_chart),
+                title: Text(
+                  "Stats",
+                  style: TextStyle(fontFamily: "OpenSans", fontSize: 10),
+                ),
               ),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              title: Text(
-                "Home",
-                style: TextStyle(fontFamily: "OpenSans", fontSize: 10),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home),
+                title: Text(
+                  "Home",
+                  style: TextStyle(fontFamily: "OpenSans", fontSize: 10),
+                ),
               ),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.settings),
-              title: Text(
-                "Settings",
-                style: TextStyle(fontFamily: "OpenSans", fontSize: 10),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.settings),
+                title: Text(
+                  "Settings",
+                  style: TextStyle(fontFamily: "OpenSans", fontSize: 10),
+                ),
               ),
-            ),
-          ],
-          currentIndex: _selectedIndex,
-          selectedItemColor: Theme.of(context).primaryColor,
-          onTap: _onItemTapped,
+            ],
+            currentIndex: _selectedIndex,
+            selectedItemColor: Theme.of(context).primaryColor,
+            onTap: _onItemTapped,
+          ),
         ),
       ),
     );

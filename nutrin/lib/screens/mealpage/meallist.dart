@@ -27,15 +27,12 @@ class _MealListState extends State<MealList> {
               var currentMeal = meals[index];
               return generateMeal(currentMeal, index);
             },
-            // separatorBuilder: (BuildContext context, int index) =>
-            //     const Divider(),
             itemCount: meals.length),
       );
     } else {
       return Container(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-        child: CircularProgressIndicator(),
+        height: 0,
+        width: 0,
       );
     }
   }
@@ -119,77 +116,82 @@ class _MealListState extends State<MealList> {
   }
 
   Widget generateMeal(MealModel currentMeal, int index) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        Container(
-          width: MediaQuery.of(context).size.width,
-          padding: EdgeInsets.only(left: 15, right: 15),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Container(
-                width: MediaQuery.of(context).size.width * .75,
-                decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor,
-                  borderRadius: BorderRadius.all(Radius.circular(30.0) //
-                      ),
-                ),
-                child: Text(
-                  currentMeal.mealName.toUpperCase(),
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontFamily: "OpenSans", color: Colors.white),
+    var user = Provider.of<User>(context);
+    var children2 = <Widget>[
+      Container(
+        width: MediaQuery.of(context).size.width,
+        padding: EdgeInsets.only(left: 15, right: 15),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Container(
+              width: MediaQuery.of(context).size.width * .75,
+              decoration: BoxDecoration(
+                color: Theme.of(context).primaryColor,
+                borderRadius: BorderRadius.all(Radius.circular(30.0) //
+                    ),
+              ),
+              child: Text(
+                currentMeal.mealName.toUpperCase(),
+                textAlign: TextAlign.center,
+                style: TextStyle(fontFamily: "OpenSans", color: Colors.white),
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                var tracker = Provider.of<Tracker>(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SearchPage(currentMeal.mealName),
+                  ),
+                );
+              },
+              child: Container(
+                width: 50,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Icon(
+                      Icons.add_circle,
+                      size: 25,
+                      color: Theme.of(context).primaryColor,
+                    )
+                  ],
                 ),
               ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => SearchPage(currentMeal.mealName)),
-                  );
-                },
-                child: Container(
-                  width: 50,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      // Text("ADD",
-                      //     style: TextStyle(
-                      //       fontSize: 10,
-                      //     )),
-                      Icon(
-                        Icons.add_circle,
-                        size: 25,
-                        color: Theme.of(context).primaryColor,
-                      )
-                    ],
-                  ),
-                ),
-              )
-            ],
-          ),
+            )
+          ],
         ),
-        Container(
-          margin: const EdgeInsets.all(15.0),
-          padding: const EdgeInsets.all(3.0),
-          decoration: BoxDecoration(
-            border: Border.all(color: Theme.of(context).primaryColor),
-            borderRadius: BorderRadius.all(Radius.circular(15.0) //
-                ),
-          ),
-          child: foodtiles(currentMeal),
-          // ListView.separated(
-          //   shrinkWrap: true,
-          //   itemCount: currentMeal.foods.length,
-          //   separatorBuilder: (BuildContext context, int index) =>
-          //       const Divider(),
-          //   itemBuilder: (BuildContext context, int index) {
-          //     return generateFoodTile(currentMeal, index);
-          //   },
-          // ),
-        ),
-      ],
+      ),
+      boxOutline(currentMeal),
+    ];
+    return StreamProvider.value(
+      value: DatabaseService(uid: user.uid).tracker,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: children2,
+      ),
     );
+  }
+
+  Widget boxOutline(MealModel currentMeal) {
+    if (currentMeal.foods.length == 0) {
+      return Container(
+        width: 0,
+        height: 0,
+      );
+    } else {
+      return Container(
+        margin: const EdgeInsets.all(15.0),
+        padding: const EdgeInsets.all(3.0),
+        decoration: BoxDecoration(
+          border: Border.all(color: Theme.of(context).primaryColor),
+          borderRadius: BorderRadius.all(Radius.circular(15.0) //
+              ),
+        ),
+        child: foodtiles(currentMeal),
+      );
+    }
   }
 }

@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mobileapp/model/user.dart';
+import 'package:mobileapp/services/database.dart';
+import 'package:provider/provider.dart';
 
 class CreateNewFoodPage extends StatefulWidget {
   @override
@@ -45,6 +48,8 @@ class _CreateNewFoodPageState extends State<CreateNewFoodPage> {
 
   @override
   Widget build(BuildContext context) {
+    var user = Provider.of<User>(context);
+    var db = DatabaseService(uid: user.uid);
     return Scaffold(
       appBar: AppBar(
         title: Row(
@@ -77,6 +82,13 @@ class _CreateNewFoodPageState extends State<CreateNewFoodPage> {
                 onPressed: () {
                   if (_foodFormKey.currentState.validate()) {
                     print("YEs");
+                    db.createNewPersonalFood(
+                        nameController.text,
+                        carbsController.text,
+                        proteinController.text,
+                        fatController.text,
+                        servingSizeController.text,
+                        dropDownValue.toString());
                   }
                 },
               )
@@ -154,6 +166,7 @@ class _CreateNewFoodPageState extends State<CreateNewFoodPage> {
             ),
             Container(
               width: 100,
+              height: 50,
               child: TextFormField(
                 keyboardType: numeric
                     ? TextInputType.numberWithOptions()

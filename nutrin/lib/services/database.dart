@@ -46,6 +46,22 @@ class DatabaseService {
         .setData({'personalNutrients': nutrients}, merge: true);
   }
 
+  Future createNewPersonalFood(String name, String carbs, String protein,
+      String fat, String serving, String unit) async {
+    return await trackerCollection.document(uid).setData({
+      'userFoods': [
+        {
+          'name': name,
+          'carbohydrates': carbs,
+          'protein': protein,
+          'fat': fat,
+          'serving': serving,
+          'unit': unit,
+        }
+      ]
+    }, merge: true);
+  }
+
   // TODO: edit object then use to map
   // TODO: add foods up (sum total value)
   Future updateMeals(String mealName, List<TrackedFood> foods) async {

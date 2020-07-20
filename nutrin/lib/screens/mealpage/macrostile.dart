@@ -190,10 +190,9 @@ class _MacroTileState extends State<MacroTile> {
           ));
     } else {
       return Container(
-          // height: MediaQuery.of(context).size.height / 3,
-          // width: MediaQuery.of(context).size.width,
-          // child: CircularProgressIndicator(),
-          );
+        height: 0,
+        width: 0,
+      );
     }
   }
 
