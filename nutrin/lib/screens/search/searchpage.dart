@@ -21,7 +21,7 @@ class _SearchPageState extends State<SearchPage> {
   var _searchQuery = TextEditingController();
   bool _isSearching = false;
   String _error;
-  List<TrackedFood> _results = List();
+  List<int> _results = List();
   FutureBuilder<List<TrackedFood>> searchResults;
   Timer debounceTimer;
 
@@ -62,7 +62,8 @@ class _SearchPageState extends State<SearchPage> {
       _results = List();
     });
 
-    final foods = await FoodClient.foodQueryWithId(query);
+    var client = FoodClient();
+    final foods = await client.foodQueryForId(query);
     if (this._searchQuery.text == query && this.mounted) {
       setState(() {
         _isSearching = false;
@@ -164,7 +165,7 @@ class _SearchPageState extends State<SearchPage> {
               ],
             ),
           ),
-          buildBody(context),
+          // buildBody(context),
           // FutureBuilder<List<TrackedFood>>(
           //   future: searchResults,
           //   builder: (context, snapshot) {
@@ -215,7 +216,7 @@ class _SearchPageState extends State<SearchPage> {
         child: Text("Begin search by typing in seach bar"),
       );
     } else {
-      ListView.builder(
+      return ListView.builder(
           itemCount: _results.length,
           padding: EdgeInsets.symmetric(vertical: 8.0),
           itemBuilder: (BuildContext context, int index) {

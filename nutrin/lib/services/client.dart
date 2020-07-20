@@ -6,10 +6,17 @@ import 'package:http/http.dart' as http;
 import 'package:mobileapp/model/tracked_food.dart';
 
 class FoodClient {
-  static final url =
+  final url =
       "https://api.nal.usda.gov/fdc/v1/foods/list?api_key=OwOopadFaacSp65Vps9UTkNTWlVUXOFFMOy6jgsf";
+  var apiKey;
 
-  static Future<List<int>> foodQueryForId(String food) async {
+  init() {
+    load();
+    apiKey = env.containsKey('APIKEY') ? env['APIKEY'] : Error();
+  }
+
+  Future<List<int>> foodQueryForId(String food) async {
+    List<int> listOfFdcids;
     var body = jsonEncode({
       "query": food,
       "dataType": ["Foundation", "SR Legacy"],
@@ -21,31 +28,50 @@ class FoodClient {
     var header = {'Content-Type': 'application/json'};
     var response = await http.post(url, body: body, headers: header);
     if (response.statusCode == 200) {
-      return json.decode(response.body).toList().map((e) => (extractFdcids(e)));
+      listOfFdcids = json
+          .decode(response.body)
+          .map((val) => extractFdcids(val))
+          .toList()
+          .map((d) => d as int)
+          .toList();
     } else {
       throw Exception("Please try again");
     }
+    var bodyForSearch = jsonEncode({
+      "fdcIds": listOfFdcids,
+      "format": "abridged",
+      // "nutrients": [203, 204, 205]
+    });
+    var headerForSearch = {'Content-Type': 'application/json'};
+    final finalResponse =
+        await http.post(url, body: bodyForSearch, headers: headerForSearch);
+    if (finalResponse.statusCode == 200) {
+      print(finalResponse.body);
+      // return TrackedFood.fromJson(json.decode(response.body));
+    } else {
+      throw Exception("Failed to retrieve foods");
+    }
   }
 
-  static Future<List<TrackedFood>> foodQueryWithId(String food) async {
-    Future<List<int>> fdcids = foodQueryForId(food);
-    print(fdcids);
-    // var body = jsonEncode({
-    //   "fdcIds": fdcids,
-    //   "format": "abridged",
-    //   // "nutrients": [203, 204, 205]
-    // });
-    // var header = {'Content-Type': 'application/json'};
-    // final response = await http.post(url, body: body, headers: header);
-    // if (response.statusCode == 200) {
-    //   print(response.body);
-    //   // return TrackedFood.fromJson(json.decode(response.body));
-    // } else {
-    //   throw Exception("Failed to retrieve foods");
-    // }
-  }
+  // Future<List<int>> foodQueryWithId(String food) async {
+  //   Future<List<int>> fdcids = foodQueryForId("cake");
+  //   print(fdcids);
+  //   var body = jsonEncode({
+  //     "fdcIds": fdcids,
+  //     "format": "abridged",
+  //     // "nutrients": [203, 204, 205]
+  //   });
+  //   var header = {'Content-Type': 'application/json'};
+  //   final response = await http.post(url, body: body, headers: header);
+  //   if (response.statusCode == 200) {
+  //     print(response.body);
+  //     // return TrackedFood.fromJson(json.decode(response.body));
+  //   } else {
+  //     throw Exception("Failed to retrieve foods");
+  //   }
+  // }
 
-  static extractFdcids(Map<String, dynamic> rawJson) {
+  int extractFdcids(Map<String, dynamic> rawJson) {
     return rawJson.containsKey('fdcId') ? rawJson['fdcId'] : '000';
   }
 }
