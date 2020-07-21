@@ -2,10 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mobileapp/model/user.dart';
+import 'package:mobileapp/screens/search/searchpage.dart';
 import 'package:mobileapp/services/database.dart';
 import 'package:provider/provider.dart';
 
 class CreateNewFoodPage extends StatefulWidget {
+  final String mealName;
+  const CreateNewFoodPage(this.mealName);
+
   @override
   _CreateNewFoodPageState createState() => _CreateNewFoodPageState();
 }
@@ -29,8 +33,6 @@ class _CreateNewFoodPageState extends State<CreateNewFoodPage> {
 
   @override
   void dispose() {
-    // Clean up the controller when the widget is removed from the widget tree.
-    // This also removes the _printLatestValue listener.
     nameController.dispose();
     carbsController.dispose();
     proteinController.dispose();
@@ -89,6 +91,12 @@ class _CreateNewFoodPageState extends State<CreateNewFoodPage> {
                         fatController.text,
                         servingSizeController.text,
                         dropDownValue.toString());
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SearchPage(widget.mealName),
+                      ),
+                    );
                   }
                 },
               )

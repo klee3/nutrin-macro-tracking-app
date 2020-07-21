@@ -63,4 +63,11 @@ class TrackedFood {
       // 'vitaminC': _vitaminC,
     };
   }
+
+  String calculateCalories() {
+    return ((((double.parse(carbohydrates) + double.parse(protein)) * 4) +
+            (double.parse(fat) * 9)))
+        .round()
+        .toString();
+  }
 }

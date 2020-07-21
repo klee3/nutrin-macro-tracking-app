@@ -1,10 +1,12 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mobileapp/model/directory.dart';
 import 'package:mobileapp/model/tracked_food.dart';
 import 'package:mobileapp/model/tracker.dart';
 import 'package:mobileapp/model/user.dart';
 import 'package:mobileapp/screens/search/createnewfood.dart';
+import 'package:mobileapp/screens/search/foodpage.dart';
 import 'package:mobileapp/services/client.dart';
 import 'package:mobileapp/services/database.dart';
 import 'package:provider/provider.dart';
@@ -24,6 +26,7 @@ class _SearchPageState extends State<SearchPage> {
   bool _isSearching = false;
   String _error;
   List<int> _results = List();
+  List<TrackedFood> userFoods;
   FutureBuilder<List<TrackedFood>> searchResults;
   Timer debounceTimer;
 
@@ -117,11 +120,11 @@ class _SearchPageState extends State<SearchPage> {
     var user = Provider.of<User>(context);
     return StreamProvider.value(
       value: DatabaseService(uid: user.uid).tracker,
-      child: searchPage(),
+      child: searchPage(context),
     );
   }
 
-  Widget searchPage() {
+  Widget searchPage(BuildContext context) {
     return MaterialApp(
       home: DefaultTabController(
         length: 2,
@@ -131,7 +134,7 @@ class _SearchPageState extends State<SearchPage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => CreateNewFoodPage(),
+                  builder: (context) => CreateNewFoodPage(widget.mealName),
                 ),
               );
             },
@@ -143,9 +146,48 @@ class _SearchPageState extends State<SearchPage> {
           ),
           body: TabBarView(
             children: [
-              Container(),
               ListView.builder(
                   itemBuilder: (BuildContext context, int index) {}),
+              ListView.builder(
+                  itemCount: userFoods.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    var tracker = Provider.of<Tracker>(context);
+                    userFoods = tracker.directory.foods;
+                    TrackedFood food = userFoods[index];
+                    return Card(
+                      child: ListTile(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  FoodPage(widget.mealName, food),
+                            ),
+                          );
+                        },
+                        title: Text(food.name),
+                        subtitle: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text(food.serving + " " + food.unit),
+                          ],
+                        ),
+                        trailing: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            Text(food.carbohydrates +
+                                "C " +
+                                food.protein +
+                                "P " +
+                                food.fat +
+                                "F "),
+                            Text(food.calculateCalories() + " CAL"),
+                          ],
+                        ),
+                      ),
+                    );
+                  }),
             ],
           ),
           appBar: AppBar(

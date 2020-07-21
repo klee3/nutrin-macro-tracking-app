@@ -1,3 +1,4 @@
+import 'package:mobileapp/model/directory.dart';
 import 'package:mobileapp/model/mealmodel.dart';
 
 class Tracker {
@@ -11,6 +12,7 @@ class Tracker {
   final String _goal;
   Map<String, double> _personalNutrients;
   List<MealModel> _meals;
+  Directory _directory;
 
   Tracker(
       this._name,
@@ -22,9 +24,12 @@ class Tracker {
       this._activityLevel,
       this._goal,
       this._personalNutrients,
-      this._meals);
+      this._meals,
+      this._directory);
 
   List<MealModel> get meals => _meals;
 
   Map<String, double> get personalNutrients => _personalNutrients;
+
+  Directory get directory => _directory;
 }

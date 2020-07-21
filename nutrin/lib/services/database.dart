@@ -13,14 +13,15 @@ class DatabaseService {
   final CollectionReference trackerCollection =
       Firestore.instance.collection('Tracker');
 
-  // collection referance for avaliblefoods
-  final CollectionReference avalibleFoodsCollection =
-      Firestore.instance.collection("AvalibleFoods");
-
   // TODO: should use enum
   // TODO: coupled with tracker
   Future createNewUser(String name, bool metric, String sex, double height,
       double weight, int age, double activityLevel, String goal) async {
+    String currentDate = DateTime.now().day.toString() +
+        "/" +
+        DateTime.now().month.toString() +
+        "/" +
+        DateTime.now().year.toString();
     return await trackerCollection.document(uid).setData({
       'name': name,
       'metric': metric,
@@ -30,7 +31,8 @@ class DatabaseService {
       'age': age,
       'activityLevel': activityLevel,
       'goal': goal,
-      'meals': [
+      'userFoods': [],
+      currentDate: [
         {'mealName': 'breakfast', 'foods': []},
         {'mealName': 'lunch', 'foods': []},
         {'mealName': 'dinner', 'foods': []},
@@ -64,24 +66,25 @@ class DatabaseService {
 
   // TODO: edit object then use to map
   // TODO: add foods up (sum total value)
-  Future updateMeals(String mealName, List<TrackedFood> foods) async {
+  Future updateMeals(String mealName, List<TrackedFood> foods,
+      [String date]) async {
+    var currentDate;
+    date == null
+        ? currentDate = DateTime.now().day.toString() +
+            "/" +
+            DateTime.now().month.toString() +
+            "/" +
+            DateTime.now().year.toString()
+        : currentDate = date;
+
     return await trackerCollection.document(uid).setData({
-      'meals': [
+      currentDate: [
         {
           'mealName': mealName,
-          'foods': foods.map((food) => food.toMap()).toList()
+          'foods': foods.map((food) => food.toMap()).toList(),
         }
       ]
     }, merge: true);
-  }
-
-  // get avalible foods stream
-  Stream<Directory> get avaliblefoods {
-    return avalibleFoodsCollection.snapshots().map(_directoryFromSnapshot);
-  }
-
-  Directory _directoryFromSnapshot(QuerySnapshot snapshot) {
-    var foods = <TrackedFood>[];
   }
 
   // get tracker stream
@@ -95,21 +98,22 @@ class DatabaseService {
   // get tracker list from snapshot
   Tracker _trackerFromSnapshot(DocumentSnapshot snapshot) {
     return Tracker(
-        snapshot.data['name'],
-        snapshot.data['sex'],
-        snapshot.data['metric'],
-        snapshot.data['height'],
-        snapshot.data['weight'],
-        snapshot.data['age'],
-        snapshot.data['activityLevel'],
-        snapshot.data['goal'],
-        Map<dynamic, dynamic>.from(snapshot.data['personalNutrients'])
-            .map((key, value) => MapEntry(key.toString(), value.toDouble())),
-        List<dynamic>.from(snapshot.data['meals'])
-            .map((mealJson) => MealModel(
-                mealJson['mealName'],
-                List<dynamic>.from(mealJson['foods'])
-                    .map((foodJson) => TrackedFood(
+      snapshot.data['name'],
+      snapshot.data['sex'],
+      snapshot.data['metric'],
+      snapshot.data['height'],
+      snapshot.data['weight'],
+      snapshot.data['age'],
+      snapshot.data['activityLevel'],
+      snapshot.data['goal'],
+      Map<dynamic, dynamic>.from(snapshot.data['personalNutrients'])
+          .map((key, value) => MapEntry(key.toString(), value.toDouble())),
+      List<dynamic>.from(snapshot.data['meals'])
+          .map(
+            (mealJson) => MealModel(
+              mealJson['mealName'],
+              List<dynamic>.from(mealJson['foods'])
+                  .map((foodJson) => TrackedFood(
                         foodJson['name'],
                         // foodJson['calories'].toDouble(),
                         foodJson['protein'],
@@ -124,9 +128,22 @@ class DatabaseService {
                         // foodJson['vitaminA'].toDouble(),
                         // foodJson['vitaminC'].toDouble(),
                         foodJson['serving'],
-                        foodJson['unit']))
-                    .toList()))
-            .toList());
+                        foodJson['unit'],
+                      ))
+                  .toList(),
+            ),
+          )
+          .toList(),
+      Directory(List<dynamic>.from(snapshot.data['userFoods'])
+          .map((foodJson) => TrackedFood(
+              foodJson['name'],
+              foodJson['protein'],
+              foodJson['carbohydrates'],
+              foodJson['fat'],
+              foodJson['serving'],
+              foodJson['unit']))
+          .toList()),
+    );
   }
 
   _generateNutrients(bool metric, String sex, double height, double weight,
