@@ -149,7 +149,7 @@ class _SearchPageState extends State<SearchPage> {
               ListView.builder(
                   itemBuilder: (BuildContext context, int index) {}),
               ListView.builder(
-                  itemCount: userFoods.length,
+                  itemCount: userFoods == null ? 0 : userFoods.length,
                   itemBuilder: (BuildContext context, int index) {
                     var tracker = Provider.of<Tracker>(context);
                     userFoods = tracker.directory.foods;

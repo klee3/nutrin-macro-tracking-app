@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobileapp/services/auth.dart';
+import 'package:mobileapp/services/database.dart';
 import 'package:provider/provider.dart';
 import 'package:mobileapp/model/tracker.dart';
 import 'package:mobileapp/model/user.dart';
@@ -14,6 +15,7 @@ class Settings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var user = Provider.of<User>(context);
+    var db = DatabaseService(uid: user.uid);
     var tracker = Provider.of<Tracker>(context);
 
     return Scaffold(
@@ -52,16 +54,19 @@ class Settings extends StatelessWidget {
                     child: Text(
                       "Change Macros",
                       textAlign: TextAlign.left,
-                      style: TextStyle(color: Theme.of(context).primaryColor),
+                      style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                          fontFamily: 'OpenSans',
+                          fontSize: 20),
                     ),
                   ),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                    macroTextFeild("carbohydrates", tracker),
-                    macroTextFeild("protein", tracker),
-                    macroTextFeild("fat", tracker),
+                    macroTextFeild("carbohydrates", tracker, carbs),
+                    macroTextFeild("protein", tracker, protein),
+                    macroTextFeild("fat", tracker, fat),
                   ],
                 ),
                 Row(
@@ -80,9 +85,26 @@ class Settings extends StatelessWidget {
                         ),
                         onPressed: () {
                           if (_formkey.currentState.validate()) {
+                            tracker.personalNutrients.update(
+                                'calories',
+                                (value) =>
+                                    (tracker.personalNutrients[
+                                                'carbohydrates'] +
+                                            tracker
+                                                .personalNutrients['protein']) *
+                                        4.0 +
+                                    (tracker.personalNutrients['fat'] * 9.0));
+                            db.updatePersonalNutrients(
+                                tracker.personalNutrients);
                             Scaffold.of(context).showSnackBar(
                               SnackBar(
                                 content: Text("Macros have changed."),
+                              ),
+                            );
+                          } else {
+                            Scaffold.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text("Please check your inputs."),
                               ),
                             );
                           }
@@ -114,7 +136,7 @@ class Settings extends StatelessWidget {
         ));
   }
 
-  Widget macroTextFeild(String name, Tracker tracker) {
+  Widget macroTextFeild(String name, Tracker tracker, int macro) {
     return Container(
       height: 100,
       width: 100,

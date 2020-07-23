@@ -42,6 +42,14 @@ class DatabaseService {
     });
   }
 
+  Future setDefaultMacros(String name, bool metric, String sex, double height,
+      double weight, int age, double activityLevel, String goal) async {
+    return await trackerCollection.document(uid).setData({
+      'personalNutrients': _generateNutrients(
+          metric, sex, height, weight, age, activityLevel, goal)
+    }, merge: true);
+  }
+
   Future updatePersonalNutrients(Map<String, double> nutrients) async {
     return await trackerCollection
         .document(uid)
