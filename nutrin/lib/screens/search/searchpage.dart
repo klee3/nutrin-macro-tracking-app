@@ -118,13 +118,15 @@ class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     var user = Provider.of<User>(context);
+
     return StreamProvider.value(
       value: DatabaseService(uid: user.uid).tracker,
-      child: searchPage(context),
+      child: searchPage(context, user.uid),
     );
   }
 
-  Widget searchPage(BuildContext context) {
+  Widget searchPage(BuildContext context, String uid) {
+    var db = DatabaseService(uid: uid);
     return MaterialApp(
       home: DefaultTabController(
         length: 2,
@@ -148,46 +150,7 @@ class _SearchPageState extends State<SearchPage> {
             children: [
               ListView.builder(
                   itemBuilder: (BuildContext context, int index) {}),
-              ListView.builder(
-                  itemCount: userFoods == null ? 0 : userFoods.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    var tracker = Provider.of<Tracker>(context);
-                    userFoods = tracker.directory.foods;
-                    TrackedFood food = userFoods[index];
-                    return Card(
-                      child: ListTile(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  FoodPage(widget.mealName, food),
-                            ),
-                          );
-                        },
-                        title: Text(food.name),
-                        subtitle: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Text(food.serving + " " + food.unit),
-                          ],
-                        ),
-                        trailing: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            Text(food.carbohydrates +
-                                "C " +
-                                food.protein +
-                                "P " +
-                                food.fat +
-                                "F "),
-                            Text(food.calculateCalories() + " CAL"),
-                          ],
-                        ),
-                      ),
-                    );
-                  }),
+              myFoodsView(context),
             ],
           ),
           appBar: AppBar(
@@ -280,6 +243,48 @@ class _SearchPageState extends State<SearchPage> {
         ),
       ),
     );
+  }
+
+  ListView myFoodsView(BuildContext context) {
+    return ListView.builder(
+        itemCount: userFoods.length,
+        itemBuilder: (BuildContext context, int index) {
+          var tracker = Provider.of<Tracker>(context);
+          userFoods = tracker.directory.foods;
+          TrackedFood food = userFoods[index];
+          return Card(
+            child: ListTile(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => FoodPage(widget.mealName, food),
+                  ),
+                );
+              },
+              title: Text(food.name),
+              subtitle: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(food.serving + " " + food.unit),
+                ],
+              ),
+              trailing: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Text(food.carbohydrates +
+                      "C " +
+                      food.protein +
+                      "P " +
+                      food.fat +
+                      "F "),
+                  Text(food.calculateCalories() + " CAL"),
+                ],
+              ),
+            ),
+          );
+        });
   }
 
   Widget buildBody(BuildContext context) {

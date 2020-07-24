@@ -151,7 +151,7 @@ class _CreateNewFoodPageState extends State<CreateNewFoodPage> {
                       child: Text(value),
                     );
                   }).toList(),
-                )
+                ),
               ],
             ),
           ],
