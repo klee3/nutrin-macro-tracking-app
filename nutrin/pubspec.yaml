@@ -34,8 +34,7 @@ dependencies:
   folding_cell: "^0.1.0"
   http: ^0.12.2
   dotenv: ^2.0.0
-  flappy_search_bar: ^1.4.1
-  oauth2: ^1.6.1
+  custom_navigator: ^0.3.0
 
 
 

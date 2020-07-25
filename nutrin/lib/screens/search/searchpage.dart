@@ -150,7 +150,7 @@ class _SearchPageState extends State<SearchPage> {
             children: [
               ListView.builder(
                   itemBuilder: (BuildContext context, int index) {}),
-              myFoodsView(context),
+              myFoodsView(),
             ],
           ),
           appBar: AppBar(
@@ -218,25 +218,6 @@ class _SearchPageState extends State<SearchPage> {
                     ),
                   ),
                 ),
-                // buildBody(context),
-                // FutureBuilder<List<TrackedFood>>(
-                //   future: searchResults,
-                //   builder: (context, snapshot) {
-                //     if (snapshot.hasData) {
-                //       return Expanded(
-                //           child:
-                //               Container(width: 100, height: 100, child: Text("YEs")));
-                //     } else {
-                //       return Center(
-                //         child: Container(
-                //             child: CircularProgressIndicator(
-                //           backgroundColor: Theme.of(context).primaryColor,
-                //           valueColor: AlwaysStoppedAnimation<Color>(Colors.white30),
-                //         )),
-                //       );
-                //     }
-                //   },
-                // ),
               ],
             ),
           ),
@@ -245,9 +226,9 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
 
-  ListView myFoodsView(BuildContext context) {
+  ListView myFoodsView() {
     return ListView.builder(
-        itemCount: userFoods.length,
+        itemCount: userFoods == null ? 1 : userFoods.length,
         itemBuilder: (BuildContext context, int index) {
           var tracker = Provider.of<Tracker>(context);
           userFoods = tracker.directory.foods;

@@ -5,6 +5,7 @@ import 'package:mobileapp/model/tracked_food.dart';
 import 'package:mobileapp/model/tracker.dart';
 import 'package:mobileapp/model/user.dart';
 import 'package:mobileapp/screens/search/searchpage.dart';
+import 'package:mobileapp/screens/search/searchtest.dart';
 import 'package:mobileapp/services/database.dart';
 import 'package:provider/provider.dart';
 
@@ -139,11 +140,15 @@ class _MealListState extends State<MealList> {
             ),
             GestureDetector(
               onTap: () {
-                var tracker = Provider.of<Tracker>(context);
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => SearchPage(currentMeal.mealName),
+                    builder: (context) {
+                      return StreamProvider<Tracker>.value(
+                        value: DatabaseService(uid: user.uid).tracker,
+                        child: SearchTest(),
+                      );
+                    },
                   ),
                 );
               },
@@ -166,7 +171,7 @@ class _MealListState extends State<MealList> {
       ),
       boxOutline(currentMeal),
     ];
-    return StreamProvider.value(
+    return StreamProvider<Tracker>.value(
       value: DatabaseService(uid: user.uid).tracker,
       child: Column(
         mainAxisSize: MainAxisSize.min,
