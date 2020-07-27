@@ -121,12 +121,11 @@ class _SearchPageState extends State<SearchPage> {
 
     return StreamProvider.value(
       value: DatabaseService(uid: user.uid).tracker,
-      child: searchPage(context, user.uid),
+      child: searchPage(context),
     );
   }
 
-  Widget searchPage(BuildContext context, String uid) {
-    var db = DatabaseService(uid: uid);
+  Widget searchPage(BuildContext context) {
     return MaterialApp(
       home: DefaultTabController(
         length: 2,

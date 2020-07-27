@@ -17,9 +17,7 @@ class MyApp extends StatelessWidget {
         StreamProvider<User>.value(
           value: AuthService().user,
         ),
-        // StreamProvider<Tracker>.value(
-        //   value: DatabaseService(uid: Provider.of<User>(context).uid).tracker,
-        // ),
+        ChangeNotifierProvider(),
       ],
       child: MaterialApp(
         theme: ThemeData(

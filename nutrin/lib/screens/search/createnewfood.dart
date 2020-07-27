@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mobileapp/model/user.dart';
-import 'package:mobileapp/screens/search/searchpage.dart';
+import 'package:mobileapp/screens/search/searchtest.dart';
 import 'package:mobileapp/services/database.dart';
 import 'package:provider/provider.dart';
 
@@ -94,7 +94,7 @@ class _CreateNewFoodPageState extends State<CreateNewFoodPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => SearchPage(widget.mealName),
+                        builder: (context) => Search(widget.mealName),
                       ),
                     );
                   }

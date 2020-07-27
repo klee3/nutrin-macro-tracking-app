@@ -2,8 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mobileapp/model/mealmodel.dart';
 import 'package:mobileapp/model/tracker.dart';
-import 'package:mobileapp/model/user.dart';
-import 'package:mobileapp/services/database.dart';
 import 'package:provider/provider.dart';
 
 class MacroTile extends StatefulWidget {
@@ -77,6 +75,7 @@ class _MacroTileState extends State<MacroTile> {
 
   @override
   Widget build(BuildContext context) {
+    bool showMacros = true;
     var tracker = Provider.of<Tracker>(context);
 
     if (tracker != null) {
@@ -96,7 +95,8 @@ class _MacroTileState extends State<MacroTile> {
       double totalProtein =
           proteinPerMeal.reduce((value, element) => value + element);
 
-      return Container(
+      if (showMacros) {
+        return Container(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height * .35,
           padding: EdgeInsets.only(left: 25, right: 25, top: 15),
@@ -187,7 +187,23 @@ class _MacroTileState extends State<MacroTile> {
                 )
               ],
             ),
-          ));
+          ),
+        );
+      } else {
+        return Container(
+          width: MediaQuery.of(context).size.width,
+          height: 50,
+          child: SwitchListTile(
+            onChanged: (bool val) {
+              setState(() {
+                showMacros = val;
+              });
+            },
+            value: showMacros,
+            secondary: Text('Show Macronutrients'),
+          ),
+        );
+      }
     } else {
       return Container(
         height: 0,

@@ -4,7 +4,7 @@ import 'package:mobileapp/model/mealmodel.dart';
 import 'package:mobileapp/model/tracked_food.dart';
 import 'package:mobileapp/model/tracker.dart';
 import 'package:mobileapp/model/user.dart';
-import 'package:mobileapp/screens/search/searchpage.dart';
+import 'package:custom_navigator/custom_navigator.dart';
 import 'package:mobileapp/screens/search/searchtest.dart';
 import 'package:mobileapp/services/database.dart';
 import 'package:provider/provider.dart';
@@ -146,7 +146,10 @@ class _MealListState extends State<MealList> {
                     builder: (context) {
                       return StreamProvider<Tracker>.value(
                         value: DatabaseService(uid: user.uid).tracker,
-                        child: SearchTest(),
+                        child: CustomNavigator(
+                          home: Search(currentMeal.mealName),
+                          pageRoute: PageRoutes.materialPageRoute,
+                        ),
                       );
                     },
                   ),
