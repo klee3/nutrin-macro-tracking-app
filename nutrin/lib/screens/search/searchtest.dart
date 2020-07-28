@@ -58,7 +58,19 @@ class _SearchTestState extends State<Search> {
     final _searchFormkey = GlobalKey<FormState>();
     var _searchQuery = TextEditingController();
     return AppBar(
-      titleSpacing: 0,
+      centerTitle: true,
+      title: Row(
+        children: <Widget>[
+          IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {},
+          ),
+          Text(
+            widget.mealName.substring(0, 1).toUpperCase() +
+                widget.mealName.substring(1, widget.mealName.length),
+          ),
+        ],
+      ),
       backgroundColor: Theme.of(context).primaryColor,
       bottom: TabBar(tabs: <Widget>[
         Tab(
@@ -68,58 +80,6 @@ class _SearchTestState extends State<Search> {
           text: "MY FOODS",
         ),
       ]),
-      title: Column(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(top: 10.0),
-            child: Container(
-                child: Text(widget.mealName.substring(0, 1).toUpperCase() +
-                    widget.mealName.substring(1, widget.mealName.length))),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 5.0),
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              child: Row(
-                children: <Widget>[
-                  Form(
-                    key: _searchFormkey,
-                    child: Row(
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10.0, vertical: 10.0),
-                          child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.grey[200],
-                                borderRadius: new BorderRadius.circular(5.0),
-                              ),
-                              width: MediaQuery.of(context).size.width * .65,
-                              height: 25,
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 8.0),
-                                child: TextField(
-                                  autofocus: true,
-                                  controller: _searchQuery,
-                                  onChanged: (value) {
-                                    print(_searchQuery.text);
-                                  },
-                                  decoration:
-                                      InputDecoration(border: InputBorder.none),
-                                ),
-                              )),
-                        ),
-                      ],
-                    ),
-                  ),
-                  buttons(),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
     );
   }
 

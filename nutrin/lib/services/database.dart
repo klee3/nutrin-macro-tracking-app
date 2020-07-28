@@ -105,6 +105,11 @@ class DatabaseService {
 
   // get tracker list from snapshot
   Tracker _trackerFromSnapshot(DocumentSnapshot snapshot) {
+    var currentDate = DateTime.now().day.toString() +
+        "/" +
+        DateTime.now().month.toString() +
+        "/" +
+        DateTime.now().year.toString();
     return Tracker(
       snapshot.data['name'],
       snapshot.data['sex'],
@@ -116,7 +121,7 @@ class DatabaseService {
       snapshot.data['goal'],
       Map<dynamic, dynamic>.from(snapshot.data['personalNutrients'])
           .map((key, value) => MapEntry(key.toString(), value.toDouble())),
-      List<dynamic>.from(snapshot.data['meals'])
+      List<dynamic>.from(snapshot.data[currentDate])
           .map(
             (mealJson) => MealModel(
               mealJson['mealName'],
