@@ -113,12 +113,28 @@ class _SearchTestState extends State<Search> {
                       ],
                     ),
                   ),
+                  buttons(),
                 ],
               ),
             ),
           ),
         ],
       ),
+    );
+  }
+
+  Widget buttons() {
+    return Row(
+      children: <Widget>[
+        IconButton(
+          icon: Icon(Icons.search),
+          onPressed: () {},
+        ),
+        IconButton(
+          icon: Icon(Icons.camera_alt),
+          onPressed: () {},
+        ),
+      ],
     );
   }
 

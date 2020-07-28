@@ -16,8 +16,7 @@ class MyApp extends StatelessWidget {
       providers: [
         StreamProvider<User>.value(
           value: AuthService().user,
-        ),
-        ChangeNotifierProvider(),
+        )
       ],
       child: MaterialApp(
         theme: ThemeData(

@@ -76,7 +76,15 @@ class _MacroTileState extends State<MacroTile> {
   @override
   Widget build(BuildContext context) {
     bool showMacros = true;
+
+    String macrosStatement = "Hide Macronutrients";
     var tracker = Provider.of<Tracker>(context);
+
+    void _onSwitchChanged(bool value) {
+      setState(() {
+        showMacros = !value;
+      });
+    }
 
     if (tracker != null) {
       var macros = tracker.personalNutrients;
@@ -98,7 +106,7 @@ class _MacroTileState extends State<MacroTile> {
       if (showMacros) {
         return Container(
           width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height * .35,
+          height: MediaQuery.of(context).size.height * .4,
           padding: EdgeInsets.only(left: 25, right: 25, top: 15),
           child: Scaffold(
             body: Column(
@@ -106,7 +114,7 @@ class _MacroTileState extends State<MacroTile> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                  padding: EdgeInsets.all(5.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
@@ -136,7 +144,8 @@ class _MacroTileState extends State<MacroTile> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding:
+                      const EdgeInsets.only(right: 5.0, left: 5.0, top: 5.0),
                   child: Material(
                     elevation: 5,
                     child: Stack(
@@ -171,18 +180,32 @@ class _MacroTileState extends State<MacroTile> {
                   child: macroPanel(totalCalories, macros["calories"].round(),
                       "CAL", Theme.of(context).primaryColor, 45),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      macroPanel(totalCarbs, macros["carbohydrates"].round(),
-                          "CARBS", Color(0xFF03256C)),
-                      macroPanel(totalProtein, macros["protein"].round(), "PRO",
-                          Color(0xFF2A9134)),
-                      macroPanel(totalFat, macros["fat"].round(), "FAT",
-                          Color(0xFFDA4167)),
-                    ],
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    macroPanel(totalCarbs, macros["carbohydrates"].round(),
+                        "CARBS", Color(0xFF03256C)),
+                    macroPanel(totalProtein, macros["protein"].round(), "PRO",
+                        Color(0xFF2A9134)),
+                    macroPanel(totalFat, macros["fat"].round(), "FAT",
+                        Color(0xFFDA4167)),
+                  ],
+                ),
+                Semantics(
+                  child: SwitchListTile(
+                    onChanged: (value) {
+                      print(showMacros);
+                      setState(() {
+                        showMacros = value;
+                        if (value) {
+                          macrosStatement = "Hide Macronutrients";
+                        } else {
+                          macrosStatement = "Show Macronutrients";
+                        }
+                      });
+                    },
+                    value: showMacros,
+                    secondary: Text(macrosStatement),
                   ),
                 )
               ],
@@ -194,12 +217,10 @@ class _MacroTileState extends State<MacroTile> {
           width: MediaQuery.of(context).size.width,
           height: 50,
           child: SwitchListTile(
-            onChanged: (bool val) {
-              setState(() {
-                showMacros = val;
-              });
-            },
             value: showMacros,
+            onChanged: (bool val) {
+              _onSwitchChanged(val);
+            },
             secondary: Text('Show Macronutrients'),
           ),
         );
