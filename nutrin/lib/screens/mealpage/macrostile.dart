@@ -106,75 +106,20 @@ class _MacroTileState extends State<MacroTile> {
       if (showMacros) {
         return Container(
           width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height * .4,
-          padding: EdgeInsets.only(left: 25, right: 25, top: 15),
+          height: MediaQuery.of(context).size.height * .34,
+          padding: EdgeInsets.only(left: 25, right: 25, top: 50),
           child: Scaffold(
             body: Column(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Padding(
-                  padding: EdgeInsets.all(5.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      GestureDetector(
-                        onTap: () {},
-                        child: Icon(
-                          Icons.arrow_back_ios,
-                          color: Colors.grey,
-                        ),
-                      ),
-                      Text(
-                        getFormattedDate(),
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontFamily: 'OpenSans',
-                            fontWeight: FontWeight.bold,
-                            color: Colors.grey),
-                      ),
-                      GestureDetector(
-                        onTap: () {},
-                        child: Icon(
-                          Icons.arrow_forward_ios,
-                          color: Colors.grey,
-                        ),
-                      ),
-                    ],
-                  ),
+                  padding: EdgeInsets.only(bottom: 10.0),
+                  child: dateAndArrows(),
                 ),
                 Padding(
-                  padding:
-                      const EdgeInsets.only(right: 5.0, left: 5.0, top: 5.0),
-                  child: Material(
-                    elevation: 5,
-                    child: Stack(
-                      children: <Widget>[
-                        Container(
-                          height: 10,
-                          width: MediaQuery.of(context).size.width,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(5.0) //
-                                    ),
-                          ),
-                        ),
-                        Container(
-                          height: 10,
-                          width: (totalCalories / macros["calories"].round()) *
-                              (MediaQuery.of(context).size.width),
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).primaryColor,
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(5.0) //
-                                    ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                  ),
+                  padding: const EdgeInsets.all(5.0),
+                  child: calorieBar(totalCalories, macros),
                 ),
                 Container(
                   child: macroPanel(totalCalories, macros["calories"].round(),
@@ -205,7 +150,10 @@ class _MacroTileState extends State<MacroTile> {
                       });
                     },
                     value: showMacros,
-                    secondary: Text(macrosStatement),
+                    secondary: Text(
+                      macrosStatement,
+                      style: TextStyle(fontFamily: "OpenSans"),
+                    ),
                   ),
                 )
               ],
@@ -231,6 +179,66 @@ class _MacroTileState extends State<MacroTile> {
         width: 0,
       );
     }
+  }
+
+  Widget calorieBar(double totalCalories, Map<String, double> macros) {
+    return Material(
+      elevation: 5,
+      child: Stack(
+        children: <Widget>[
+          Container(
+            height: 10,
+            width: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(5.0) //
+                  ),
+            ),
+          ),
+          Container(
+            height: 10,
+            width: (totalCalories / macros["calories"].round()) *
+                (MediaQuery.of(context).size.width),
+            decoration: BoxDecoration(
+              color: Theme.of(context).primaryColor,
+              borderRadius: BorderRadius.all(Radius.circular(5.0) //
+                  ),
+            ),
+          ),
+        ],
+      ),
+      borderRadius: BorderRadius.all(Radius.circular(5.0)),
+    );
+  }
+
+  Widget dateAndArrows() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        GestureDetector(
+          onTap: () {},
+          child: Icon(
+            Icons.arrow_back_ios,
+            color: Colors.grey,
+          ),
+        ),
+        Text(
+          getFormattedDate(),
+          style: TextStyle(
+              fontSize: 20,
+              fontFamily: 'OpenSans',
+              fontWeight: FontWeight.bold,
+              color: Colors.grey),
+        ),
+        GestureDetector(
+          onTap: () {},
+          child: Icon(
+            Icons.arrow_forward_ios,
+            color: Colors.grey,
+          ),
+        ),
+      ],
+    );
   }
 
   Widget macroPanel(double consumed, int total, String macro, Color color,

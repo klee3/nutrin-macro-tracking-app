@@ -39,7 +39,22 @@ class DatabaseService {
       ],
       'personalNutrients': _generateNutrients(
           metric, sex, height, weight, age, activityLevel, goal)
-    });
+    }, merge: true);
+  }
+
+  Future addNewDay() async {
+    String currentDate = DateTime.now().day.toString() +
+        "/" +
+        DateTime.now().month.toString() +
+        "/" +
+        DateTime.now().year.toString();
+    return await trackerCollection.document(uid).setData({
+      currentDate: [
+        {'mealName': 'breakfast', 'foods': []},
+        {'mealName': 'lunch', 'foods': []},
+        {'mealName': 'dinner', 'foods': []},
+      ],
+    }, merge: true);
   }
 
   Future setDefaultMacros(String name, bool metric, String sex, double height,
@@ -97,6 +112,7 @@ class DatabaseService {
 
   // get tracker stream
   Stream<Tracker> get tracker {
+    addNewDay();
     return trackerCollection
         .document(uid)
         .snapshots()
