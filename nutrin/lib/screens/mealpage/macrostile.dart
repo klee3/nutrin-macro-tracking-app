@@ -106,8 +106,8 @@ class _MacroTileState extends State<MacroTile> {
       if (showMacros) {
         return Container(
           width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height * .34,
-          padding: EdgeInsets.only(left: 25, right: 25, top: 35),
+          height: MediaQuery.of(context).size.height * .35,
+          padding: EdgeInsets.only(left: 25, right: 25, top: 45),
           child: Scaffold(
             body: Column(
               mainAxisSize: MainAxisSize.min,

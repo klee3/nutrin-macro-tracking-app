@@ -37,23 +37,31 @@ class _FoodPageState extends State<FoodPage> {
     double protein = double.parse(proteinPerServing);
 
     return Scaffold(
+      appBar: AppBar(
+        iconTheme: IconThemeData(
+          color: Colors.white,
+        ),
+        centerTitle: true,
+        title: Text(
+          widget.food.name,
+          style: TextStyle(
+            color: Colors.white,
+            fontFamily: "OpenSans",
+            fontSize: 25,
+          ),
+        ),
+        backgroundColor: Color(0xFF3C7A89),
+      ),
       resizeToAvoidBottomPadding: false,
-      backgroundColor: Color(0xFF3C7A89),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.only(top: 30.0),
-            child: Text(
-              widget.mealName.substring(0, 1).toUpperCase() +
-                  widget.mealName.substring(1, widget.mealName.length),
-              style: TextStyle(
-                  fontFamily: 'OpenSans', color: Colors.white, fontSize: 25),
-            ),
+            padding: const EdgeInsets.only(top: 8.0),
+            child: macroBar(carbs, protein, fat),
           ),
-          macroBar(carbs, protein, fat),
           Form(
             key: _foodFormKey,
             child: form(carbsPerServing, fatPerServing, proteinPerServing),
@@ -66,7 +74,7 @@ class _FoodPageState extends State<FoodPage> {
                   topRight: const Radius.circular(40.0),
                 )),
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * .65,
+            height: MediaQuery.of(context).size.height * .60,
             child: ListView(
               shrinkWrap: true,
               padding: EdgeInsets.all(8.0),
@@ -142,10 +150,21 @@ class _FoodPageState extends State<FoodPage> {
 
   List<Widget> nutritionTiles() {
     var widgets = <Widget>[];
-    for (int i = 0; i < widget.food.toMap().length; i++) {
+    TrackedFood food = widget.food;
+    for (int i = 0; i < food.toMap().length; i++) {
+      List<String> name =
+          food.toMap().keys.map((name) => name.toString()).toList();
+      List<String> val =
+          food.toMap().values.map((val) => val.toString()).toList();
       widgets.add(
         ListTile(
-          title: Text('item $i'),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text(name[i]),
+              Text(val[i]),
+            ],
+          ),
         ),
       );
     }
@@ -170,7 +189,7 @@ class _FoodPageState extends State<FoodPage> {
               children: <Widget>[
                 Container(
                   decoration: BoxDecoration(
-                    color: Color(0xFF57B8FF),
+                    color: Color(0xFF03256C),
                     borderRadius: new BorderRadius.only(
                       bottomLeft: const Radius.circular(25.0),
                       topLeft: const Radius.circular(25.0),
@@ -192,7 +211,7 @@ class _FoodPageState extends State<FoodPage> {
             child: Stack(
               children: <Widget>[
                 Container(
-                  color: Color(0xFFEF7674),
+                  color: Color(0xFFDA4167),
                 ),
                 Center(
                   child: Text(
@@ -210,7 +229,7 @@ class _FoodPageState extends State<FoodPage> {
                 children: <Widget>[
                   Container(
                     decoration: BoxDecoration(
-                      color: Color(0xFFC5DCA0),
+                      color: Color(0xFF2A9134),
                       borderRadius: new BorderRadius.only(
                         bottomRight: const Radius.circular(25.0),
                         topRight: const Radius.circular(25.0),
@@ -263,19 +282,19 @@ class _FoodPageState extends State<FoodPage> {
                               });
                             }
                           },
-                          style: TextStyle(color: Colors.white),
+                          style: TextStyle(color: Colors.black),
                           decoration: InputDecoration(
                             labelText: "Servings",
                             labelStyle: TextStyle(
-                                color: Colors.white, fontFamily: "OpenSans"),
+                                color: Colors.black, fontFamily: "OpenSans"),
                             enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white),
+                              borderSide: BorderSide(color: Colors.black),
                             ),
                             focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white),
+                              borderSide: BorderSide(color: Colors.black),
                             ),
                             border: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white),
+                              borderSide: BorderSide(color: Colors.black),
                             ),
                           ),
                           controller: serving,
@@ -298,12 +317,12 @@ class _FoodPageState extends State<FoodPage> {
                       "Unit",
                       style: TextStyle(
                           fontFamily: 'OpenSans',
-                          color: Colors.white,
+                          color: Colors.black,
                           fontSize: 15),
                     ),
                     DropdownButton(
                       underline: Container(
-                        color: Colors.white,
+                        color: Colors.black,
                       ),
                       value: dropDownValue,
                       onChanged: (String unit) {
@@ -316,7 +335,7 @@ class _FoodPageState extends State<FoodPage> {
                           value: value,
                           child: Text(
                             value,
-                            style: TextStyle(color: Colors.grey),
+                            style: TextStyle(color: Colors.black),
                           ),
                         );
                       }).toList(),
@@ -335,22 +354,8 @@ class _FoodPageState extends State<FoodPage> {
                 child: IconButton(
                   onPressed: () {
                     if (_foodFormKey.currentState.validate()) {
-                      print("YEs");
-                      List<TrackedFood> trackedFoods;
-                      trackedFoods.add(TrackedFood(
-                          widget.food.name,
-                          (double.parse(carbsPerServing) *
-                                  int.parse(serving.text))
-                              .toString(),
-                          (double.parse(proteinPerServing) *
-                                  int.parse(serving.text))
-                              .toString(),
-                          (double.parse(fatPerServing) *
-                                  int.parse(serving.text))
-                              .toString(),
-                          serving.text,
-                          dropDownValue));
-                      db.updateMeals(widget.mealName, trackedFoods);
+                      sendFoodsToDb(carbsPerServing, proteinPerServing,
+                          fatPerServing, db);
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -359,7 +364,7 @@ class _FoodPageState extends State<FoodPage> {
                       );
                     }
                   },
-                  icon: Icon(Icons.check, color: Colors.white),
+                  icon: Icon(Icons.check, color: Colors.black),
                 ),
               )
             ],
@@ -367,6 +372,20 @@ class _FoodPageState extends State<FoodPage> {
         ],
       ),
     );
+  }
+
+  sendFoodsToDb(String carbsPerServing, String proteinPerServing,
+      String fatPerServing, DatabaseService db) {
+    print("YEs");
+    List<TrackedFood> trackedFoods;
+    trackedFoods.add(TrackedFood(
+        widget.food.name,
+        (double.parse(carbsPerServing) * int.parse(serving.text)).toString(),
+        (double.parse(proteinPerServing) * int.parse(serving.text)).toString(),
+        (double.parse(fatPerServing) * int.parse(serving.text)).toString(),
+        serving.text,
+        dropDownValue));
+    db.updateMeals(widget.mealName, trackedFoods);
   }
 
   Widget macroDisplay(String macro, String macroPerServing) {
@@ -377,13 +396,13 @@ class _FoodPageState extends State<FoodPage> {
           Text(
             macro,
             style: TextStyle(
-                fontFamily: 'OpenSans', color: Colors.white, fontSize: 15),
+                fontFamily: 'OpenSans', color: Colors.black, fontSize: 15),
           ),
           Text(
             (double.parse(macroPerServing) * userInputServing).toString() +
                 " g",
             style: TextStyle(
-                fontFamily: 'OpenSans', color: Colors.white, fontSize: 15),
+                fontFamily: 'OpenSans', color: Colors.black, fontSize: 12),
           ),
         ],
       ),
