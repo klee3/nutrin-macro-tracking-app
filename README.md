@@ -2,7 +2,7 @@
 
 ## why I made it 
 Most food trackers are not accurate: 
-![macros](/readmeimgs/macro.jpg) ![calories](/readmeimgs/calories.jpg)
+![macros](/readmeimgs/macro.jpg =100x20) ![calories](/readmeimgs/calorie.jpg =100x20)
 
 Too many features I did not care for:
 
