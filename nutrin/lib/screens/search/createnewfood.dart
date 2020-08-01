@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mobileapp/model/tracked_food.dart';
 import 'package:mobileapp/model/user.dart';
-import 'package:mobileapp/screens/search/searchtest.dart';
+import 'package:mobileapp/screens/search/search.dart';
 import 'package:mobileapp/services/database.dart';
 import 'package:provider/provider.dart';
 

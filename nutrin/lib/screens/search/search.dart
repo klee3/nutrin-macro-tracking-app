@@ -1,8 +1,12 @@
+import 'package:custom_navigator/custom_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:mobileapp/model/tracked_food.dart';
 import 'package:mobileapp/model/tracker.dart';
+import 'package:mobileapp/model/user.dart';
+import 'package:mobileapp/screens/main/bottomnav.dart';
 import 'package:mobileapp/screens/search/createnewfood.dart';
 import 'package:mobileapp/screens/search/foodpage.dart';
+import 'package:mobileapp/services/database.dart';
 import 'package:provider/provider.dart';
 
 class Search extends StatefulWidget {
@@ -57,6 +61,7 @@ class _SearchTestState extends State<Search> {
   }
 
   Widget myAppBar() {
+    var user = Provider.of<User>(context);
     final _searchFormkey = GlobalKey<FormState>();
     var _searchQuery = TextEditingController();
     return AppBar(
@@ -65,7 +70,22 @@ class _SearchTestState extends State<Search> {
         children: <Widget>[
           IconButton(
             icon: Icon(Icons.arrow_back),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return StreamProvider<Tracker>.value(
+                      value: DatabaseService(uid: user.uid).tracker,
+                      child: CustomNavigator(
+                        home: NavigationBar(),
+                        pageRoute: PageRoutes.materialPageRoute,
+                      ),
+                    );
+                  },
+                ),
+              );
+            },
           ),
           Text(
             widget.mealName.substring(0, 1).toUpperCase() +

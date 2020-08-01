@@ -5,7 +5,7 @@ import 'package:mobileapp/model/tracked_food.dart';
 import 'package:mobileapp/model/tracker.dart';
 import 'package:mobileapp/model/user.dart';
 import 'package:custom_navigator/custom_navigator.dart';
-import 'package:mobileapp/screens/search/searchtest.dart';
+import 'package:mobileapp/screens/search/search.dart';
 import 'package:mobileapp/services/database.dart';
 import 'package:provider/provider.dart';
 

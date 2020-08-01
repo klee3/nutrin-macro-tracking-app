@@ -14,7 +14,7 @@ class NavigationBar extends StatefulWidget {
 }
 
 class _NavigationBarState extends State<NavigationBar> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 1;
 
   final List<Widget> _widgetOptions = <Widget>[
     StatsPage(),
