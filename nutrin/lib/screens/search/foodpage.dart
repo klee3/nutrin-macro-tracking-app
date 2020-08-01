@@ -19,6 +19,7 @@ class FoodPage extends StatefulWidget {
 class _FoodPageState extends State<FoodPage> {
   TextEditingController serving = new TextEditingController();
   final _foodFormKey = GlobalKey<FormState>();
+  double userInputServing = 1.0;
   var dropDownValue = "g";
   var dropDownValues = ["g", "cups", "mL"];
 
@@ -241,42 +242,42 @@ class _FoodPageState extends State<FoodPage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Expanded(
-                flex: 1,
-                child: Column(
-                  children: <Widget>[
-                    Text(
-                      "Carbohydrates",
-                      style: TextStyle(
-                          fontFamily: 'OpenSans',
-                          color: Colors.white,
-                          fontSize: 15),
-                    ),
-                    Text(
-                      carbsPerServing + "g",
-                      style: TextStyle(
-                          fontFamily: 'OpenSans',
-                          color: Colors.white,
-                          fontSize: 15),
-                    ),
-                  ],
-                ),
-              ),
+              macroDisplay("Carbs", carbsPerServing),
               Expanded(
                 flex: 1,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Text(
-                      "Serving",
-                      style: TextStyle(
-                          fontFamily: 'OpenSans',
-                          color: Colors.white,
-                          fontSize: 15),
-                    ),
                     Container(
-                        width: 50,
-                        child: TextFormField(
+                        width: 100,
+                        child: TextField(
+                          keyboardType: TextInputType.number,
+                          onChanged: (value) {
+                            if (value == null) {
+                              setState(() {
+                                userInputServing = 0.0;
+                              });
+                            } else {
+                              setState(() {
+                                userInputServing = double.parse(value);
+                              });
+                            }
+                          },
+                          style: TextStyle(color: Colors.white),
+                          decoration: InputDecoration(
+                            labelText: "Servings",
+                            labelStyle: TextStyle(
+                                color: Colors.white, fontFamily: "OpenSans"),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white),
+                            ),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white),
+                            ),
+                            border: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white),
+                            ),
+                          ),
                           controller: serving,
                         )),
                   ],
@@ -287,27 +288,7 @@ class _FoodPageState extends State<FoodPage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Expanded(
-                flex: 1,
-                child: Column(
-                  children: <Widget>[
-                    Text(
-                      "Protein",
-                      style: TextStyle(
-                          fontFamily: 'OpenSans',
-                          color: Colors.white,
-                          fontSize: 15),
-                    ),
-                    Text(
-                      proteinPerServing + "g",
-                      style: TextStyle(
-                          fontFamily: 'OpenSans',
-                          color: Colors.white,
-                          fontSize: 15),
-                    ),
-                  ],
-                ),
-              ),
+              macroDisplay("Protein", proteinPerServing),
               Expanded(
                 flex: 1,
                 child: Row(
@@ -348,27 +329,7 @@ class _FoodPageState extends State<FoodPage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Expanded(
-                flex: 1,
-                child: Column(
-                  children: <Widget>[
-                    Text(
-                      "Fat",
-                      style: TextStyle(
-                          fontFamily: 'OpenSans',
-                          color: Colors.white,
-                          fontSize: 15),
-                    ),
-                    Text(
-                      fatPerServing + "g",
-                      style: TextStyle(
-                          fontFamily: 'OpenSans',
-                          color: Colors.white,
-                          fontSize: 15),
-                    ),
-                  ],
-                ),
-              ),
+              macroDisplay("Fat", fatPerServing),
               Expanded(
                 flex: 1,
                 child: IconButton(
@@ -402,6 +363,27 @@ class _FoodPageState extends State<FoodPage> {
                 ),
               )
             ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget macroDisplay(String macro, String macroPerServing) {
+    return Expanded(
+      flex: 1,
+      child: Column(
+        children: <Widget>[
+          Text(
+            macro,
+            style: TextStyle(
+                fontFamily: 'OpenSans', color: Colors.white, fontSize: 15),
+          ),
+          Text(
+            (double.parse(macroPerServing) * userInputServing).toString() +
+                " g",
+            style: TextStyle(
+                fontFamily: 'OpenSans', color: Colors.white, fontSize: 15),
           ),
         ],
       ),
