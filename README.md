@@ -2,10 +2,7 @@
 
 ## why I made it 
 Most food trackers are not accurate: 
-![macros](/readmeimgs/macro.jpg) ![calories](/readmeimgs/calorie.jpg)
-img[alt=macros] { width: 200px; }
-img[alt=calories] { width: 200px; }
-
+<img src="/readmeimgs/macro.jpg" alt="drawing" width="200"/> <img src="/readmeimgs/calorie.jpg" alt="drawing" width="200"/>
 Too many features I did not care for:
 
 ## try it out
