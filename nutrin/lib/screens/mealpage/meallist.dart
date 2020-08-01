@@ -185,9 +185,12 @@ class _MealListState extends State<MealList> {
 
   Widget boxOutline(MealModel currentMeal) {
     if (currentMeal.foods.length == 0) {
-      return Container(
-        width: 0,
-        height: 0,
+      return Padding(
+        padding: const EdgeInsets.only(bottom: 15.0),
+        child: Container(
+          width: 0,
+          height: 0,
+        ),
       );
     } else {
       return Container(

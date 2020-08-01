@@ -23,6 +23,7 @@ class _SearchTestState extends State<Search> {
   }
 
   Widget searchPage() {
+    var tracker = Provider.of<Tracker>(context);
     return MaterialApp(
       home: DefaultTabController(
         length: 2,
@@ -32,7 +33,8 @@ class _SearchTestState extends State<Search> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => CreateNewFoodPage(widget.mealName),
+                  builder: (context) => CreateNewFoodPage(
+                      widget.mealName, tracker.directory.foods),
                 ),
               );
             },
@@ -102,7 +104,7 @@ class _SearchTestState extends State<Search> {
     var tracker = Provider.of<Tracker>(context);
     List<TrackedFood> userFoods = tracker.directory.foods;
     return ListView.builder(
-        itemCount: userFoods == null ? 1 : userFoods.length,
+        itemCount: userFoods.length,
         itemBuilder: (BuildContext context, int index) {
           var tracker = Provider.of<Tracker>(context);
           userFoods = tracker.directory.foods;

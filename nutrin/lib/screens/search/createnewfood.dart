@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mobileapp/model/tracked_food.dart';
 import 'package:mobileapp/model/user.dart';
 import 'package:mobileapp/screens/search/searchtest.dart';
 import 'package:mobileapp/services/database.dart';
@@ -8,7 +9,8 @@ import 'package:provider/provider.dart';
 
 class CreateNewFoodPage extends StatefulWidget {
   final String mealName;
-  const CreateNewFoodPage(this.mealName);
+  final List<TrackedFood> userFoodsOld;
+  const CreateNewFoodPage(this.mealName, this.userFoodsOld);
 
   @override
   _CreateNewFoodPageState createState() => _CreateNewFoodPageState();
@@ -84,13 +86,15 @@ class _CreateNewFoodPageState extends State<CreateNewFoodPage> {
                 onPressed: () {
                   if (_foodFormKey.currentState.validate()) {
                     print("YEs");
-                    db.createNewPersonalFood(
+                    List<TrackedFood> foods = widget.userFoodsOld;
+                    foods.add(TrackedFood(
                         nameController.text,
                         carbsController.text,
                         proteinController.text,
                         fatController.text,
                         servingSizeController.text,
-                        dropDownValue.toString());
+                        dropDownValue.toString()));
+                    db.createNewPersonalFood(foods);
                     Navigator.push(
                       context,
                       MaterialPageRoute(

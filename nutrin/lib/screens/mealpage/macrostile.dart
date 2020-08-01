@@ -107,7 +107,7 @@ class _MacroTileState extends State<MacroTile> {
         return Container(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height * .34,
-          padding: EdgeInsets.only(left: 25, right: 25, top: 50),
+          padding: EdgeInsets.only(left: 25, right: 25, top: 35),
           child: Scaffold(
             body: Column(
               mainAxisSize: MainAxisSize.min,
@@ -136,26 +136,26 @@ class _MacroTileState extends State<MacroTile> {
                         Color(0xFFDA4167)),
                   ],
                 ),
-                Semantics(
-                  child: SwitchListTile(
-                    onChanged: (value) {
-                      print(showMacros);
-                      setState(() {
-                        showMacros = value;
-                        if (value) {
-                          macrosStatement = "Hide Macronutrients";
-                        } else {
-                          macrosStatement = "Show Macronutrients";
-                        }
-                      });
-                    },
-                    value: showMacros,
-                    secondary: Text(
-                      macrosStatement,
-                      style: TextStyle(fontFamily: "OpenSans"),
-                    ),
-                  ),
-                )
+                // Semantics(
+                //   child: SwitchListTile(
+                //     onChanged: (value) {
+                //       print(showMacros);
+                //       setState(() {
+                //         showMacros = value;
+                //         if (value) {
+                //           macrosStatement = "Hide Macronutrients";
+                //         } else {
+                //           macrosStatement = "Show Macronutrients";
+                //         }
+                //       });
+                //     },
+                //     value: showMacros,
+                //     secondary: Text(
+                //       macrosStatement,
+                //       style: TextStyle(fontFamily: "OpenSans"),
+                //     ),
+                //   ),
+                // )
               ],
             ),
           ),

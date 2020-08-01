@@ -25,7 +25,10 @@ class _MealPage extends State<MealPage> {
         return Scaffold(
           body: Column(
             mainAxisSize: MainAxisSize.min,
-            children: <Widget>[MacroTile(), Expanded(child: MealList())],
+            children: <Widget>[
+              Expanded(flex: 1, child: MacroTile()),
+              Expanded(flex: 2, child: MealList())
+            ],
           ),
         );
       } else {
