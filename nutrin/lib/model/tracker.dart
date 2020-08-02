@@ -11,7 +11,7 @@ class Tracker {
   final double _activityLevel;
   final String _goal;
   Map<String, double> _personalNutrients;
-  List<MealModel> _meals;
+  Map<String, MealModel> _meals;
   Directory _directory;
 
   Tracker(
@@ -27,7 +27,7 @@ class Tracker {
       this._meals,
       this._directory);
 
-  List<MealModel> get meals => _meals;
+  Map<String, MealModel> get meals => _meals;
 
   Map<String, double> get personalNutrients => _personalNutrients;
 

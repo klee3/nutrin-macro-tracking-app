@@ -27,16 +27,6 @@ class _SearchTestState extends State<Search> {
     return searchPage();
   }
 
-  MealModel getMeal(List<MealModel> meals, String mealname) {
-    if (mealname.toLowerCase() == "breakfast") {
-      return meals[0];
-    } else if (mealname.toLowerCase() == "lunch") {
-      return meals[1];
-    } else {
-      return meals[2];
-    }
-  }
-
   Widget searchPage() {
     var tracker = Provider.of<Tracker>(context);
     return MaterialApp(
@@ -146,8 +136,8 @@ class _SearchTestState extends State<Search> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => FoodPage(widget.mealName, food,
-                        getMeal(tracker.meals, widget.mealName)),
+                    builder: (context) =>
+                        FoodPage(widget.mealName, food, tracker.meals),
                   ),
                 );
               },

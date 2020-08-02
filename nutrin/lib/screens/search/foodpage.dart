@@ -14,9 +14,9 @@ import 'package:provider/provider.dart';
 class FoodPage extends StatefulWidget {
   final String mealName;
   final TrackedFood food;
-  final MealModel currentMeal;
+  final List<MealModel> meals;
 
-  FoodPage(this.mealName, this.food, this.currentMeal);
+  FoodPage(this.mealName, this.food, this.meals);
   @override
   _FoodPageState createState() => _FoodPageState();
 }
@@ -376,17 +376,27 @@ class _FoodPageState extends State<FoodPage> {
     );
   }
 
+  MealModel getMeal(List<MealModel> meals, String mealname) {
+    if (mealname.toLowerCase() == "breakfast") {
+      return meals[0];
+    } else if (mealname.toLowerCase() == "lunch") {
+      return meals[1];
+    } else {
+      return meals[2];
+    }
+  }
+
   sendFoodsToDb(String carbsPerServing, String proteinPerServing,
       String fatPerServing, DatabaseService db) {
-    List<TrackedFood> trackedFoods = widget.currentMeal.foods;
-    trackedFoods.add(TrackedFood(
+    MealModel meal = getMeal(widget.meals, widget.mealName);
+    meal.addFoodItem(TrackedFood(
         widget.food.name,
         (double.parse(carbsPerServing) * int.parse(serving.text)).toString(),
         (double.parse(proteinPerServing) * int.parse(serving.text)).toString(),
         (double.parse(fatPerServing) * int.parse(serving.text)).toString(),
-        serving.text,
-        dropDownValue));
-    db.updateMeals(widget.mealName, trackedFoods);
+        serving.text.toString(),
+        dropDownValue.toString()));
+    db.updateMeals(widget.mealName, widget.meals);
   }
 
   Widget macroDisplay(String macro, String macroPerServing) {

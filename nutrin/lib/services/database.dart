@@ -90,16 +90,15 @@ class DatabaseService {
             DateTime.now().year.toString()
         : currentDate = date;
 
-    return await trackerCollection.document(uid).setData(
+    return await trackerCollection.document(uid).updateData(
       {
         currentDate: [
-          {
-            'mealName': 'yy',
+          
+            'mealName': mealName,
             'foods': foods.map((food) => food.toMap()).toList(),
-          }
+          
         ]
       },
-      merge: true,
     );
   }
 
