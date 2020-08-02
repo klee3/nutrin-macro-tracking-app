@@ -1,5 +1,6 @@
 import 'package:custom_navigator/custom_navigation.dart';
 import 'package:flutter/material.dart';
+import 'package:mobileapp/model/mealmodel.dart';
 import 'package:mobileapp/model/tracked_food.dart';
 import 'package:mobileapp/model/tracker.dart';
 import 'package:mobileapp/model/user.dart';
@@ -24,6 +25,16 @@ class _SearchTestState extends State<Search> {
       return CircularProgressIndicator();
     }
     return searchPage();
+  }
+
+  MealModel getMeal(List<MealModel> meals, String mealname) {
+    if (mealname.toLowerCase() == "breakfast") {
+      return meals[0];
+    } else if (mealname.toLowerCase() == "lunch") {
+      return meals[1];
+    } else {
+      return meals[2];
+    }
   }
 
   Widget searchPage() {
@@ -135,7 +146,8 @@ class _SearchTestState extends State<Search> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => FoodPage(widget.mealName, food),
+                    builder: (context) => FoodPage(widget.mealName, food,
+                        getMeal(tracker.meals, widget.mealName)),
                   ),
                 );
               },

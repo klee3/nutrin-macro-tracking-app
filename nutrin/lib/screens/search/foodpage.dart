@@ -1,8 +1,12 @@
+import 'package:custom_navigator/custom_navigation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mobileapp/model/mealmodel.dart';
 import 'package:mobileapp/model/tracked_food.dart';
 import 'package:flutter/services.dart';
+import 'package:mobileapp/model/tracker.dart';
 import 'package:mobileapp/model/user.dart';
+import 'package:mobileapp/screens/main/bottomnav.dart';
 import 'package:mobileapp/screens/search/search.dart';
 import 'package:mobileapp/services/database.dart';
 import 'package:provider/provider.dart';
@@ -10,8 +14,9 @@ import 'package:provider/provider.dart';
 class FoodPage extends StatefulWidget {
   final String mealName;
   final TrackedFood food;
+  final MealModel currentMeal;
 
-  FoodPage(this.mealName, this.food);
+  FoodPage(this.mealName, this.food, this.currentMeal);
   @override
   _FoodPageState createState() => _FoodPageState();
 }
@@ -356,12 +361,9 @@ class _FoodPageState extends State<FoodPage> {
                     if (_foodFormKey.currentState.validate()) {
                       sendFoodsToDb(carbsPerServing, proteinPerServing,
                           fatPerServing, db);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Search(widget.mealName),
-                        ),
-                      );
+                      Navigator.pop(context);
+                    } else {
+                      return null;
                     }
                   },
                   icon: Icon(Icons.check, color: Colors.black),
@@ -376,8 +378,7 @@ class _FoodPageState extends State<FoodPage> {
 
   sendFoodsToDb(String carbsPerServing, String proteinPerServing,
       String fatPerServing, DatabaseService db) {
-    print("YEs");
-    List<TrackedFood> trackedFoods;
+    List<TrackedFood> trackedFoods = widget.currentMeal.foods;
     trackedFoods.add(TrackedFood(
         widget.food.name,
         (double.parse(carbsPerServing) * int.parse(serving.text)).toString(),

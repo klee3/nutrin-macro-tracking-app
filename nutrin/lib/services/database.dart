@@ -90,14 +90,17 @@ class DatabaseService {
             DateTime.now().year.toString()
         : currentDate = date;
 
-    return await trackerCollection.document(uid).setData({
-      currentDate: [
-        {
-          'mealName': mealName,
-          'foods': foods.map((food) => food.toMap()).toList(),
-        }
-      ]
-    }, merge: true);
+    return await trackerCollection.document(uid).setData(
+      {
+        currentDate: [
+          {
+            'mealName': 'yy',
+            'foods': foods.map((food) => food.toMap()).toList(),
+          }
+        ]
+      },
+      merge: true,
+    );
   }
 
   // get tracker stream

@@ -147,7 +147,9 @@ class _MealListState extends State<MealList> {
                       return StreamProvider<Tracker>.value(
                         value: DatabaseService(uid: user.uid).tracker,
                         child: CustomNavigator(
-                          home: Search(currentMeal.mealName),
+                          home: Search(
+                            currentMeal.mealName,
+                          ),
                           pageRoute: PageRoutes.materialPageRoute,
                         ),
                       );
