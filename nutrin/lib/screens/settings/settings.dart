@@ -23,20 +23,24 @@ class Settings extends StatelessWidget {
           title: Text(
             "Settings",
             style: TextStyle(
-                fontSize: 20, color: Colors.black, fontFamily: "OpenSans"),
+                fontSize: 20,
+                color: Colors.white,
+                fontFamily: "OpenSans",
+                fontWeight: FontWeight.bold),
           ),
-          backgroundColor: Colors.white,
           elevation: 0.0,
           actions: <Widget>[
             FlatButton.icon(
                 onPressed: () async {
                   await _authService.signOut();
                 },
-                icon: Icon(Icons.person),
+                icon: Icon(Icons.person, color: Colors.white),
                 label: Text(
                   'Log Out',
                   style: TextStyle(
-                      fontWeight: FontWeight.bold, fontFamily: "OpenSans"),
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: "OpenSans"),
                 ))
           ],
         ),
