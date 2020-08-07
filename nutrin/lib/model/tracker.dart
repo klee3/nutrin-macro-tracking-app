@@ -1,3 +1,4 @@
+import 'package:mobileapp/model/current_date.dart';
 import 'package:mobileapp/model/directory.dart';
 import 'package:mobileapp/model/mealmodel.dart';
 import 'package:json_annotation/json_annotation.dart';

@@ -63,6 +63,7 @@ class _MacroTileState extends State<MacroTile> {
     }
   }
 
+  // return food for current date
   String getFormattedDate() {
     DateTime now = new DateTime.now();
     DateTime date = new DateTime(now.year, now.month, now.day);

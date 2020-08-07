@@ -65,7 +65,7 @@ class TrackedFood {
         .toString();
   }
 
-  factory TrackedFood.fromJson(Map<dynamic, dynamic> json) =>
+  factory TrackedFood.fromJson(Map<String, dynamic> json) =>
       _$TrackedFoodFromJson(json);
 
   Map<dynamic, dynamic> toJson() => _$TrackedFoodToJson(this);

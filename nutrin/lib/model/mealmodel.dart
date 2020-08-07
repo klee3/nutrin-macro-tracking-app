@@ -55,7 +55,7 @@ class MealModel {
     foods.add(food);
   }
 
-  factory MealModel.fromJson(Map<dynamic, dynamic> json) =>
+  factory MealModel.fromJson(Map<String, dynamic> json) =>
       _$MealModelFromJson(json);
 
   Map<dynamic, dynamic> toJson() => _$MealModelToJson(this);

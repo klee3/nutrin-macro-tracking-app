@@ -9,7 +9,7 @@ class Directory {
 
   Directory(this.foods);
 
-  factory Directory.fromJson(Map<dynamic, dynamic> json) =>
+  factory Directory.fromJson(Map<String, dynamic> json) =>
       _$DirectoryFromJson(json);
 
   Map<dynamic, dynamic> toJson() => _$DirectoryToJson(this);

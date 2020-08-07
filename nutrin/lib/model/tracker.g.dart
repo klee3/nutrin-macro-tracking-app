@@ -7,6 +7,11 @@ part of 'tracker.dart';
 // **************************************************************************
 
 Tracker _$TrackerFromJson(Map<String, dynamic> json) {
+  String currentDate = DateTime.now().day.toString() +
+      "/" +
+      DateTime.now().month.toString() +
+      "/" +
+      DateTime.now().year.toString();
   return Tracker(
     json['name'] as String,
     json['sex'] as String,
@@ -19,7 +24,7 @@ Tracker _$TrackerFromJson(Map<String, dynamic> json) {
     (json['personalNutrients'] as Map<String, dynamic>)?.map(
       (k, e) => MapEntry(k, (e as num)?.toDouble()),
     ),
-    (json['meals'] as Map<String, dynamic>)?.map(
+    (json[currentDate] as Map<String, dynamic>)?.map(
       (k, e) => MapEntry(
           k,
           (e as List)
