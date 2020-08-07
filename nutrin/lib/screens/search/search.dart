@@ -137,7 +137,7 @@ class _SearchTestState extends State<Search> {
                   context,
                   MaterialPageRoute(
                     builder: (context) =>
-                        FoodPage(widget.mealName, food, tracker.meals),
+                        FoodPage(widget.mealName, food, tracker.mealsList),
                   ),
                 );
               },

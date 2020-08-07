@@ -1,5 +1,9 @@
 import 'package:mobileapp/model/tracked_food.dart';
+import 'package:json_annotation/json_annotation.dart';
 
+part 'mealmodel.g.dart';
+
+@JsonSerializable()
 class MealModel {
   final String mealName;
   List<TrackedFood> foods;
@@ -50,4 +54,9 @@ class MealModel {
   void addFoodItem(TrackedFood food) {
     foods.add(food);
   }
+
+  factory MealModel.fromJson(Map<dynamic, dynamic> json) =>
+      _$MealModelFromJson(json);
+
+  Map<dynamic, dynamic> toJson() => _$MealModelToJson(this);
 }

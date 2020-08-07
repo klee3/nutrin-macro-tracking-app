@@ -386,18 +386,9 @@ class _FoodPageState extends State<FoodPage> {
     }
   }
 
+  // TODO: fix method
   sendFoodsToDb(String carbsPerServing, String proteinPerServing,
-      String fatPerServing, DatabaseService db) {
-    MealModel meal = getMeal(widget.meals, widget.mealName);
-    meal.addFoodItem(TrackedFood(
-        widget.food.name,
-        (double.parse(carbsPerServing) * int.parse(serving.text)).toString(),
-        (double.parse(proteinPerServing) * int.parse(serving.text)).toString(),
-        (double.parse(fatPerServing) * int.parse(serving.text)).toString(),
-        serving.text.toString(),
-        dropDownValue.toString()));
-    db.updateMeals(widget.mealName, widget.meals);
-  }
+      String fatPerServing, DatabaseService db) {}
 
   Widget macroDisplay(String macro, String macroPerServing) {
     return Expanded(

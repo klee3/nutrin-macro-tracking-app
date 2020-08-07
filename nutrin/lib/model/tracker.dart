@@ -1,35 +1,42 @@
 import 'package:mobileapp/model/directory.dart';
 import 'package:mobileapp/model/mealmodel.dart';
+import 'package:json_annotation/json_annotation.dart';
+import 'package:mobileapp/model/tracked_food.dart';
 
+part 'tracker.g.dart';
+
+@JsonSerializable()
 class Tracker {
-  final String _name;
-  final bool _metric;
-  final String _sex;
-  final double _weight;
-  final double _height;
-  final int _age;
-  final double _activityLevel;
-  final String _goal;
-  Map<String, double> _personalNutrients;
-  Map<String, MealModel> _meals;
-  Directory _directory;
+  final String name;
+  final bool metric;
+  final String sex;
+  final double weight;
+  final double height;
+  final int age;
+  final double activityLevel;
+  final String goal;
+  Map<String, double> personalNutrients;
+  Map<String, List<TrackedFood>> meals;
+  Directory directory;
 
   Tracker(
-      this._name,
-      this._sex,
-      this._metric,
-      this._height,
-      this._weight,
-      this._age,
-      this._activityLevel,
-      this._goal,
-      this._personalNutrients,
-      this._meals,
-      this._directory);
+      this.name,
+      this.sex,
+      this.metric,
+      this.height,
+      this.weight,
+      this.age,
+      this.activityLevel,
+      this.goal,
+      this.personalNutrients,
+      this.meals,
+      this.directory);
 
-  Map<String, MealModel> get meals => _meals;
+  List<MealModel> get mealsList =>
+      meals.entries.map((e) => MealModel(e.key, e.value)).toList();
 
-  Map<String, double> get personalNutrients => _personalNutrients;
+  factory Tracker.fromJson(Map<dynamic, dynamic> json) =>
+      _$TrackerFromJson(json);
 
-  Directory get directory => _directory;
+  Map<dynamic, dynamic> toJson() => _$TrackerToJson(this);
 }

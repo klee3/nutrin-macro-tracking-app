@@ -88,7 +88,7 @@ class _MacroTileState extends State<MacroTile> {
 
     if (tracker != null) {
       var macros = tracker.personalNutrients;
-      List<MealModel> meals = tracker.meals;
+      List<MealModel> meals = tracker.mealsList;
       var caloriesPerMeal =
           meals.map((meal) => meal.calculateCalories()).toList();
       var carbsPerMeal = meals.map((meal) => meal.calculateCarbs()).toList();
