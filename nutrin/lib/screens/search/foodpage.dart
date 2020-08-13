@@ -25,8 +25,8 @@ class _FoodPageState extends State<FoodPage> {
   TextEditingController serving = new TextEditingController();
   final _foodFormKey = GlobalKey<FormState>();
   double userInputServing = 1.0;
-  var dropDownValue = "g";
-  var dropDownValues = ["g", "cups", "mL"];
+  var dropDownValue = "serving";
+  var dropDownValues = new List<String>();
 
   @override
   Widget build(BuildContext context) {
@@ -255,8 +255,14 @@ class _FoodPageState extends State<FoodPage> {
     );
   }
 
+  List<String> appropriateDropDownvalues() {
+    TrackedFood food = widget.food;
+    if (food.unit == "g" | )
+  }
+
   Widget form(
       String carbsPerServing, String fatPerServing, String proteinPerServing) {
+    dropdown = appropriateDropDownvalues();
     var user = Provider.of<User>(context);
     var db = DatabaseService(uid: user.uid);
     return Container(
@@ -358,9 +364,11 @@ class _FoodPageState extends State<FoodPage> {
                 flex: 1,
                 child: IconButton(
                   onPressed: () {
+                    double carbs = double.parse(carbsPerServing);
+                    double fat = double.parse(fatPerServing);
+                    double protein = double.parse(proteinPerServing);
                     if (_foodFormKey.currentState.validate()) {
-                      sendFoodsToDb(carbsPerServing, proteinPerServing,
-                          fatPerServing, db);
+                      sendFoodsToDb(carbs, protein, fat, db);
                       Navigator.pop(context);
                     } else {
                       return null;
@@ -387,8 +395,25 @@ class _FoodPageState extends State<FoodPage> {
   }
 
   // TODO: fix method
-  sendFoodsToDb(String carbsPerServing, String proteinPerServing,
-      String fatPerServing, DatabaseService db) {}
+  sendFoodsToDb(double carbs, double protein, double fat, DatabaseService db) {
+    TrackedFood food = widget.food;
+    List<TrackedFood> foods = List<TrackedFood>();
+    foods.add(new TrackedFood(
+        food.name,
+        calculateMacroValues(carbs),
+        (protein * userInputServing).toString(),
+        (fat * userInputServing).toString(),
+        userInputServing.toString(),
+        dropDownValue));
+    db.updateMeals(widget.mealName, foods);
+  }
+
+  String calculateMacroValues(double macro) {
+    TrackedFood food = widget.food;
+    if (food.unit == dropDownValue) {
+      return (macro * userInputServing).toString();
+    }
+  }
 
   Widget macroDisplay(String macro, String macroPerServing) {
     return Expanded(

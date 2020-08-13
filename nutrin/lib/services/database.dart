@@ -90,6 +90,11 @@ class DatabaseService {
             "/" +
             DateTime.now().year.toString()
         : currentDate = date;
+    return await trackerCollection.document(uid).setData({
+      currentDate: {
+        mealName: foods.map((food) => food.toMap()).toList(),
+      },
+    }, merge: true);
   }
 
   // get tracker stream
@@ -184,49 +189,3 @@ class DatabaseService {
     };
   }
 }
-
-// (mealJson) => MealModel(
-//   mealJson['mealName'],
-//   List<dynamic>.from(mealJson['foods'])
-//       .map((foodJson) => TrackedFood(
-//             foodJson['name'],
-//             // foodJson['calories'].toDouble(),
-//             foodJson['protein'],
-//             foodJson['carbohydrates'],
-//             foodJson['fat'],
-//             // foodJson['calcium'].toDouble(),
-//             // foodJson['fiber'].toDouble(),
-//             // foodJson['cholesterol'].toDouble(),
-//             // foodJson['iron'].toDouble(),
-//             // foodJson['potassium'].toDouble(),
-//             // foodJson['sodium'].toDouble(),
-//             // foodJson['vitaminA'].toDouble(),
-//             // foodJson['vitaminC'].toDouble(),
-//             foodJson['serving'],
-//             foodJson['unit'],
-//           ))
-//       .toList(),
-// ),
-
-// return Tracker(
-//   snapshot.data['name'],
-//   snapshot.data['sex'],
-//   snapshot.data['metric'],
-//   snapshot.data['height'],
-//   snapshot.data['weight'],
-//   snapshot.data['age'],
-//   snapshot.data['activityLevel'],
-//   snapshot.data['goal'],
-//   Map<dynamic, dynamic>.from(snapshot.data['personalNutrients'])
-//       .map((key, value) => MapEntry(key.toString(), value.toDouble())),
-//   mapToListOfMeals(Map<dynamic, dynamic>.from(snapshot.data[currentDate])),
-//   Directory(List<dynamic>.from(snapshot.data['userFoods'])
-//       .map((foodJson) => TrackedFood(
-//           foodJson['name'],
-//           foodJson['protein'],
-//           foodJson['carbohydrates'],
-//           foodJson['fat'],
-//           foodJson['serving'],
-//           foodJson['unit']))
-//       .toList()),
-// );
