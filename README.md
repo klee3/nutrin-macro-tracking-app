@@ -11,9 +11,7 @@ Each gram of carbohydrate or protein has 4 calories and each gram of fat has 9 c
 Well when companies create nutrition labels, they usually round down, and as a result the more you eat, the less accurate the calorie count becomes. You can find the exact rounding rules [here](https://www.fda.gov/food/food-labeling-nutrition/industry-resources-changes-nutrition-facts-label). Thus, the app I am creating does not calculate calories from a nutrition label, but rather the macronutrients. 
 
 ### sneakpeak
-Main Screen                     |  Search Screen 
-:------------------------------:|:-------------------------:
-![](/readmeimgs/mainscreen.png) | will be added soon 
+[](/readmeimgs/mainscreen.png)
 
 ### try it out
 to try it out git clone, `cd nutrin` and run `flutter pub get` and then `flutter run`. 
