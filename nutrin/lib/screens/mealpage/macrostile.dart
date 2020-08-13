@@ -63,6 +63,7 @@ class _MacroTileState extends State<MacroTile> {
     }
   }
 
+  // return food for current date
   String getFormattedDate() {
     DateTime now = new DateTime.now();
     DateTime date = new DateTime(now.year, now.month, now.day);
@@ -88,7 +89,7 @@ class _MacroTileState extends State<MacroTile> {
 
     if (tracker != null) {
       var macros = tracker.personalNutrients;
-      List<MealModel> meals = tracker.meals;
+      List<MealModel> meals = tracker.mealsList;
       var caloriesPerMeal =
           meals.map((meal) => meal.calculateCalories()).toList();
       var carbsPerMeal = meals.map((meal) => meal.calculateCarbs()).toList();

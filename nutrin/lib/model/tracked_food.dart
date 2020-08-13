@@ -1,3 +1,8 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'tracked_food.g.dart';
+
+@JsonSerializable()
 class TrackedFood {
   // TODO: could make nutrient class
   final String name;
@@ -33,17 +38,6 @@ class TrackedFood {
       this.serving,
       this.unit);
 
-  factory TrackedFood.fromJson(Map<String, dynamic> json) {
-    return TrackedFood(
-      json['n'],
-      json['n'],
-      json['n'],
-      json['n'],
-      json['n'],
-      json['n'],
-    );
-  }
-
   Map<String, dynamic> toMap() {
     return {
       'name': name,
@@ -70,4 +64,9 @@ class TrackedFood {
         .round()
         .toString();
   }
+
+  factory TrackedFood.fromJson(Map<String, dynamic> json) =>
+      _$TrackedFoodFromJson(json);
+
+  Map<dynamic, dynamic> toJson() => _$TrackedFoodToJson(this);
 }

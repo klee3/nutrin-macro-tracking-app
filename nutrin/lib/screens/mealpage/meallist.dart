@@ -19,7 +19,7 @@ class _MealListState extends State<MealList> {
   Widget build(BuildContext context) {
     var tracker = Provider.of<Tracker>(context);
     if (tracker != null) {
-      var meals = tracker.meals;
+      var meals = tracker.mealsList;
       return Container(
         width: MediaQuery.of(context).size.width,
         child: ListView.builder(

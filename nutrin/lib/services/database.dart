@@ -1,6 +1,6 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:mobileapp/model/directory.dart';
-import 'package:mobileapp/model/mealmodel.dart';
 import 'package:mobileapp/model/tracked_food.dart';
 import 'package:mobileapp/model/tracker.dart';
 
@@ -14,6 +14,7 @@ class DatabaseService {
       Firestore.instance.collection('Tracker');
 
   // TODO: should use enum
+  // TODO: fix meal representation
   // TODO: coupled with tracker
   Future createNewUser(String name, bool metric, String sex, double height,
       double weight, int age, double activityLevel, String goal) async {
@@ -32,11 +33,11 @@ class DatabaseService {
       'activityLevel': activityLevel,
       'goal': goal,
       'userFoods': [],
-      currentDate: [
-        {'mealName': 'breakfast', 'foods': []},
-        {'mealName': 'lunch', 'foods': []},
-        {'mealName': 'dinner', 'foods': []},
-      ],
+      currentDate: {
+        'breakfast': [],
+        'lunch': [],
+        'dinner': [],
+      },
       'personalNutrients': _generateNutrients(
           metric, sex, height, weight, age, activityLevel, goal)
     }, merge: true);
@@ -49,11 +50,11 @@ class DatabaseService {
         "/" +
         DateTime.now().year.toString();
     return await trackerCollection.document(uid).setData({
-      currentDate: [
-        {'mealName': 'breakfast', 'foods': []},
-        {'mealName': 'lunch', 'foods': []},
-        {'mealName': 'dinner', 'foods': []},
-      ],
+      currentDate: {
+        'breakfast': [],
+        'lunch': [],
+        'dinner': [],
+      },
     }, merge: true);
   }
 
@@ -89,17 +90,6 @@ class DatabaseService {
             "/" +
             DateTime.now().year.toString()
         : currentDate = date;
-
-    return await trackerCollection.document(uid).updateData(
-      {
-        currentDate: [
-          
-            'mealName': mealName,
-            'foods': foods.map((food) => food.toMap()).toList(),
-          
-        ]
-      },
-    );
   }
 
   // get tracker stream
@@ -113,58 +103,7 @@ class DatabaseService {
 
   // get tracker list from snapshot
   Tracker _trackerFromSnapshot(DocumentSnapshot snapshot) {
-    var currentDate = DateTime.now().day.toString() +
-        "/" +
-        DateTime.now().month.toString() +
-        "/" +
-        DateTime.now().year.toString();
-    return Tracker(
-      snapshot.data['name'],
-      snapshot.data['sex'],
-      snapshot.data['metric'],
-      snapshot.data['height'],
-      snapshot.data['weight'],
-      snapshot.data['age'],
-      snapshot.data['activityLevel'],
-      snapshot.data['goal'],
-      Map<dynamic, dynamic>.from(snapshot.data['personalNutrients'])
-          .map((key, value) => MapEntry(key.toString(), value.toDouble())),
-      List<dynamic>.from(snapshot.data[currentDate])
-          .map(
-            (mealJson) => MealModel(
-              mealJson['mealName'],
-              List<dynamic>.from(mealJson['foods'])
-                  .map((foodJson) => TrackedFood(
-                        foodJson['name'],
-                        // foodJson['calories'].toDouble(),
-                        foodJson['protein'],
-                        foodJson['carbohydrates'],
-                        foodJson['fat'],
-                        // foodJson['calcium'].toDouble(),
-                        // foodJson['fiber'].toDouble(),
-                        // foodJson['cholesterol'].toDouble(),
-                        // foodJson['iron'].toDouble(),
-                        // foodJson['potassium'].toDouble(),
-                        // foodJson['sodium'].toDouble(),
-                        // foodJson['vitaminA'].toDouble(),
-                        // foodJson['vitaminC'].toDouble(),
-                        foodJson['serving'],
-                        foodJson['unit'],
-                      ))
-                  .toList(),
-            ),
-          )
-          .toList(),
-      Directory(List<dynamic>.from(snapshot.data['userFoods'])
-          .map((foodJson) => TrackedFood(
-              foodJson['name'],
-              foodJson['protein'],
-              foodJson['carbohydrates'],
-              foodJson['fat'],
-              foodJson['serving'],
-              foodJson['unit']))
-          .toList()),
-    );
+    return Tracker.fromJson(jsonDecode(jsonEncode(snapshot.data)));
   }
 
   _generateNutrients(bool metric, String sex, double height, double weight,
@@ -245,3 +184,49 @@ class DatabaseService {
     };
   }
 }
+
+// (mealJson) => MealModel(
+//   mealJson['mealName'],
+//   List<dynamic>.from(mealJson['foods'])
+//       .map((foodJson) => TrackedFood(
+//             foodJson['name'],
+//             // foodJson['calories'].toDouble(),
+//             foodJson['protein'],
+//             foodJson['carbohydrates'],
+//             foodJson['fat'],
+//             // foodJson['calcium'].toDouble(),
+//             // foodJson['fiber'].toDouble(),
+//             // foodJson['cholesterol'].toDouble(),
+//             // foodJson['iron'].toDouble(),
+//             // foodJson['potassium'].toDouble(),
+//             // foodJson['sodium'].toDouble(),
+//             // foodJson['vitaminA'].toDouble(),
+//             // foodJson['vitaminC'].toDouble(),
+//             foodJson['serving'],
+//             foodJson['unit'],
+//           ))
+//       .toList(),
+// ),
+
+// return Tracker(
+//   snapshot.data['name'],
+//   snapshot.data['sex'],
+//   snapshot.data['metric'],
+//   snapshot.data['height'],
+//   snapshot.data['weight'],
+//   snapshot.data['age'],
+//   snapshot.data['activityLevel'],
+//   snapshot.data['goal'],
+//   Map<dynamic, dynamic>.from(snapshot.data['personalNutrients'])
+//       .map((key, value) => MapEntry(key.toString(), value.toDouble())),
+//   mapToListOfMeals(Map<dynamic, dynamic>.from(snapshot.data[currentDate])),
+//   Directory(List<dynamic>.from(snapshot.data['userFoods'])
+//       .map((foodJson) => TrackedFood(
+//           foodJson['name'],
+//           foodJson['protein'],
+//           foodJson['carbohydrates'],
+//           foodJson['fat'],
+//           foodJson['serving'],
+//           foodJson['unit']))
+//       .toList()),
+// );
