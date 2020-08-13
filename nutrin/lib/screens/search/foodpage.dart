@@ -257,12 +257,16 @@ class _FoodPageState extends State<FoodPage> {
 
   List<String> appropriateDropDownvalues() {
     TrackedFood food = widget.food;
-    if (food.unit == "g" | )
+    if (food.unit == "g" || food.unit == "oz") {
+      return ["g", "oz", "serving"];
+    } else {
+      return ["cups", "mL", "tsp", "tbsp", "serving"];
+    }
   }
 
   Widget form(
       String carbsPerServing, String fatPerServing, String proteinPerServing) {
-    dropdown = appropriateDropDownvalues();
+    dropDownValues = appropriateDropDownvalues();
     var user = Provider.of<User>(context);
     var db = DatabaseService(uid: user.uid);
     return Container(
@@ -408,11 +412,14 @@ class _FoodPageState extends State<FoodPage> {
     db.updateMeals(widget.mealName, foods);
   }
 
-  String calculateMacroValues(double macro) {
+  // TODO: olawd
+  String calculateMacroValues(double macroPerServing) {
     TrackedFood food = widget.food;
-    if (food.unit == dropDownValue) {
-      return (macro * userInputServing).toString();
-    }
+    if (dropDownValue == 'serving') {
+      return macroPerServing.toString();
+    } else if (dropDownValues.contains("g")) {
+    } else if (dropDownValue.contains("mL")) {}
+    return macroPerServing.toString();
   }
 
   Widget macroDisplay(String macro, String macroPerServing) {
@@ -426,8 +433,7 @@ class _FoodPageState extends State<FoodPage> {
                 fontFamily: 'OpenSans', color: Colors.black, fontSize: 15),
           ),
           Text(
-            (double.parse(macroPerServing) * userInputServing).toString() +
-                " g",
+            calculateMacroValues(double.parse(macroPerServing)) + " g",
             style: TextStyle(
                 fontFamily: 'OpenSans', color: Colors.black, fontSize: 12),
           ),
