@@ -1,13 +1,9 @@
-import 'package:custom_navigator/custom_navigation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mobileapp/model/mealmodel.dart';
 import 'package:mobileapp/model/tracked_food.dart';
 import 'package:flutter/services.dart';
-import 'package:mobileapp/model/tracker.dart';
 import 'package:mobileapp/model/user.dart';
-import 'package:mobileapp/screens/main/bottomnav.dart';
-import 'package:mobileapp/screens/search/search.dart';
 import 'package:mobileapp/services/database.dart';
 import 'package:provider/provider.dart';
 
@@ -270,7 +266,7 @@ class _FoodPageState extends State<FoodPage> {
     var user = Provider.of<User>(context);
     var db = DatabaseService(uid: user.uid);
     return Container(
-      width: MediaQuery.of(context).size.width * .6,
+      width: MediaQuery.of(context).size.width * .7,
       child: Column(
         children: <Widget>[
           Row(
@@ -399,17 +395,20 @@ class _FoodPageState extends State<FoodPage> {
   }
 
   // TODO: fix method
+  // TODO: make sure to add the same foods to get more: 1 + 1 egg equal 2 (sum up foods)
   sendFoodsToDb(double carbs, double protein, double fat, DatabaseService db) {
     TrackedFood food = widget.food;
     List<TrackedFood> foods = List<TrackedFood>();
-    foods.add(new TrackedFood(
-        food.name,
-        calculateMacroValues(carbs),
-        (protein * userInputServing).toString(),
-        (fat * userInputServing).toString(),
-        userInputServing.toString(),
-        dropDownValue));
-    db.updateMeals(widget.mealName, foods);
+    foods.add(new TrackedFood(food.name, food.carbohydrates, food.protein,
+        food.fat, food.serving, food.unit));
+    // foods.add(new TrackedFood(
+    //     food.name,
+    //     calculateMacroValues(carbs),
+    //     (protein * userInputServing).toString(),
+    //     (fat * userInputServing).toString(),
+    //     userInputServing.toString(),
+    //     dropDownValue));
+    db.updateMeals(widget.mealName.toLowerCase(), foods);
   }
 
   // TODO: olawd

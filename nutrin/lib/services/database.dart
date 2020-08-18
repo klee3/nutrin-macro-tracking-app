@@ -19,9 +19,9 @@ class DatabaseService {
   Future createNewUser(String name, bool metric, String sex, double height,
       double weight, int age, double activityLevel, String goal) async {
     String currentDate = DateTime.now().day.toString() +
-        "/" +
+        "-" +
         DateTime.now().month.toString() +
-        "/" +
+        "-" +
         DateTime.now().year.toString();
     return await trackerCollection.document(uid).setData({
       'name': name,
@@ -44,18 +44,34 @@ class DatabaseService {
   }
 
   Future addNewDay() async {
-    String currentDate = DateTime.now().day.toString() +
-        "/" +
+    var currentDate = DateTime.now().day.toString() +
+        "-" +
         DateTime.now().month.toString() +
-        "/" +
+        "-" +
         DateTime.now().year.toString();
-    return await trackerCollection.document(uid).setData({
+    return await trackerCollection.document(uid).updateData({
       currentDate: {
         'breakfast': [],
         'lunch': [],
         'dinner': [],
       },
-    }, merge: true);
+    });
+
+    // var todayMeal = trackerCollection
+    //     .document(uid)
+    //     .snapshots()
+    //     .map((event) => event.data.containsKey(currentDate));
+    // String alreadyMade = "false";
+    // todayMeal.listen((event) {
+    //   print(event);
+    //   alreadyMade = event.toString();
+    // });
+
+    // if (alreadyMade == "true") {
+
+    // } else {
+    //   print("Already exists");
+    // }
   }
 
   Future setDefaultMacros(String name, bool metric, String sex, double height,
@@ -85,21 +101,29 @@ class DatabaseService {
     var currentDate;
     date == null
         ? currentDate = DateTime.now().day.toString() +
-            "/" +
+            "-" +
             DateTime.now().month.toString() +
-            "/" +
+            "-" +
             DateTime.now().year.toString()
         : currentDate = date;
-    return await trackerCollection.document(uid).setData({
-      currentDate: {
-        mealName: foods.map((food) => food.toMap()).toList(),
+    return await trackerCollection.document(uid).updateData(
+      {
+        currentDate + "." + mealName.toLowerCase():
+            foods.map((food) => food.toMap()).toList(),
       },
-    }, merge: true);
+    ).then((value) => print("User updated"));
   }
 
   // get tracker stream
   Stream<Tracker> get tracker {
-    addNewDay();
+    try {
+      return trackerCollection
+          .document(uid)
+          .snapshots()
+          .map(_trackerFromSnapshot);
+    } catch (e) {
+      addNewDay();
+    }
     return trackerCollection
         .document(uid)
         .snapshots()

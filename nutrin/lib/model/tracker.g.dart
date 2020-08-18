@@ -7,10 +7,10 @@ part of 'tracker.dart';
 // **************************************************************************
 
 Tracker _$TrackerFromJson(Map<String, dynamic> json) {
-  String currentDate = DateTime.now().day.toString() +
-      "/" +
+  var currentDate = DateTime.now().day.toString() +
+      "-" +
       DateTime.now().month.toString() +
-      "/" +
+      "-" +
       DateTime.now().year.toString();
   return Tracker(
     json['name'] as String,
