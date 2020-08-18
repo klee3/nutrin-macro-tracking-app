@@ -33,9 +33,10 @@ Tracker _$TrackerFromJson(Map<String, dynamic> json) {
                   : TrackedFood.fromJson(e as Map<String, dynamic>))
               ?.toList()),
     ),
-    json['directory'] == null
-        ? null
-        : Directory.fromJson(json['directory'] as Map<String, dynamic>),
+    (json['userFoods'] as List)
+        ?.map((e) =>
+            e == null ? null : TrackedFood.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
   );
 }
 

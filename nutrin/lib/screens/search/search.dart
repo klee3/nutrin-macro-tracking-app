@@ -38,8 +38,8 @@ class _SearchTestState extends State<Search> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => CreateNewFoodPage(
-                      widget.mealName, tracker.directory.foods),
+                  builder: (context) => CreateNewFoodPage(widget.mealName,
+                      tracker.directory == null ? [] : tracker.directory),
                 ),
               );
             },
@@ -63,8 +63,6 @@ class _SearchTestState extends State<Search> {
 
   Widget myAppBar() {
     var user = Provider.of<User>(context);
-    final _searchFormkey = GlobalKey<FormState>();
-    var _searchQuery = TextEditingController();
     return AppBar(
       centerTitle: true,
       title: Row(
@@ -123,12 +121,12 @@ class _SearchTestState extends State<Search> {
 
   Widget myFoodsView() {
     var tracker = Provider.of<Tracker>(context);
-    List<TrackedFood> userFoods = tracker.directory.foods;
+    List<TrackedFood> userFoods =
+        tracker.directory == null ? [] : tracker.directory;
     return ListView.builder(
         itemCount: userFoods.length,
         itemBuilder: (BuildContext context, int index) {
           var tracker = Provider.of<Tracker>(context);
-          userFoods = tracker.directory.foods;
           TrackedFood food = userFoods[index];
           return Card(
             child: ListTile(

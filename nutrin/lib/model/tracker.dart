@@ -1,5 +1,4 @@
 import 'package:mobileapp/model/current_date.dart';
-import 'package:mobileapp/model/directory.dart';
 import 'package:mobileapp/model/mealmodel.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:mobileapp/model/tracked_food.dart';
@@ -18,7 +17,7 @@ class Tracker {
   final String goal;
   Map<String, double> personalNutrients;
   Map<String, List<TrackedFood>> meals;
-  Directory directory;
+  List<TrackedFood> directory;
 
   Tracker(
       this.name,
