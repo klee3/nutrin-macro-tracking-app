@@ -115,6 +115,7 @@ class DatabaseService {
   }
 
   // get tracker stream
+  // TODO: need to fix this
   Stream<Tracker> get tracker {
     try {
       return trackerCollection
@@ -123,11 +124,11 @@ class DatabaseService {
           .map(_trackerFromSnapshot);
     } catch (e) {
       addNewDay();
+      return trackerCollection
+          .document(uid)
+          .snapshots()
+          .map(_trackerFromSnapshot);
     }
-    return trackerCollection
-        .document(uid)
-        .snapshots()
-        .map(_trackerFromSnapshot);
   }
 
   // get tracker list from snapshot
