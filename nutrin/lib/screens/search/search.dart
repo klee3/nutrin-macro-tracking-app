@@ -18,6 +18,7 @@ class Search extends StatefulWidget {
 }
 
 class _SearchTestState extends State<Search> {
+  List<TrackedFood> searchedFoods = new List();
   @override
   Widget build(BuildContext context) {
     var tracker = Provider.of<Tracker>(context);
@@ -49,11 +50,21 @@ class _SearchTestState extends State<Search> {
               size: 35,
             ),
           ),
-          body: TabBarView(
-            children: [
-              searchView(),
-              myFoodsView(),
-            ],
+          body: Container(
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            child: Column(
+              children: [
+                Expanded(
+                  child: TabBarView(
+                    children: [
+                      searchView(),
+                      myFoodsView(),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
           appBar: myAppBar(),
         ),
@@ -63,6 +74,7 @@ class _SearchTestState extends State<Search> {
 
   Widget myAppBar() {
     var user = Provider.of<User>(context);
+    var tracker = Provider.of<Tracker>(context);
     return AppBar(
       centerTitle: true,
       title: Row(
@@ -89,6 +101,29 @@ class _SearchTestState extends State<Search> {
           Text(
             widget.mealName.substring(0, 1).toUpperCase() +
                 widget.mealName.substring(1, widget.mealName.length),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+                width: 220,
+                child: TextFormField(
+                  onChanged: (value) {
+                    if (tracker.directory
+                        .map((food) => food.name)
+                        .any((name) => name.contains(value))) {
+                      setState(() {
+                        searchedFoods = tracker.directory.where((food) => food
+                            .name
+                            .toLowerCase()
+                            .contains(value.toLowerCase()));
+                      });
+                    } else {
+                      setState(() {
+                        searchedFoods = tracker.directory;
+                      });
+                    }
+                  },
+                )),
           ),
         ],
       ),
@@ -121,8 +156,7 @@ class _SearchTestState extends State<Search> {
 
   Widget myFoodsView() {
     var tracker = Provider.of<Tracker>(context);
-    List<TrackedFood> userFoods =
-        tracker.directory == null ? [] : tracker.directory;
+    List<TrackedFood> userFoods = searchedFoods == null ? [] : searchedFoods;
     return ListView.builder(
         itemCount: userFoods.length,
         itemBuilder: (BuildContext context, int index) {
