@@ -73,4 +73,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
 
   textField(String val) {}
   weightField() {}
+  dropDown(String val) {}
+  numField(String val) {}
+  personalNutrients() {}
 }
