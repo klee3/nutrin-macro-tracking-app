@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:mobileapp/model/tracker.dart';
-import 'package:mobileapp/model/user.dart';
 import 'package:provider/provider.dart';
 
 class MacroForm extends StatefulWidget {
@@ -14,7 +13,6 @@ class _MacroFormState extends State<MacroForm> {
 
   @override
   Widget build(BuildContext context) {
-    var user = Provider.of<User>(context);
     var tracker = Provider.of<Tracker>(context);
 
     return Container(
@@ -24,7 +22,6 @@ class _MacroFormState extends State<MacroForm> {
           children: <Widget>[
             Row(
               children: <Widget>[
-                Text(user.uid),
                 Text(tracker.personalNutrients.containsKey("Carbs")
                     ? tracker.personalNutrients["carbs"].toString()
                     : "0"),

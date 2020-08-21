@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:mobileapp/model/tracker.dart';
-import 'package:mobileapp/model/user.dart';
 import 'package:provider/provider.dart';
 
 class PersonalInfo extends StatefulWidget {
@@ -13,22 +12,32 @@ class _PersonalInfoState extends State<PersonalInfo> {
   final _formkey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    var user = Provider.of<User>(context);
     var tracker = Provider.of<Tracker>(context);
     return Container(
       child: Form(
         key: _formkey,
         child: Column(
           children: <Widget>[
-            Row(
-              children: <Widget>[
-                Text(user.uid),
-                Text(tracker.personalNutrients.containsKey("Carbs")
-                    ? tracker.personalNutrients["carbs"].toString()
-                    : "0"),
-                textField("Carbs"),
-                textField("Protein"),
-                textField("Fat"),
+            Column(
+              children: [
+                // this.weight,
+                weightField(),
+                // this.name,
+                textField("name"),
+                // this.sex,
+                dropDown("sex"),
+                // this.metric,
+                dropDown("metric"),
+                // this.height,
+                numField("height"),
+                // this.age,
+                numField("age"),
+                // this.activityLevel,
+                dropDown("activityLevel"),
+                // this.goal,
+                dropDown("goal"),
+                // this.personalNutrients,
+                personalNutrients(),
               ],
             ),
             Row(
@@ -38,7 +47,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                     if (_formkey.currentState.validate()) {
                       Scaffold.of(context).showSnackBar(
                         SnackBar(
-                          content: Text("Macros have changed."),
+                          content: Text("Personal settings have changed."),
                         ),
                       );
                     }
@@ -48,7 +57,8 @@ class _PersonalInfoState extends State<PersonalInfo> {
                   onPressed: () {
                     Scaffold.of(context).showSnackBar(
                       SnackBar(
-                        content: Text("Macros have been set to default"),
+                        content:
+                            Text("Personal settings have been set to default"),
                       ),
                     );
                   },
@@ -60,20 +70,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
       ),
     );
   }
-}
 
-Widget textField(String name) {
-  return Column(
-    children: <Widget>[
-      Text(name),
-      TextFormField(
-        validator: (value) {
-          if (value.isEmpty) {
-            return 'Please enter a number.';
-          }
-          return null;
-        },
-      ),
-    ],
-  );
+  textField(String val) {}
+  weightField() {}
 }
