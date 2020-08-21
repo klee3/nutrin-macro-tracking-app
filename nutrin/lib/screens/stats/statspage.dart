@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fl_chart/fl_chart.dart';
 import 'package:mobileapp/screens/stats/calories_graph.dart';
 import 'package:mobileapp/screens/stats/carbs_graph.dart';
 import 'package:mobileapp/screens/stats/fat_graph.dart';

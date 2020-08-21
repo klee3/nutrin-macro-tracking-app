@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mobileapp/model/tracked_food.dart';
 import 'package:mobileapp/model/tracker.dart';

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mobileapp/services/auth.dart';
-import 'package:mobileapp/shared/constants.dart';
 import 'package:mobileapp/shared/loading.dart';
 import 'package:mobileapp/utilities/constants.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
@@ -87,7 +86,7 @@ class _SignInState extends State<SignIn> {
             style: TextStyle(color: Colors.black54),
             decoration: InputDecoration(
                 errorStyle: TextStyle(fontSize: 15),
-                border:InputBorder.none,
+                border: InputBorder.none,
                 contentPadding:
                     EdgeInsets.symmetric(vertical: 14.0, horizontal: 14.0),
                 prefixIcon: Icon(
@@ -175,7 +174,8 @@ class _SignInState extends State<SignIn> {
       child: Row(
         children: <Widget>[
           Theme(
-            data: ThemeData(unselectedWidgetColor: Theme.of(context).primaryColor),
+            data: ThemeData(
+                unselectedWidgetColor: Theme.of(context).primaryColor),
             child: Checkbox(
               value: _rememberMe,
               checkColor: Colors.white,
@@ -309,20 +309,22 @@ class _SignInState extends State<SignIn> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            Column(children: <Widget>[
-                              SizedBox(
-                                width: double.infinity,
-                                child: Text(
-                                  "Welcome Back",
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontFamily: "OpenSans",
-                                      fontSize: 30.0,
-                                      fontWeight: FontWeight.bold),
-                                  textAlign: TextAlign.left,
+                            Column(
+                              children: <Widget>[
+                                SizedBox(
+                                  width: double.infinity,
+                                  child: Text(
+                                    "Welcome Back",
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontFamily: "OpenSans",
+                                        fontSize: 30.0,
+                                        fontWeight: FontWeight.bold),
+                                    textAlign: TextAlign.left,
+                                  ),
                                 ),
-                              ),
-                            ],),
+                              ],
+                            ),
                             SizedBox(
                               height: 30.0,
                             ),

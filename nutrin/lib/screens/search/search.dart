@@ -1,6 +1,5 @@
 import 'package:custom_navigator/custom_navigation.dart';
 import 'package:flutter/material.dart';
-import 'package:mobileapp/model/mealmodel.dart';
 import 'package:mobileapp/model/tracked_food.dart';
 import 'package:mobileapp/model/tracker.dart';
 import 'package:mobileapp/model/user.dart';
@@ -155,7 +154,6 @@ class _SearchTestState extends State<Search> {
   }
 
   Widget myFoodsView() {
-    var tracker = Provider.of<Tracker>(context);
     List<TrackedFood> userFoods = searchedFoods == null ? [] : searchedFoods;
     return ListView.builder(
         itemCount: userFoods.length,
