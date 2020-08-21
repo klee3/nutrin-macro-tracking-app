@@ -19,7 +19,7 @@ class _MealListState extends State<MealList> {
   Widget build(BuildContext context) {
     var tracker = Provider.of<Tracker>(context);
     if (tracker != null) {
-      var meals = tracker.mealsList;
+      var meals = orderMeals(tracker.mealsList);
       return Container(
         width: MediaQuery.of(context).size.width,
         child: ListView.builder(
@@ -36,6 +36,20 @@ class _MealListState extends State<MealList> {
         width: 0,
       );
     }
+  }
+
+  List<MealModel> orderMeals(List<MealModel> meals) {
+    List<MealModel> orderedmeals = [null, null, null];
+    for (var i = 0; i < meals.length; i++) {
+      if (meals[i].mealName == "breakfast") {
+        orderedmeals[0] = meals[i];
+      } else if (meals[i].mealName == "lunch") {
+        orderedmeals[1] = meals[i];
+      } else {
+        orderedmeals[2] = meals[i];
+      }
+    }
+    return orderedmeals;
   }
 
   Widget foodtiles(MealModel currentMeal) {

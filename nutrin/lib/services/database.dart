@@ -56,22 +56,6 @@ class DatabaseService {
         'dinner': [],
       },
     });
-
-    // var todayMeal = trackerCollection
-    //     .document(uid)
-    //     .snapshots()
-    //     .map((event) => event.data.containsKey(currentDate));
-    // String alreadyMade = "false";
-    // todayMeal.listen((event) {
-    //   print(event);
-    //   alreadyMade = event.toString();
-    // });
-
-    // if (alreadyMade == "true") {
-
-    // } else {
-    //   print("Already exists");
-    // }
   }
 
   Future setDefaultMacros(String name, bool metric, String sex, double height,
