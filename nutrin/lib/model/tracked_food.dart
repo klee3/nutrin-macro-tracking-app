@@ -18,8 +18,8 @@ class TrackedFood {
   // final double _sodium;
   // final double _vitaminA;
   // final double _vitaminC;
-  final String unit;
-  final String serving;
+  String unit;
+  String serving;
 
   TrackedFood(
       this.name,
@@ -65,11 +65,82 @@ class TrackedFood {
         .toString();
   }
 
-  factory TrackedFood.fromFDCJson(Map<String, dynamic> json) {
+  // has the values: servingSize, servingSizeUnit, brandedFoodCategory, labelNutrients
+  factory TrackedFood.fromFDCJsonfoodNutrients(Map<String, dynamic> json) {
+    // var name;
+    // var serving;
+    // var unit;
+    var carbs;
+    var protein;
+    var fat;
+    // var calcium;
+    // var fiber;
+    // var cholesterol;
+    // var iron;
+    // var potassium;
+    // var sodium;
+    // var vitaminA;
+    // var vitaminC;
+
+    List foodNutrients = json['foodNutrients'];
+    int count = 3;
+    for (int i = 0; i < foodNutrients.length; i++) {
+      if (count > 0) {
+        switch (foodNutrients[i]['name']) {
+          case "Total lipid (fat)":
+            fat = foodNutrients[i]['amount'];
+            count = count - 1;
+            break;
+          case 'Carbohydrate, by difference':
+            carbs = foodNutrients[i]['amount'];
+            count = count - 1;
+            break;
+          case 'Protein':
+            protein = foodNutrients[i]['amount'];
+            count = count - 1;
+            break;
+        }
+      } else {
+        break;
+      }
+    }
+
     return TrackedFood(
-      name: json[],
-      
-    );
+        // name
+        json['description'].toString() + "," + json['brandOwner'].toString(),
+        // serving
+        '1',
+        // servingSizeUnit
+        'serving',
+        // carbohydrates
+        carbs == null ? 0 : carbs,
+        // protein
+        protein == null ? 0 : protein,
+        // fat
+        fat == null ? 0 : fat);
+  }
+
+  // has the values: servingSize, servingSizeUnit, brandedFoodCategory, labelNutrients
+  factory TrackedFood.fromFDCJsonLabelNutrients(Map<String, dynamic> json) {
+    return TrackedFood(
+        // name
+        json['name'].toString() + json['brandedFoodCategory'].toString(),
+        // serving
+        json['servingSize'],
+        // servingSizeUnit
+        json['servingSizeUnit'],
+        // carbohydrates
+        json['labelNutrients']['carbohydrates']['value'],
+        // protein
+        json['labelNutrients']['protein']['value'],
+        // fat
+        json['labelNutrients']['protein']['value']);
+  }
+
+  // should have values: foodPortions
+  getServing(TrackedFood food, Map<String, dynamic> json) {
+    food.serving = json['foodPortions']['gramWeight'];
+    food.unit = 'g';
   }
 
   factory TrackedFood.fromJson(Map<String, dynamic> json) =>
