@@ -18,6 +18,7 @@ class Search extends StatefulWidget {
 
 class _SearchTestState extends State<Search> {
   List<TrackedFood> searchedFoods = new List();
+  var searchQueary = TextEditingController();
   @override
   Widget build(BuildContext context) {
     var tracker = Provider.of<Tracker>(context);
@@ -104,25 +105,12 @@ class _SearchTestState extends State<Search> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(
-                width: 220,
-                child: TextFormField(
-                  onChanged: (value) {
-                    if (tracker.directory
-                        .map((food) => food.name)
-                        .any((name) => name.contains(value))) {
-                      setState(() {
-                        searchedFoods = tracker.directory.where((food) => food
-                            .name
-                            .toLowerCase()
-                            .contains(value.toLowerCase()));
-                      });
-                    } else {
-                      setState(() {
-                        searchedFoods = tracker.directory;
-                      });
-                    }
-                  },
-                )),
+              width: 100,
+              height: 50,
+              child: TextFormField(
+                controller: searchQueary,
+              ),
+            ),
           ),
         ],
       ),
@@ -154,11 +142,14 @@ class _SearchTestState extends State<Search> {
   }
 
   Widget myFoodsView() {
-    List<TrackedFood> userFoods = searchedFoods == null ? [] : searchedFoods;
+    var tracker = Provider.of<Tracker>(context);
+    List<TrackedFood> userFoods = tracker.directory
+        .where((food) =>
+            food.name.toLowerCase().contains(searchQueary.text.toLowerCase()))
+        .toList();
     return ListView.builder(
         itemCount: userFoods.length,
         itemBuilder: (BuildContext context, int index) {
-          var tracker = Provider.of<Tracker>(context);
           TrackedFood food = userFoods[index];
           return Card(
             child: ListTile(
