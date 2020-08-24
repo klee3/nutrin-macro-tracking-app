@@ -6,6 +6,7 @@ import 'package:mobileapp/model/user.dart';
 import 'package:mobileapp/screens/main/bottomnav.dart';
 import 'package:mobileapp/screens/search/createnewfood.dart';
 import 'package:mobileapp/screens/search/foodpage.dart';
+import 'package:mobileapp/services/client.dart';
 import 'package:mobileapp/services/database.dart';
 import 'package:provider/provider.dart';
 
@@ -107,9 +108,17 @@ class _SearchTestState extends State<Search> {
             child: Container(
               width: 100,
               height: 50,
-              child: TextFormField(
-                controller: searchQueary,
+              child: RaisedButton(
+                onPressed: () {
+                  var food = FoodClient();
+                  print('pressed');
+                  food.foodQueryForId('cake');
+                  food.foodQueryWithId(174943);
+                },
               ),
+              // child: TextFormField(
+              //   controller: searchQueary,
+              // ),
             ),
           ),
         ],

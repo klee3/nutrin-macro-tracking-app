@@ -65,6 +65,13 @@ class TrackedFood {
         .toString();
   }
 
+  factory TrackedFood.fromFDCJson(Map<String, dynamic> json) {
+    return TrackedFood(
+      name: json[],
+      
+    );
+  }
+
   factory TrackedFood.fromJson(Map<String, dynamic> json) =>
       _$TrackedFoodFromJson(json);
 
