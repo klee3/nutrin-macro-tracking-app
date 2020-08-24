@@ -107,7 +107,9 @@ class TrackedFood {
 
     return TrackedFood(
         // name
-        json['description'].toString() + "," + json['brandOwner'].toString(),
+        json['description'].toString() +
+            "," +
+            (json.containsKey('brandOwner') ? '' : json['brandOwner']),
         // serving
         '1',
         // servingSizeUnit
@@ -134,12 +136,12 @@ class TrackedFood {
         // protein
         json['labelNutrients']['protein']['value'],
         // fat
-        json['labelNutrients']['protein']['value']);
+        json['labelNutrients']['fat']['value']);
   }
 
   // should have values: foodPortions
   getServing(TrackedFood food, Map<String, dynamic> json) {
-    food.serving = json['foodPortions']['gramWeight'];
+    food.serving = json['foodPortions'][0]['gramWeight'];
     food.unit = 'g';
   }
 
