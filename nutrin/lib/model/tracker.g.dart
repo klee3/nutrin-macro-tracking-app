@@ -6,7 +6,7 @@ part of 'tracker.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Tracker _$TrackerFromJson(Map<String, dynamic> json) {
+Tracker _$TrackerFromJson(Map<String, dynamic> json, [String date]) {
   var currentDate = DateTime.now().day.toString() +
       "-" +
       DateTime.now().month.toString() +
