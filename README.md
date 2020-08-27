@@ -13,7 +13,7 @@ Well when companies create nutrition labels, they usually round down, and as a r
 ### sneakpeak
 Main Screen (Figma)             |  Main Screen (Flutter)
 :------------------------------:|:-------------------------:
-![](/readmeimgs/mainscreen.png) | ![](/readmeimgs/demo.png)
+![](/readmeimgs/mainscreen.png) | ![](/readmeimgs/demo.jpg)
 
 ### try it out
 to try it out git clone, `cd nutrin` and run `flutter pub get` and then `flutter run`. 
