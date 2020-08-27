@@ -97,6 +97,11 @@ class _MealListState extends State<MealList> {
                           GestureDetector(
                             onTap: () {
                               print("Pressed");
+                              List<TrackedFood> foodToDelete = [food];
+                              var user = Provider.of<User>(context);
+                              var db = DatabaseService(uid: user.uid);
+                              db.deleteAFood(
+                                  foodToDelete, currentMeal.mealName);
                             },
                             child: Icon(
                               Icons.delete,

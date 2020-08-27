@@ -114,6 +114,18 @@ class DatabaseService {
         .map(_trackerFromSnapshot);
   }
 
+  Future deleteAFood(List<TrackedFood> foods, String mealName) async {
+    String currentDate = DateTime.now().day.toString() +
+        "-" +
+        DateTime.now().month.toString() +
+        "-" +
+        DateTime.now().year.toString();
+    return await trackerCollection.document(uid).updateData({
+      currentDate + "." + mealName.toLowerCase():
+          FieldValue.arrayRemove(foods.map((food) => food.toMap()).toList())
+    }).then((value) => print("Deleted"));
+  }
+
   // get tracker list from snapshot
   Tracker _trackerFromSnapshot(DocumentSnapshot snapshot) {
     return Tracker.fromJson(jsonDecode(jsonEncode(snapshot.data)));
