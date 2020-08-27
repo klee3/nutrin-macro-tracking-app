@@ -365,11 +365,8 @@ class _FoodPageState extends State<FoodPage> {
                 flex: 1,
                 child: IconButton(
                   onPressed: () {
-                    double carbs = double.parse(carbsPerServing);
-                    double fat = double.parse(fatPerServing);
-                    double protein = double.parse(proteinPerServing);
                     if (_foodFormKey.currentState.validate()) {
-                      sendFoodsToDb(carbs, protein, fat, db);
+                      sendFoodsToDb(db);
                       Navigator.pop(context);
                     } else {
                       return null;
@@ -397,18 +394,23 @@ class _FoodPageState extends State<FoodPage> {
 
   // TODO: fix method
   // TODO: make sure to add the same foods to get more: 1 + 1 egg equal 2 (sum up foods)
-  sendFoodsToDb(double carbs, double protein, double fat, DatabaseService db) {
+  sendFoodsToDb(DatabaseService db) {
     TrackedFood food = widget.food;
     List<TrackedFood> foods = List<TrackedFood>();
-    foods.add(new TrackedFood(food.name, food.carbohydrates, food.protein,
-        food.fat, food.serving, food.unit));
-    // foods.add(new TrackedFood(
-    //     food.name,
-    //     calculateMacroValues(carbs),
-    //     (protein * userInputServing).toString(),
-    //     (fat * userInputServing).toString(),
-    //     userInputServing.toString(),
-    //     dropDownValue));
+    double carbsInput =
+        double.parse(calculateMacroValues(double.parse(food.carbohydrates)));
+    double proteinInput =
+        double.parse(calculateMacroValues(double.parse(food.protein)));
+    double fatInput =
+        double.parse(calculateMacroValues(double.parse(food.fat)));
+
+    foods.add(new TrackedFood(
+        food.name,
+        carbsInput.toString(),
+        proteinInput.toString(),
+        fatInput.toString(),
+        userInputServing.toString(),
+        dropDownValue));
     db.updateMeals(widget.mealName.toLowerCase(), foods);
   }
 
@@ -417,15 +419,15 @@ class _FoodPageState extends State<FoodPage> {
     TrackedFood food = widget.food;
     double serving = userInputServing == null ? 1 : userInputServing;
     if (dropDownValue == 'serving') {
-      return (macroPerServing * serving).toString();
+      return (macroPerServing * serving).toStringAsPrecision(3);
     } else if (dropDownValues.contains("g")) {
       return ((macroPerServing / double.parse(food.serving)) * serving)
-          .toString();
+          .toStringAsPrecision(3);
     } else if (dropDownValue.contains("oz")) {
       return ((macroPerServing / double.parse(food.serving)) *
               serving *
               0.035274)
-          .toString();
+          .toStringAsPrecision(3);
     }
     return macroPerServing.toString();
   }

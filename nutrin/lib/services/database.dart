@@ -100,17 +100,18 @@ class DatabaseService {
   // get tracker stream
   // TODO: need to fix this
   Stream<Tracker> get tracker {
-    var jsonFromFirebase;
-    jsonFromFirebase = trackerCollection.document(uid).snapshots();
     try {
-      return jsonFromFirebase.map(_trackerFromSnapshot);
-    } catch (e) {
-      addNewDay();
       return trackerCollection
           .document(uid)
           .snapshots()
           .map(_trackerFromSnapshot);
+    } catch (e) {
+      addNewDay();
     }
+    return trackerCollection
+        .document(uid)
+        .snapshots()
+        .map(_trackerFromSnapshot);
   }
 
   // get tracker list from snapshot
