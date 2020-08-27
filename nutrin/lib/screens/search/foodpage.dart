@@ -18,7 +18,6 @@ class FoodPage extends StatefulWidget {
 }
 
 class _FoodPageState extends State<FoodPage> {
-  TextEditingController serving = new TextEditingController();
   final _foodFormKey = GlobalKey<FormState>();
   double userInputServing = 1.0;
   var dropDownValue = "serving";
@@ -279,37 +278,39 @@ class _FoodPageState extends State<FoodPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Container(
-                        width: 100,
-                        child: TextField(
-                          keyboardType: TextInputType.number,
-                          onChanged: (value) {
-                            if (value == null) {
-                              setState(() {
-                                userInputServing = 0.0;
-                              });
-                            } else {
-                              setState(() {
-                                userInputServing = double.parse(value);
-                              });
-                            }
-                          },
-                          style: TextStyle(color: Colors.black),
-                          decoration: InputDecoration(
-                            labelText: "Servings",
-                            labelStyle: TextStyle(
-                                color: Colors.black, fontFamily: "OpenSans"),
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.black),
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.black),
-                            ),
-                            border: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.black),
-                            ),
+                      width: 100,
+                      child: TextFormField(
+                        initialValue: "1",
+                        keyboardType: TextInputType.number,
+                        onChanged: (value) {
+                          if (value == null) {
+                            setState(() {
+                              userInputServing = 0.0;
+                            });
+                          } else {
+                            setState(() {
+                              print(value);
+                              userInputServing = double.parse(value);
+                            });
+                          }
+                        },
+                        style: TextStyle(color: Colors.black),
+                        decoration: InputDecoration(
+                          labelText: "Servings",
+                          labelStyle: TextStyle(
+                              color: Colors.black, fontFamily: "OpenSans"),
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black),
                           ),
-                          controller: serving,
-                        )),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black),
+                          ),
+                          border: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black),
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -414,10 +415,18 @@ class _FoodPageState extends State<FoodPage> {
   // TODO: olawd
   String calculateMacroValues(double macroPerServing) {
     TrackedFood food = widget.food;
+    double serving = userInputServing == null ? 1 : userInputServing;
     if (dropDownValue == 'serving') {
-      return macroPerServing.toString();
+      return (macroPerServing * serving).toString();
     } else if (dropDownValues.contains("g")) {
-    } else if (dropDownValue.contains("mL")) {}
+      return ((macroPerServing / double.parse(food.serving)) * serving)
+          .toString();
+    } else if (dropDownValue.contains("oz")) {
+      return ((macroPerServing / double.parse(food.serving)) *
+              serving *
+              0.035274)
+          .toString();
+    }
     return macroPerServing.toString();
   }
 

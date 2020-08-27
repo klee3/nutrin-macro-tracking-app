@@ -108,16 +108,16 @@ class _SearchTestState extends State<Search> {
             child: Container(
               width: 100,
               height: 50,
-              child: RaisedButton(
-                onPressed: () {
-                  var food = FoodClient();
-                  print('pressed');
-                  food.foodQueryForId('cake');
-                  food.foodQueryWithId(174943);
-                },
+              child: TextFormField(
+                controller: searchQueary,
               ),
-              // child: TextFormField(
-              //   controller: searchQueary,
+              // RaisedButton(
+              //   onPressed: () {
+              //     // var food = FoodClient();
+              //     // print('pressed');
+              //     // food.foodQueryForId('cake');
+              //     // food.foodQueryWithId(174943);
+              //   },
               // ),
             ),
           ),
