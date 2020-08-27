@@ -392,11 +392,18 @@ class _FoodPageState extends State<FoodPage> {
     }
   }
 
+  List<TrackedFood> getCurrentMealList() {
+    return widget.meals
+        .firstWhere((meal) =>
+            meal.mealName.toLowerCase() == widget.mealName.toLowerCase())
+        .foods;
+  }
+
   // TODO: fix method
   // TODO: make sure to add the same foods to get more: 1 + 1 egg equal 2 (sum up foods)
   sendFoodsToDb(DatabaseService db) {
     TrackedFood food = widget.food;
-    List<TrackedFood> foods = List<TrackedFood>();
+    List<TrackedFood> foods = getCurrentMealList();
     double carbsInput =
         double.parse(calculateMacroValues(double.parse(food.carbohydrates)));
     double proteinInput =
